@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -23,7 +26,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * 
  */
 @Entity
-@Table(name = "USUARIO")
+@Table(name = "USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = -2561353904338124908L;
@@ -34,11 +37,7 @@ public class Usuario implements Serializable {
 	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize = 1)
 	private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "id_pessoa")
-	private Pessoa pessoa;
-
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
 	@Column(name = "telefone", nullable = true)
@@ -47,21 +46,19 @@ public class Usuario implements Serializable {
 	@Column(name = "apelido", nullable = true)
 	private String apelido;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", nullable = false)
 	private Tipo tipo;
 
 	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
 
-	private enum Tipo {
-		/**
-		 * representa uma instituição de ensino
-		 */
-		CRECHE, //
-		/**
-		 * representa uma pessoa responsável por alguma criança
-		 */
-		RESPONSAVEL
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "id_pessoa")
+	private Pessoa pessoa;
+
+	public Usuario() {
+		super();
 	}
 
 	public Long getId() {
@@ -112,10 +109,30 @@ public class Usuario implements Serializable {
 		this.ativo = ativo;
 	}
 
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(final Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public enum Tipo {
+		/**
+		 * representa uma instituição de ensino
+		 */
+		CRECHE, //
+		/**
+		 * representa uma pessoa responsável por alguma criança
+		 */
+		RESPONSAVEL
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("id", id).append("email", email).append("telefone", telefone)
-				.append("apelido", apelido).append("tipo", tipo).append("ativo", ativo).toString();
+				.append("apelido", apelido).append("tipo", tipo).append("ativo", ativo).append("pessoa", pessoa)
+				.toString();
 	}
 
 }

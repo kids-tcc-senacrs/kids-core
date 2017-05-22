@@ -1,6 +1,6 @@
 package com.kids.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.kids.model.Pessoa;
@@ -12,6 +12,6 @@ import com.kids.model.Pessoa;
  * 
  */
 @Repository
-public interface PessoaRepository extends CrudRepository<Pessoa, Long> {
+public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
 }

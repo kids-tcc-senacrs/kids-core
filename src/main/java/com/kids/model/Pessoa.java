@@ -36,6 +36,10 @@ public class Pessoa implements Serializable {
 	@Column(name = "foto", nullable = true)
 	private String foto;
 
+	public Pessoa() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -3,9 +3,7 @@ package com.kids.moduloautorizacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
-import com.kids.repository.PessoaRepository;
 import com.kids.repository.UsuarioRepository;
 
 /**
@@ -17,22 +15,23 @@ import com.kids.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
 
-	private PessoaRepository pessoaRepository;
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	@Autowired
-	public UsuarioService(final PessoaRepository pessoaRepository, final UsuarioRepository usuarioRepository) {
-		super();
-		this.pessoaRepository = pessoaRepository;
-		this.usuarioRepository = usuarioRepository;
+	public Usuario findUsuarioByEmail(final String email) {
+		return this.usuarioRepository.findByEmail(email);
 	}
 
-	public Pessoa createPessoa(final Pessoa pessoa) {
-		return this.pessoaRepository.save(pessoa);
+	public void createUsuario(final UsuarioVO usuarioVO) throws UsuarioJaCadastradoException {
+		if (this.usuarioJaCadastrado(usuarioVO)) {
+			throw new UsuarioJaCadastradoException();
+		}
+		this.usuarioRepository.save(usuarioVO);
 	}
 
-	public Usuario createUsuario(final Usuario usuario) {
-		return this.usuarioRepository.save(usuario);
+	private boolean usuarioJaCadastrado(final UsuarioVO usuarioVO) {
+		final Usuario u = this.findUsuarioByEmail(usuarioVO.getEmail());
+		return u == null ? Boolean.TRUE : Boolean.FALSE;
 	}
 
 }

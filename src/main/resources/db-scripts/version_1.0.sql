@@ -1,14 +1,14 @@
 create table PESSOA (
 	id integer not null,
 	nome varchar(60) not null,
-	foto varchar(120),        
+	foto varchar(300),        
 constraint pessoaPK primary key(id)
 );
 
 create table USUARIO (
 	id integer not null,
 	id_pessoa integer not null REFERENCES PESSOA(id),
-	email varchar(120) not null,
+	email varchar(120) not null unique,
 	telefone varchar(20),
 	apelido varchar(30),
 	tipo varchar(11),
