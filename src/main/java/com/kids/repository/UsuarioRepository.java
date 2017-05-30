@@ -9,9 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
-import com.kids.moduloautorizacao.UsuarioVO;
 
 /**
  * 
@@ -27,7 +25,7 @@ public class UsuarioRepository {
 
 	public Usuario findByEmail(@Param(value = "email") final String email) {
 		try {
-			final String hql = "select u from Usuario u inner join fetch u.pessoa as pessoa where u.email = :email";
+			final String hql = "select u from Usuario u left join fetch u.endereco as endereco where u.email = :email";
 			final Query query = this.em.createQuery(hql, Usuario.class);
 			query.setParameter("email", StringUtils.trim(email));
 			return (Usuario) query.getSingleResult();
@@ -37,19 +35,7 @@ public class UsuarioRepository {
 	}
 
 	@Transactional
-	public void save(final UsuarioVO vo) {
-		final Pessoa pessoa = new Pessoa();
-		pessoa.setNome(vo.getNome());
-		pessoa.setFoto(vo.getFotoUrl());
-
-		final Usuario usuario = new Usuario();
-		usuario.setApelido(vo.getApelido());
-		usuario.setEmail(vo.getApelido());
-		usuario.setTelefone(vo.getApelido());
-		usuario.setAtivo(Boolean.FALSE);
-		usuario.setTipo(vo.getTipo());
-		usuario.setPessoa(pessoa);
-
+	public void save(final Usuario usuario) {
 		this.em.persist(usuario);
 	}
 

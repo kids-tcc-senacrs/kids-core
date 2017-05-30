@@ -17,8 +17,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -37,36 +35,46 @@ public class Usuario implements Serializable {
 	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize = 1)
 	private Long id;
 
-	@Column(name = "email", nullable = false, unique = true)
+	@Column(name = "nome", nullable = false, length = 60)
+	private String nome;
+
+	@Column(name = "foto", nullable = true, length = 300)
+	private String foto;
+
+	@Column(name = "email", nullable = false, unique = true, length = 255)
 	private String email;
 
-	@Column(name = "telefone", nullable = true)
+	@Column(name = "telefone", nullable = true, length = 20)
 	private String telefone;
 
-	@Column(name = "apelido", nullable = true)
+	@Column(name = "apelido", nullable = true, length = 30)
 	private String apelido;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo", nullable = false)
+	@Column(name = "tipo", nullable = false, length = 8)
 	private Tipo tipo;
 
 	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "id_pessoa")
-	private Pessoa pessoa;
+	@JoinColumn(name = "id_endereco")
+	private Endereco endereco;
 
-	public Usuario() {
-		super();
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public enum Tipo {
+		CRECHE, FAMILIAR
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(final Long id) {
-		this.id = id;
 	}
 
 	public String getEmail() {
@@ -79,6 +87,22 @@ public class Usuario implements Serializable {
 
 	public String getTelefone() {
 		return telefone;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public void setTelefone(final String telefone) {
@@ -107,32 +131,6 @@ public class Usuario implements Serializable {
 
 	public void setAtivo(final Boolean ativo) {
 		this.ativo = ativo;
-	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(final Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public enum Tipo {
-		/**
-		 * representa uma instituição de ensino
-		 */
-		CRECHE, //
-		/**
-		 * representa uma pessoa responsável por alguma criança
-		 */
-		RESPONSAVEL
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("id", id).append("email", email).append("telefone", telefone)
-				.append("apelido", apelido).append("tipo", tipo).append("ativo", ativo).append("pessoa", pessoa)
-				.toString();
 	}
 
 }

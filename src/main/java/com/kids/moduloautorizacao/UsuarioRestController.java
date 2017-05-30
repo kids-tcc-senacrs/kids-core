@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -34,8 +34,8 @@ public class UsuarioRestController {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	@RequestMapping(method = GET, params = "email", produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getUsuarioByEmail(@RequestParam(required = true) final String email) {
+	@RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getUsuarioByEmail(@PathVariable (required = true) final String email) {
 		final Usuario usuario = this.usuarioService.findUsuarioByEmail(email);
 		final String gson = new Gson().toJson(usuario);
 		final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
@@ -43,7 +43,7 @@ public class UsuarioRestController {
 	}
 
 	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createUsuario(@Valid @RequestBody(required=true) final UsuarioVO usuarioVO, final Errors errors) {
+	public ResponseEntity<?> createUsuario(@Valid @RequestBody(required = true) final UsuarioVO usuarioVO, final Errors errors) {
 		try {
 			if (this.existeErrosNaRequisicao(errors)) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.getMessageErros(errors));
