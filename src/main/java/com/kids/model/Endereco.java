@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.kids.enumeration.UF;
+
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -44,58 +46,77 @@ public class Endereco implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "estado", length = 2)
-	private Estado estado;
+	private UF estado;
+
+
 
 	public Long getId() {
 		return id;
 	}
 
+
+
 	public void setId(final Long id) {
 		this.id = id;
 	}
+
+
 
 	public String getCep() {
 		return cep;
 	}
 
+
+
 	public void setCep(final String cep) {
 		this.cep = cep;
 	}
+
+
 
 	public String getLogradouro() {
 		return logradouro;
 	}
 
+
+
 	public void setLogradouro(final String logradouro) {
 		this.logradouro = logradouro;
 	}
+
+
 
 	public String getBairro() {
 		return bairro;
 	}
 
+
+
 	public void setBairro(final String bairro) {
 		this.bairro = bairro;
 	}
+
+
 
 	public String getCidade() {
 		return cidade;
 	}
 
+
+
 	public void setCidade(final String cidade) {
 		this.cidade = cidade;
 	}
 
-	public Estado getEstado() {
+
+
+	public UF getEstado() {
 		return estado;
 	}
 
-	public void setEstado(final Estado estado) {
+
+
+	public void setEstado(final UF estado) {
 		this.estado = estado;
 	}
-
-	public enum Estado {
-		RS, SC, SP, RJ
-	}
-
 }

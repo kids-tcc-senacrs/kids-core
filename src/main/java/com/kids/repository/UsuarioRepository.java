@@ -5,7 +5,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,9 @@ public class UsuarioRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Usuario findByEmail(@Param(value = "email") final String email) {
+
+
+	public Usuario findByEmail(final String email) {
 		try {
 			final String hql = "select u from Usuario u left join fetch u.endereco as endereco where u.email = :email";
 			final Query query = this.em.createQuery(hql, Usuario.class);
@@ -34,9 +35,23 @@ public class UsuarioRepository {
 		}
 	}
 
+
+
 	@Transactional
 	public void save(final Usuario usuario) {
 		this.em.persist(usuario);
 	}
 
+
+
+	@Transactional
+	public void update(final Usuario usuario) {
+		this.em.merge(usuario);
+	}
+
+
+
+	public Usuario findUsuarioById(final Long id) {
+		return this.em.find(Usuario.class, id);
+	}
 }

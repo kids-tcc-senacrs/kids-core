@@ -1,12 +1,13 @@
-package com.kids.moduloautorizacao;
+package com.kids.moduloautorizacao.vo;
 
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.kids.enumeration.UF;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,28 +18,24 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 05/2017
  * 
  */
-
 @ApiModel(description = "usuario")
-public class UsuarioVO implements Serializable {
+public class UsuarioAtualizaVO implements Serializable {
 
 	private static final long serialVersionUID = -4250740341959384029L;
 
 	@ApiModelProperty(required = true, position = 0)
+	@NotNull(message = "o campo 'id' é de preenchimento obrigatório")
+	private Long id;
+
+	@ApiModelProperty(required = true, position = 1)
 	@Size(max = 60, message = "o campo 'nome' deve conter no máximo '60' caracteres")
 	@NotNull(message = "o campo 'nome' é de preenchimento obrigatório")
 	@NotEmpty(message = "o campo 'nome' não pode ser vazio")
 	private String nome;
 
-	@ApiModelProperty(position = 1)
+	@ApiModelProperty(position = 2)
 	@Size(max = 30, message = "o campo 'apelido' deve conter no máximo '30' caracteres")
 	private String apelido;
-
-	@ApiModelProperty(required = true, position = 2)
-	@Email(message = "o 'email' informado não é um endereço de email valido")
-	@Size(max = 120, message = "o campo 'email' deve conter no máximo '120' caracteres")
-	@NotNull(message = "o campo 'email' é de preenchimento obrigatório")
-	@NotEmpty(message = "o campo 'email' não pode ser vazio")
-	private String email;
 
 	@ApiModelProperty(position = 3)
 	@Size(max = 20, message = "o campo 'telefone' deve conter no máximo '20' caracteres")
@@ -48,9 +45,8 @@ public class UsuarioVO implements Serializable {
 	@Size(max = 300, message = "o campo 'fotoUrl' deve conter no máximo '300' caracteres")
 	private String fotoUrl;
 
-	@ApiModelProperty(required = true, allowableValues = "CRECHE, FAMILIAR", position = 5)
-	@NotNull(message = "o campo 'tipo' é de preenchimento obrigatório")
-	private String tipo;
+	@ApiModelProperty(position = 5)
+	private boolean ativo;
 
 	@ApiModelProperty(position = 6)
 	private EnderecoVO endereco;
@@ -74,54 +70,77 @@ public class UsuarioVO implements Serializable {
 		@Size(max = 60, message = "o campo 'cidade' deve conter no máximo '60' caracteres")
 		private String cidade;
 
-		@ApiModelProperty(required = true, allowableValues = "RS, RJ, SP, SC", position = 4)
-		private String estado;
+		@ApiModelProperty(required = true, position = 4)
+		private UF estado;
+
+
 
 		public String getCep() {
 			return cep;
 		}
 
+
+
 		public String getLogradouro() {
 			return logradouro;
 		}
+
+
 
 		public String getBairro() {
 			return bairro;
 		}
 
+
+
 		public String getCidade() {
 			return cidade;
 		}
 
-		public String getEstado() {
+
+
+		public UF getEstado() {
 			return estado;
 		}
-
 	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
 
 	public String getNome() {
 		return nome;
 	}
 
+
+
 	public String getApelido() {
 		return apelido;
 	}
 
-	public String getEmail() {
-		return email;
-	}
+
 
 	public String getTelefone() {
 		return telefone;
 	}
 
+
+
 	public String getFotoUrl() {
 		return fotoUrl;
 	}
 
-	public String getTipo() {
-		return tipo;
+
+
+	public boolean isAtivo() {
+		return ativo;
 	}
+
+
 
 	public EnderecoVO getEndereco() {
 		return endereco;

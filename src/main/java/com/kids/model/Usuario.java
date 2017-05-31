@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.kids.enumeration.TipoUsuario;
+
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -52,85 +54,114 @@ public class Usuario implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", nullable = false, length = 8)
-	private Tipo tipo;
+	private TipoUsuario tipo;
 
 	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
+
+
 
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
+
+
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
-	public enum Tipo {
-		CRECHE, FAMILIAR
-	}
+
 
 	public Long getId() {
 		return id;
 	}
 
+
+
 	public String getEmail() {
 		return email;
 	}
+
+
 
 	public void setEmail(final String email) {
 		this.email = email;
 	}
 
+
+
 	public String getTelefone() {
 		return telefone;
 	}
+
+
 
 	public String getNome() {
 		return nome;
 	}
 
+
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+
 
 	public String getFoto() {
 		return foto;
 	}
 
+
+
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+
+
 
 	public void setTelefone(final String telefone) {
 		this.telefone = telefone;
 	}
 
+
+
 	public String getApelido() {
 		return apelido;
 	}
+
+
 
 	public void setApelido(final String apelido) {
 		this.apelido = apelido;
 	}
 
-	public Tipo getTipo() {
+
+
+	public TipoUsuario getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(final Tipo tipo) {
+
+
+	public void setTipo(final TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
+
+
 
 	public Boolean getAtivo() {
 		return ativo;
 	}
 
+
+
 	public void setAtivo(final Boolean ativo) {
 		this.ativo = ativo;
 	}
-
 }
