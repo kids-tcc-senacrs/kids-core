@@ -42,13 +42,9 @@ public class UsuarioAtualizaVO implements Serializable {
 	private String telefone;
 
 	@ApiModelProperty(position = 4)
-	@Size(max = 300, message = "o campo 'fotoUrl' deve conter no máximo '300' caracteres")
-	private String fotoUrl;
-
-	@ApiModelProperty(position = 5)
 	private boolean ativo;
 
-	@ApiModelProperty(position = 6)
+	@ApiModelProperty(position = 5)
 	private EnderecoVO endereco;
 
 	@ApiModel(description = "endereco")
@@ -126,12 +122,6 @@ public class UsuarioAtualizaVO implements Serializable {
 
 	public String getTelefone() {
 		return telefone;
-	}
-
-
-
-	public String getFotoUrl() {
-		return fotoUrl;
 	}
 
 

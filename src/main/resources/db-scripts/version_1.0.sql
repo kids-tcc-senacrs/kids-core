@@ -12,7 +12,6 @@ create table USUARIO (
 	id integer not null,
 	id_endereco integer REFERENCES ENDERECO(id),
 	nome varchar(60) not null,
-	foto varchar(300),        
 	email varchar(255) not null unique,
 	telefone varchar(20),
 	apelido varchar(30),

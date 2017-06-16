@@ -46,15 +46,11 @@ public class UsuarioNovoVO implements Serializable {
 	@Size(max = 20, message = "o campo 'telefone' deve conter no máximo '20' caracteres")
 	private String telefone;
 
-	@ApiModelProperty(position = 4)
-	@Size(max = 300, message = "o campo 'fotoUrl' deve conter no máximo '300' caracteres")
-	private String fotoUrl;
-
-	@ApiModelProperty(required = true, position = 5)
+	@ApiModelProperty(required = true, position = 4)
 	@NotNull(message = "o campo 'tipo' é de preenchimento obrigatório")
 	private TipoUsuario tipo;
 
-	@ApiModelProperty(position = 6)
+	@ApiModelProperty(position = 5)
 	private EnderecoVO endereco;
 
 	@ApiModel(description = "endereco")
@@ -132,12 +128,6 @@ public class UsuarioNovoVO implements Serializable {
 
 	public String getTelefone() {
 		return telefone;
-	}
-
-
-
-	public String getFotoUrl() {
-		return fotoUrl;
 	}
 
 

@@ -40,9 +40,6 @@ public class Usuario implements Serializable {
 	@Column(name = "nome", nullable = false, length = 60)
 	private String nome;
 
-	@Column(name = "foto", nullable = true, length = 300)
-	private String foto;
-
 	@Column(name = "email", nullable = false, unique = true, length = 255)
 	private String email;
 
@@ -59,7 +56,7 @@ public class Usuario implements Serializable {
 	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 
@@ -109,18 +106,6 @@ public class Usuario implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-
-
-	public String getFoto() {
-		return foto;
-	}
-
-
-
-	public void setFoto(String foto) {
-		this.foto = foto;
 	}
 
 

@@ -24,7 +24,8 @@ class UsuarioService {
 
 
 	void createUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
-		if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail())) throw new UsuarioJaCadastradoException();
+		if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
+			throw new UsuarioJaCadastradoException();
 		final Usuario usuario = this.criarUsuario(vo);
 		final Endereco endereco = this.criarEndereco(vo);
 		usuario.setEndereco(endereco);
@@ -34,7 +35,8 @@ class UsuarioService {
 
 
 	void updateUsuario(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
-		if (!this.usuarioInformadoJaPossuiCadastro(vo.getId())) throw new UsuarioInexistenteException();
+		if (!this.usuarioInformadoJaPossuiCadastro(vo.getId()))
+			throw new UsuarioInexistenteException();
 		final Usuario usuario = this.usuarioRepository.findUsuarioById(vo.getId());
 		this.atualizarUsuario(usuario, vo);
 		this.atualizarEndereco(usuario, vo);
@@ -67,7 +69,6 @@ class UsuarioService {
 	private void atualizarUsuario(final Usuario usuario, UsuarioAtualizaVO vo) {
 		usuario.setNome(vo.getNome());
 		usuario.setApelido(vo.getApelido());
-		usuario.setFoto(vo.getFotoUrl());
 		usuario.setTelefone(vo.getTelefone());
 		usuario.setAtivo(vo.isAtivo());
 	}
@@ -77,7 +78,6 @@ class UsuarioService {
 	private Usuario criarUsuario(final UsuarioNovoVO vo) {
 		final Usuario usuario = new Usuario();
 		usuario.setNome(vo.getNome());
-		usuario.setFoto(vo.getFotoUrl());
 		usuario.setApelido(vo.getApelido());
 		usuario.setEmail(vo.getEmail());
 		usuario.setTelefone(vo.getTelefone());
