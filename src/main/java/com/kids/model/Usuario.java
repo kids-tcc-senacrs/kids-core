@@ -46,9 +46,6 @@ public class Usuario implements Serializable {
 	@Column(name = "telefone", nullable = true, length = 20)
 	private String telefone;
 
-	@Column(name = "apelido", nullable = true, length = 30)
-	private String apelido;
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", nullable = false, length = 8)
 	private TipoUsuario tipo;
@@ -116,18 +113,6 @@ public class Usuario implements Serializable {
 
 
 
-	public String getApelido() {
-		return apelido;
-	}
-
-
-
-	public void setApelido(final String apelido) {
-		this.apelido = apelido;
-	}
-
-
-
 	public TipoUsuario getTipo() {
 		return tipo;
 	}
@@ -149,4 +134,5 @@ public class Usuario implements Serializable {
 	public void setAtivo(final Boolean ativo) {
 		this.ativo = ativo;
 	}
+	
 }

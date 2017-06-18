@@ -3,6 +3,7 @@ package com.kids.moduloautorizacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Endereco;
 import com.kids.model.Usuario;
 import com.kids.moduloautorizacao.vo.UsuarioAtualizaVO;
@@ -23,13 +24,13 @@ class UsuarioService {
 
 
 
-	void createUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
+	Usuario createUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
 		if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
 			throw new UsuarioJaCadastradoException();
 		final Usuario usuario = this.criarUsuario(vo);
 		final Endereco endereco = this.criarEndereco(vo);
 		usuario.setEndereco(endereco);
-		this.usuarioRepository.save(usuario);
+		return this.usuarioRepository.save(usuario);
 	}
 
 
@@ -68,7 +69,6 @@ class UsuarioService {
 
 	private void atualizarUsuario(final Usuario usuario, UsuarioAtualizaVO vo) {
 		usuario.setNome(vo.getNome());
-		usuario.setApelido(vo.getApelido());
 		usuario.setTelefone(vo.getTelefone());
 		usuario.setAtivo(vo.isAtivo());
 	}
@@ -78,11 +78,14 @@ class UsuarioService {
 	private Usuario criarUsuario(final UsuarioNovoVO vo) {
 		final Usuario usuario = new Usuario();
 		usuario.setNome(vo.getNome());
-		usuario.setApelido(vo.getApelido());
 		usuario.setEmail(vo.getEmail());
 		usuario.setTelefone(vo.getTelefone());
-		usuario.setAtivo(Boolean.FALSE);
 		usuario.setTipo(vo.getTipo());
+		if (TipoUsuario.CRECHE.equals(vo.getTipo())) {
+			usuario.setAtivo(Boolean.TRUE);
+		} else {
+			usuario.setAtivo(Boolean.FALSE);
+		}
 		return usuario;
 	}
 

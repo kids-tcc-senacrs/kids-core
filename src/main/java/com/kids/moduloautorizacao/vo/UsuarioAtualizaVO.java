@@ -34,17 +34,13 @@ public class UsuarioAtualizaVO implements Serializable {
 	private String nome;
 
 	@ApiModelProperty(position = 2)
-	@Size(max = 30, message = "o campo 'apelido' deve conter no máximo '30' caracteres")
-	private String apelido;
-
-	@ApiModelProperty(position = 3)
 	@Size(max = 20, message = "o campo 'telefone' deve conter no máximo '20' caracteres")
 	private String telefone;
 
-	@ApiModelProperty(position = 4)
+	@ApiModelProperty(position = 3)
 	private boolean ativo;
 
-	@ApiModelProperty(position = 5)
+	@ApiModelProperty(position = 4)
 	private EnderecoVO endereco;
 
 	@ApiModel(description = "endereco")
@@ -110,12 +106,6 @@ public class UsuarioAtualizaVO implements Serializable {
 
 	public String getNome() {
 		return nome;
-	}
-
-
-
-	public String getApelido() {
-		return apelido;
 	}
 
 

@@ -38,8 +38,10 @@ public class UsuarioRepository {
 
 
 	@Transactional
-	public void save(final Usuario usuario) {
+	public Usuario save(final Usuario usuario) {
 		this.em.persist(usuario);
+		this.em.flush();
+		return usuario;
 	}
 
 
