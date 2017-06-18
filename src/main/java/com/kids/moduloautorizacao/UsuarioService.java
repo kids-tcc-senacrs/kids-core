@@ -58,10 +58,8 @@ class UsuarioService {
 				usuario.setEndereco(new Endereco());
 			}
 			usuario.getEndereco().setCep(vo.getEndereco().getCep());
-			usuario.getEndereco().setCidade(vo.getEndereco().getCidade());
-			usuario.getEndereco().setEstado(vo.getEndereco().getEstado());
 			usuario.getEndereco().setLogradouro(vo.getEndereco().getLogradouro());
-			usuario.getEndereco().setBairro(vo.getEndereco().getBairro());
+			usuario.getEndereco().setComplemento(vo.getEndereco().getComplemento());
 		}
 	}
 
@@ -95,10 +93,8 @@ class UsuarioService {
 		if (this.informouAlgumDadoDoEndereco(vo)) {
 			final Endereco endereco = new Endereco();
 			endereco.setCep(vo.getEndereco().getCep());
-			endereco.setCidade(vo.getEndereco().getCidade());
-			endereco.setBairro(vo.getEndereco().getBairro());
-			endereco.setEstado(vo.getEndereco().getEstado());
 			endereco.setLogradouro(vo.getEndereco().getLogradouro());
+			endereco.setComplemento(vo.getEndereco().getComplemento());
 			return endereco;
 		}
 		return null;

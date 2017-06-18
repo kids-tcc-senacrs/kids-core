@@ -4,15 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.kids.enumeration.UF;
 
 /**
  * 
@@ -38,15 +34,8 @@ public class Endereco implements Serializable {
 	@Column(name = "logradouro", length = 80)
 	private String logradouro;
 
-	@Column(name = "bairro", length = 30)
-	private String bairro;
-
-	@Column(name = "cidade", length = 60)
-	private String cidade;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "estado", length = 2)
-	private UF estado;
+	@Column(name = "complemento", length = 100)
+	private String complemento;
 
 
 
@@ -86,37 +75,13 @@ public class Endereco implements Serializable {
 
 
 
-	public String getBairro() {
-		return bairro;
+	public String getComplemento() {
+		return complemento;
 	}
 
 
 
-	public void setBairro(final String bairro) {
-		this.bairro = bairro;
-	}
-
-
-
-	public String getCidade() {
-		return cidade;
-	}
-
-
-
-	public void setCidade(final String cidade) {
-		this.cidade = cidade;
-	}
-
-
-
-	public UF getEstado() {
-		return estado;
-	}
-
-
-
-	public void setEstado(final UF estado) {
-		this.estado = estado;
+	public void setComplemento(final String complemento) {
+		this.complemento = complemento;
 	}
 }

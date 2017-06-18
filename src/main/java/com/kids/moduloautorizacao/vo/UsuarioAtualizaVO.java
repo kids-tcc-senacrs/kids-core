@@ -7,8 +7,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.kids.enumeration.UF;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -55,15 +53,8 @@ public class UsuarioAtualizaVO implements Serializable {
 		private String logradouro;
 
 		@ApiModelProperty(position = 2)
-		@Size(max = 30, message = "o campo 'bairro' deve conter no máximo '30' caracteres")
-		private String bairro;
-
-		@ApiModelProperty(position = 3)
-		@Size(max = 60, message = "o campo 'cidade' deve conter no máximo '60' caracteres")
-		private String cidade;
-
-		@ApiModelProperty(required = true, position = 4)
-		private UF estado;
+		@Size(max = 100, message = "o campo 'complemento' deve conter no máximo '100' caracteres")
+		private String complemento;
 
 
 
@@ -79,20 +70,8 @@ public class UsuarioAtualizaVO implements Serializable {
 
 
 
-		public String getBairro() {
-			return bairro;
-		}
-
-
-
-		public String getCidade() {
-			return cidade;
-		}
-
-
-
-		public UF getEstado() {
-			return estado;
+		public String getComplemento() {
+			return complemento;
 		}
 	}
 

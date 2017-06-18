@@ -2,9 +2,7 @@ create table ENDERECO (
 	id integer not null,
 	cep varchar(8),
 	logradouro varchar(80),
-	bairro varchar(30),
-	cidade varchar(60),
-	estado varchar(2),
+	complemento varchar(100),
 constraint enderecoPK primary key(id)
 );
 
@@ -14,7 +12,6 @@ create table USUARIO (
 	nome varchar(60) not null,
 	email varchar(255) not null unique,
 	telefone varchar(20),
-	apelido varchar(30),
 	tipo varchar(8),
 	ativo boolean,
 constraint usuarioPK primary key(id)
