@@ -2,6 +2,7 @@ package com.kids.moduloautorizacao;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -72,11 +73,12 @@ public class UsuarioRestController {
 			if (RestUtil.existeErroNaRequisicao(errors)) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
 			} else {
-				this.usuarioService.updateUsuario(usuario);
-				return new ResponseEntity<Void>(HttpStatus.OK);
+				final Usuario u = this.usuarioService.updateUsuario(usuario);
+				return ResponseEntity.status(OK).body(new Gson().toJson(u));
 			}
 		} catch (final KidsException e) {
 			return ResponseEntity.status(CONFLICT).body(e.getMessage());
 		}
 	}
+	
 }

@@ -35,13 +35,13 @@ class UsuarioService {
 
 
 
-	void updateUsuario(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
+	Usuario updateUsuario(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
 		if (!this.usuarioInformadoJaPossuiCadastro(vo.getId()))
 			throw new UsuarioInexistenteException();
 		final Usuario usuario = this.usuarioRepository.findUsuarioById(vo.getId());
 		this.atualizarUsuario(usuario, vo);
 		this.atualizarEndereco(usuario, vo);
-		this.usuarioRepository.update(usuario);
+		return this.usuarioRepository.update(usuario);
 	}
 
 

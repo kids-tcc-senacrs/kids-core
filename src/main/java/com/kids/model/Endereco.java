@@ -31,10 +31,10 @@ public class Endereco implements Serializable {
 	@Column(name = "cep", length = 8)
 	private String cep;
 
-	@Column(name = "logradouro", length = 80)
+	@Column(name = "logradouro", length = 200)
 	private String logradouro;
 
-	@Column(name = "complemento", length = 100)
+	@Column(name = "complemento", length = 200)
 	private String complemento;
 
 

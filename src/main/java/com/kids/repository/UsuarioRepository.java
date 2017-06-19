@@ -47,8 +47,10 @@ public class UsuarioRepository {
 
 
 	@Transactional
-	public void update(final Usuario usuario) {
+	public Usuario update(final Usuario usuario) {
 		this.em.merge(usuario);
+		this.em.flush();
+		return usuario;
 	}
 
 
