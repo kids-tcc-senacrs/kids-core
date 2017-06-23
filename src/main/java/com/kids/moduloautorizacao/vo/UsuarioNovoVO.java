@@ -30,26 +30,22 @@ public class UsuarioNovoVO implements Serializable {
 	@NotEmpty(message = "o campo 'nome' não pode ser vazio")
 	private String nome;
 
-	@ApiModelProperty(position = 1)
-	@Size(max = 30, message = "o campo 'apelido' deve conter no máximo '30' caracteres")
-	private String apelido;
-
-	@ApiModelProperty(required = true, position = 2)
+	@ApiModelProperty(required = true, position = 1)
 	@Email(message = "o 'email' informado não é um endereço de email valido")
 	@Size(max = 120, message = "o campo 'email' deve conter no máximo '120' caracteres")
 	@NotNull(message = "o campo 'email' é de preenchimento obrigatório")
 	@NotEmpty(message = "o campo 'email' não pode ser vazio")
 	private String email;
 
-	@ApiModelProperty(position = 3)
+	@ApiModelProperty(position = 2)
 	@Size(max = 20, message = "o campo 'telefone' deve conter no máximo '20' caracteres")
 	private String telefone;
 
-	@ApiModelProperty(required = true, position = 4)
+	@ApiModelProperty(required = true, position = 3)
 	@NotNull(message = "o campo 'tipo' é de preenchimento obrigatório")
 	private TipoUsuario tipo;
 
-	@ApiModelProperty(position = 5)
+	@ApiModelProperty(position = 4)
 	private EnderecoVO endereco;
 
 	@ApiModel(description = "endereco")
@@ -60,12 +56,12 @@ public class UsuarioNovoVO implements Serializable {
 		private String cep;
 
 		@ApiModelProperty(position = 1)
-		@Size(max = 80, message = "o campo 'logradouro' deve conter no máximo '80' caracteres")
+		@Size(max = 60, message = "o campo 'logradouro' deve conter no máximo '60' caracteres")
 		private String logradouro;
 
 		@ApiModelProperty(position = 2)
-		@Size(max = 100, message = "o campo 'complemento' deve conter no máximo '100' caracteres")
-		private String complemento;
+		@Size(max = 255, message = "o campo 'complemento' deve conter no máximo '255' caracteres")
+		private String localizacao;
 
 
 
@@ -81,8 +77,8 @@ public class UsuarioNovoVO implements Serializable {
 
 
 
-		public String getComplemento() {
-			return complemento;
+		public String getLocalizacao() {
+			return localizacao;
 		}
 	}
 
@@ -90,12 +86,6 @@ public class UsuarioNovoVO implements Serializable {
 
 	public String getNome() {
 		return nome;
-	}
-
-
-
-	public String getApelido() {
-		return apelido;
 	}
 
 

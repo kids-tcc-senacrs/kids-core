@@ -59,7 +59,7 @@ class UsuarioService {
 			}
 			usuario.getEndereco().setCep(vo.getEndereco().getCep());
 			usuario.getEndereco().setLogradouro(vo.getEndereco().getLogradouro());
-			usuario.getEndereco().setComplemento(vo.getEndereco().getComplemento());
+			usuario.getEndereco().setLocalizacao(vo.getEndereco().getLocalizacao());
 		}
 	}
 
@@ -94,7 +94,7 @@ class UsuarioService {
 			final Endereco endereco = new Endereco();
 			endereco.setCep(vo.getEndereco().getCep());
 			endereco.setLogradouro(vo.getEndereco().getLogradouro());
-			endereco.setComplemento(vo.getEndereco().getComplemento());
+			endereco.setLocalizacao(vo.getEndereco().getLocalizacao());
 			return endereco;
 		}
 		return null;

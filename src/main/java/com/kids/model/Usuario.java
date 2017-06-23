@@ -59,6 +59,12 @@ public class Usuario implements Serializable {
 
 
 
+	public Usuario() {
+		super();
+	}
+
+
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -134,5 +140,4 @@ public class Usuario implements Serializable {
 	public void setAtivo(final Boolean ativo) {
 		this.ativo = ativo;
 	}
-	
 }

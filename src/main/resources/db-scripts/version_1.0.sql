@@ -2,7 +2,7 @@ create table ENDERECO (
 	id integer not null,
 	cep varchar(8),
 	logradouro varchar(80),
-	complemento varchar(100),
+	localizacao varchar(255),
 constraint enderecoPK primary key(id)
 );
 

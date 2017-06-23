@@ -31,11 +31,17 @@ public class Endereco implements Serializable {
 	@Column(name = "cep", length = 8)
 	private String cep;
 
-	@Column(name = "logradouro", length = 200)
+	@Column(name = "logradouro", length = 60)
 	private String logradouro;
 
-	@Column(name = "complemento", length = 200)
-	private String complemento;
+	@Column(name = "localizacao", length = 255)
+	private String localizacao;
+
+
+
+	public Endereco() {
+		super();
+	}
 
 
 
@@ -75,13 +81,13 @@ public class Endereco implements Serializable {
 
 
 
-	public String getComplemento() {
-		return complemento;
+	public String getLocalizacao() {
+		return localizacao;
 	}
 
 
 
-	public void setComplemento(final String complemento) {
-		this.complemento = complemento;
+	public void setLocalizacao(final String localizacao) {
+		this.localizacao = localizacao;
 	}
 }

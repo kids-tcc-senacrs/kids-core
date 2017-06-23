@@ -49,12 +49,12 @@ public class UsuarioAtualizaVO implements Serializable {
 		private String cep;
 
 		@ApiModelProperty(position = 1)
-		@Size(max = 80, message = "o campo 'logradouro' deve conter no máximo '80' caracteres")
+		@Size(max = 60, message = "o campo 'logradouro' deve conter no máximo '60' caracteres")
 		private String logradouro;
 
 		@ApiModelProperty(position = 2)
-		@Size(max = 100, message = "o campo 'complemento' deve conter no máximo '100' caracteres")
-		private String complemento;
+		@Size(max = 255, message = "o campo 'complemento' deve conter no máximo '255' caracteres")
+		private String localizacao;
 
 
 
@@ -70,8 +70,8 @@ public class UsuarioAtualizaVO implements Serializable {
 
 
 
-		public String getComplemento() {
-			return complemento;
+		public String getLocalizacao() {
+			return localizacao;
 		}
 	}
 
