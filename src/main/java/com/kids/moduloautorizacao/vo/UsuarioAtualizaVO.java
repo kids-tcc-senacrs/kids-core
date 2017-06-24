@@ -53,7 +53,7 @@ public class UsuarioAtualizaVO implements Serializable {
 		private String logradouro;
 
 		@ApiModelProperty(position = 2)
-		@Size(max = 255, message = "o campo 'complemento' deve conter no máximo '255' caracteres")
+		@Size(max = 120, message = "o campo 'complemento' deve conter no máximo '120' caracteres")
 		private String localizacao;
 
 

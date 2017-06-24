@@ -32,7 +32,7 @@ public class UsuarioNovoVO implements Serializable {
 
 	@ApiModelProperty(required = true, position = 1)
 	@Email(message = "o 'email' informado não é um endereço de email valido")
-	@Size(max = 120, message = "o campo 'email' deve conter no máximo '120' caracteres")
+	@Size(max = 255, message = "o campo 'email' deve conter no máximo '255' caracteres")
 	@NotNull(message = "o campo 'email' é de preenchimento obrigatório")
 	@NotEmpty(message = "o campo 'email' não pode ser vazio")
 	private String email;
@@ -60,7 +60,7 @@ public class UsuarioNovoVO implements Serializable {
 		private String logradouro;
 
 		@ApiModelProperty(position = 2)
-		@Size(max = 255, message = "o campo 'complemento' deve conter no máximo '255' caracteres")
+		@Size(max = 120, message = "o campo 'complemento' deve conter no máximo '120' caracteres")
 		private String localizacao;
 
 
