@@ -1,4 +1,4 @@
-package com.kids.moduloautorizacao;
+package com.kids.util;
 
 import java.io.IOException;
 

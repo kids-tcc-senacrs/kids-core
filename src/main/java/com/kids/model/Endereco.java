@@ -28,13 +28,13 @@ public class Endereco implements Serializable {
 	@SequenceGenerator(name = "endereco_id_seq", sequenceName = "endereco_id_seq", allocationSize = 1)
 	private Long id;
 
-	@Column(name = "cep", length = 8)
+	@Column(name = "cep", length = 8, nullable = false)
 	private String cep;
 
-	@Column(name = "logradouro", length = 60)
+	@Column(name = "logradouro", length = 60, nullable = false)
 	private String logradouro;
 
-	@Column(name = "localizacao", length = 120)
+	@Column(name = "localizacao", length = 120, nullable = false)
 	private String localizacao;
 
 

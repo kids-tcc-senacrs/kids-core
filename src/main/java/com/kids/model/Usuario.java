@@ -107,7 +107,7 @@ public class Usuario implements Serializable {
 
 
 
-	public void setNome(String nome) {
+	public void setNome(final String nome) {
 		this.nome = nome;
 	}
 

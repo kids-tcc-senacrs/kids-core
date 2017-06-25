@@ -2,6 +2,8 @@ package com.kids.util;
 
 import org.springframework.validation.Errors;
 
+import com.google.gson.Gson;
+
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -20,12 +22,13 @@ public class RestUtil {
 
 
 	public static String getErros(final Errors errors) {
-		final StringBuilder msgErros = new StringBuilder();
+		final RestErroVo restErroVo = new RestErroVo();
 		if (errors.hasErrors()) {
 			errors.getAllErrors().forEach(e -> {
-				msgErros.append(e.getDefaultMessage()).append("\n");
+				restErroVo.addMessage(e.getDefaultMessage());
 			});
 		}
-		return msgErros.toString();
+		return new Gson().toJson(restErroVo);
 	}
+	
 }

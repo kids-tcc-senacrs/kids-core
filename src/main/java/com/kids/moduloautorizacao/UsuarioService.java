@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Endereco;
 import com.kids.model.Usuario;
-import com.kids.moduloautorizacao.vo.UsuarioAtualizaVO;
-import com.kids.moduloautorizacao.vo.UsuarioNovoVO;
 import com.kids.repository.UsuarioRepository;
 
 /**
@@ -28,8 +26,6 @@ class UsuarioService {
 		if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
 			throw new UsuarioJaCadastradoException();
 		final Usuario usuario = this.criarUsuario(vo);
-		final Endereco endereco = this.criarEndereco(vo);
-		usuario.setEndereco(endereco);
 		return this.usuarioRepository.save(usuario);
 	}
 
@@ -65,8 +61,7 @@ class UsuarioService {
 
 
 
-	private void atualizarUsuario(final Usuario usuario, UsuarioAtualizaVO vo) {
-		usuario.setNome(vo.getNome());
+	private void atualizarUsuario(final Usuario usuario, final UsuarioAtualizaVO vo) {
 		usuario.setTelefone(vo.getTelefone());
 		usuario.setAtivo(vo.isAtivo());
 	}
@@ -89,25 +84,6 @@ class UsuarioService {
 
 
 
-	private Endereco criarEndereco(final UsuarioNovoVO vo) {
-		if (this.informouAlgumDadoDoEndereco(vo)) {
-			final Endereco endereco = new Endereco();
-			endereco.setCep(vo.getEndereco().getCep());
-			endereco.setLogradouro(vo.getEndereco().getLogradouro());
-			endereco.setLocalizacao(vo.getEndereco().getLocalizacao());
-			return endereco;
-		}
-		return null;
-	}
-
-
-
-	private boolean informouAlgumDadoDoEndereco(UsuarioNovoVO vo) {
-		return vo.getEndereco() != null;
-	}
-
-
-
 	private boolean usuarioInformadoJaPossuiCadastro(final String email) {
 		return this.usuarioRepository.findByEmail(email) == null ? Boolean.FALSE : Boolean.TRUE;
 	}
@@ -117,4 +93,5 @@ class UsuarioService {
 	private boolean usuarioInformadoJaPossuiCadastro(final Long id) {
 		return this.usuarioRepository.findUsuarioById(id) == null ? Boolean.FALSE : Boolean.TRUE;
 	}
+	
 }

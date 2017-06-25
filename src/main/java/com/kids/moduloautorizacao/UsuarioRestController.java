@@ -24,8 +24,8 @@ import com.google.gson.GsonBuilder;
 import com.kids.exception.KidsException;
 import com.kids.model.Endereco;
 import com.kids.model.Usuario;
-import com.kids.moduloautorizacao.vo.UsuarioAtualizaVO;
-import com.kids.moduloautorizacao.vo.UsuarioNovoVO;
+import com.kids.util.HibernateProxyTypeAdapter;
+import com.kids.util.RestErroVo;
 import com.kids.util.RestUtil;
 
 /**
@@ -66,7 +66,9 @@ public class UsuarioRestController {
 				return ResponseEntity.status(CREATED).body(new Gson().toJson(u));
 			}
 		} catch (final KidsException e) {
-			return ResponseEntity.status(CONFLICT).body(e.getMessage());
+			final RestErroVo erroVo = new RestErroVo();
+			erroVo.addMessage(e.getMessage());
+			return ResponseEntity.status(CONFLICT).body(erroVo);
 		}
 	}
 
@@ -79,14 +81,16 @@ public class UsuarioRestController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
 			} else {
 				final Usuario u = this.usuarioService.updateUsuario(usuario);
-				
 				final GsonBuilder b = new GsonBuilder();
 				b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
 				final Gson gson = b.create();
 				return ResponseEntity.status(OK).body(gson.toJson(u));
 			}
 		} catch (final KidsException e) {
-			return ResponseEntity.status(CONFLICT).body(e.getMessage());
+			final RestErroVo erroVo = new RestErroVo();
+			erroVo.addMessage(e.getMessage());
+			return ResponseEntity.status(CONFLICT).body(erroVo);
 		}
 	}
+	
 }
