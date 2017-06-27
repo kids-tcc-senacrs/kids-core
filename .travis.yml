@@ -11,6 +11,6 @@ addons:
     token:
       secure: ffa2ae8a0c79b6f78b8d4feb20b6c7867f012ca0
     github_token:
-      secure: ee5dfc465f2922ec917fd56682734b213b025ee8
+      secure: 7a30b932d95f12e91b1161fcc7c02ab3ac61a998
 script:
   - sonar-scanner 
