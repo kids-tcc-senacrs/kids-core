@@ -5,12 +5,15 @@ provider: heroku
 app: kids-core
 api-key: 
 secure: AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+#configuracao sonar - inicio
 addons:
   sonarcloud:
-    organization: "kid-core"
+    organization: "kids-tcc-senacrs"
     token:
-      secure: ffa2ae8a0c79b6f78b8d4feb20b6c7867f012ca0
-    github_token:
-      secure: 7a30b932d95f12e91b1161fcc7c02ab3ac61a998
+      secure: d61de00c511ba13a119ae4efdfe315b9524f024f
+branches:
+      - master  
 script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
   - sonar-scanner 
+#configuracao sonar - final  
