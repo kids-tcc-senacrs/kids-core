@@ -13,6 +13,12 @@ import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Usuario;
 import com.kids.repository.UsuarioRepository;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 06/2017
+ *
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UsuarioServiceTest {
 
