@@ -15,7 +15,7 @@ import com.kids.repository.UsuarioRepository;
  * 
  */
 @Service
-class UsuarioService {
+public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;

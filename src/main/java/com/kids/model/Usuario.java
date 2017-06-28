@@ -65,6 +65,13 @@ public class Usuario implements Serializable {
 
 
 
+	public Usuario(final String email) {
+		super();
+		this.email = email;
+	}
+
+
+
 	public Endereco getEndereco() {
 		return endereco;
 	}

@@ -47,6 +47,22 @@ public class UsuarioNovoVO implements Serializable {
 
 
 
+	public UsuarioNovoVO() {
+		super();
+	}
+
+
+
+	public UsuarioNovoVO(final String nome, final String email, final String telefone, final TipoUsuario tipo) {
+		super();
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+		this.tipo = tipo;
+	}
+
+
+
 	public String getNome() {
 		return nome;
 	}

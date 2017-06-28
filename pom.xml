@@ -63,11 +63,32 @@
 			<version>3.5</version>
 		</dependency>
 
+		<!-- TESTE UNITARIO -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.7.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.7.0</version>
+			<scope>test</scope>
+		</dependency>
+
+
 	</dependencies>
 
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+
 
 	<build>
 		<finalName>kids-core</finalName>
@@ -75,6 +96,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.3.0.603</version>
 			</plugin>
 		</plugins>
 	</build>
