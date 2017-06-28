@@ -5,7 +5,8 @@
 
 	<groupId>com.kids</groupId>
 	<artifactId>kids</artifactId>
-	<version>1.0.0.1</version>
+	<version>1.0.0</version>
+	<name>kids-core</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
