@@ -10,7 +10,7 @@ addons:
   sonarcloud:
     organization: "kids-tcc-senacrs"
     token:
-      secure: d61de00c511ba13a119ae4efdfe315b9524f024f
+      secure: 073a9ec686440b1d8c5439b53804d188ee9b52b3
 branches:
       - master  
 script:
