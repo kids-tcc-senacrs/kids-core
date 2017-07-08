@@ -57,7 +57,7 @@ public class UsuarioRestController {
 
 
 	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createUser(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
+	public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
 		try {
 			if (RestUtil.existeErroNaRequisicao(errors)) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
@@ -75,7 +75,7 @@ public class UsuarioRestController {
 
 
 	@RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateUser(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
+	public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
 		try {
 			if (RestUtil.existeErroNaRequisicao(errors)) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
