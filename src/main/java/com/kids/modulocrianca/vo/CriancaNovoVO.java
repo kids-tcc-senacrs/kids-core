@@ -1,4 +1,4 @@
-package com.kids.modulocrianca;
+package com.kids.modulocrianca.vo;
 
 public class CriancaNovoVO extends CriancaVO {
 

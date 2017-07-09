@@ -1,4 +1,4 @@
-package com.kids.modulocrianca;
+package com.kids.modulocrianca.vo;
 
 import java.io.Serializable;
 
@@ -12,10 +12,16 @@ import com.kids.enumeration.Sexo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(description = "crianca")
-public class CriancaVO implements Serializable {
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ *
+ */
+@ApiModel(description = "geral")
+public class GeralVO implements Serializable {
 
-	private static final long serialVersionUID = 8182810973491330809L;
+	private static final long serialVersionUID = -5899955521629691704L;
 
 	@ApiModelProperty(position = 0, required = true)
 	@NotEmpty(message = "o campo 'matricula' não pode ser vazio")

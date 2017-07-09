@@ -1,4 +1,4 @@
-package com.kids.moduloautorizacao;
+package com.kids.moduloautenticacao.vo;
 
 import java.io.Serializable;
 
@@ -30,18 +30,14 @@ public class UsuarioNovoVO implements Serializable {
 	@Size(max = 60, message = "o campo 'nome' deve conter no máximo '60' caracteres")
 	private String nome;
 
-	@ApiModelProperty(position = 1, required = true)
+	@ApiModelProperty(position = 1, required = true, example = "email@email.com")
 	@Email(message = "o 'email' informado não é um endereço de email valido")
 	@NotEmpty(message = "o campo 'email' não pode ser vazio")
 	@NotNull(message = "o campo 'email' é de preenchimento obrigatório")
 	@Size(max = 255, message = "o campo 'email' deve conter no máximo '255' caracteres")
 	private String email;
 
-	@ApiModelProperty(position = 2)
-	@Size(max = 20, message = "o campo 'telefone' deve conter no máximo '20' caracteres")
-	private String telefone;
-
-	@ApiModelProperty(position = 3, required = true)
+	@ApiModelProperty(position = 2, required = true)
 	@NotNull(message = "o campo 'tipo' é de preenchimento obrigatório")
 	private TipoUsuario tipo;
 
@@ -53,11 +49,10 @@ public class UsuarioNovoVO implements Serializable {
 
 
 
-	public UsuarioNovoVO(final String nome, final String email, final String telefone, final TipoUsuario tipo) {
+	public UsuarioNovoVO(final String nome, final String email, final TipoUsuario tipo) {
 		super();
 		this.nome = nome;
 		this.email = email;
-		this.telefone = telefone;
 		this.tipo = tipo;
 	}
 
@@ -71,12 +66,6 @@ public class UsuarioNovoVO implements Serializable {
 
 	public String getEmail() {
 		return email;
-	}
-
-
-
-	public String getTelefone() {
-		return telefone;
 	}
 
 

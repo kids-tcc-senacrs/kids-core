@@ -24,11 +24,12 @@ public class CriancaRepository {
 
 
 
-	public Crianca findByMatricula(final String matricula) {
+	public Crianca findByCrecheIdAndMatricula(final Long crecheId, final String matricula) {
 		try {
-			final String hql = "select c from Crianca c left join fetch c.endereco as endereco where c.matricula= :matricula";
+			final String hql = "select crianca from Crianca crianca inner join fetch crianca.creches as creche where crianca.matricula= :matricula and creche.id= :crecheId";
 			final Query query = this.em.createQuery(hql, Crianca.class);
 			query.setParameter("matricula", StringUtils.trim(matricula));
+			query.setParameter("crecheId", crecheId);
 			return (Crianca) query.getSingleResult();
 		} catch (final Exception e) {
 			return null;

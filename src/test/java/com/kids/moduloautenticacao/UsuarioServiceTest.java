@@ -1,4 +1,4 @@
-package com.kids.moduloautorizacao;
+package com.kids.moduloautenticacao;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Usuario;
+import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
 import com.kids.repository.UsuarioRepository;
 
 /**
@@ -35,7 +36,7 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void deveGerarUsuarioJaCadastradoException_quandoTentarCadastrarMesmoUsuario() throws Exception {
-		final UsuarioNovoVO usuarioNovoVO = new UsuarioNovoVO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", "51982012911", TipoUsuario.FAMILIAR);
+		final UsuarioNovoVO usuarioNovoVO = new UsuarioNovoVO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", TipoUsuario.FAMILIAR);
 		final Usuario usuario = new Usuario(usuarioNovoVO.getEmail());
 		Mockito.when(this.usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(usuario);
 		thrown.expect(UsuarioJaCadastradoException.class);

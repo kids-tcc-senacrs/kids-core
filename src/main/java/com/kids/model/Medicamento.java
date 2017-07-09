@@ -9,10 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(name = "MEDICAMENTO", uniqueConstraints = @UniqueConstraint(columnNames = "nome", name = "UK_medicamento_nome"))
 public class Medicamento implements Serializable {
 
 	private static final long serialVersionUID = -1376527019024736261L;
@@ -23,7 +26,7 @@ public class Medicamento implements Serializable {
 	@SequenceGenerator(name = "medicamento_id_seq", sequenceName = "medicamento_id_seq", allocationSize = 1)
 	private Long id;
 
-	@Column(name = "nome", length = 40)
+	@Column(name = "nome", length = 40, unique = true)
 	private String nome;
 
 	@Column(name = "dosagem", length = 25)

@@ -4,10 +4,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.commons.lang3.StringUtils;
+import org.hibernate.FetchMode;
+import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Usuario;
 
 /**
@@ -25,14 +29,11 @@ public class UsuarioRepository {
 
 
 	public Usuario findByEmail(final String email) {
-		try {
-			final String hql = "select u from Usuario u left join fetch u.endereco as endereco where u.email = :email";
-			final Query query = this.em.createQuery(hql, Usuario.class);
-			query.setParameter("email", StringUtils.trim(email));
-			return (Usuario) query.getSingleResult();
-		} catch (final Exception e) {
-			return null;
-		}
+		final Session session = (Session) this.em.getDelegate();
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class, "u");
+		criteria.setFetchMode("u.pessoa", FetchMode.SELECT);
+		criteria.add(Restrictions.eq("u.email", email));
+		return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
 	}
 
 
@@ -47,15 +48,28 @@ public class UsuarioRepository {
 
 
 	@Transactional
-	public Usuario update(final Usuario usuario) {
+	public void update(final Usuario usuario) {
 		this.em.merge(usuario);
 		this.em.flush();
-		return usuario;
 	}
 
 
 
 	public Usuario findUsuarioById(final Long id) {
 		return this.em.find(Usuario.class, id);
+	}
+
+
+
+	public Usuario findUsuarioByIdAndTipo(final Long usuarioId, final TipoUsuario tipoUsuario) {
+		try {
+			final String hql = "select u from Usuario u where u.id = :id and u.tipo = :tipo ";
+			final Query query = this.em.createQuery(hql, Usuario.class);
+			query.setParameter("id", usuarioId);
+			query.setParameter("tipo", tipoUsuario);
+			return (Usuario) query.getSingleResult();
+		} catch (final Exception e) {
+			return null;
+		}
 	}
 }

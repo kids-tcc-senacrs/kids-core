@@ -1,4 +1,4 @@
-package com.kids.moduloautorizacao;
+package com.kids.moduloautenticacao.vo;
 
 import java.io.Serializable;
 
@@ -11,38 +11,37 @@ import org.hibernate.validator.constraints.NotEmpty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-/**
- * 
- * @author luciano - lucianoortizsilva@gmail.com
- * @since 05/2017
- * 
- */
-@ApiModel(description = "usuario")
-public class UsuarioAtualizaVO implements Serializable {
+@ApiModel(description = "pessoa")
+public class PessoaVO implements Serializable {
 
-	private static final long serialVersionUID = -4250740341959384029L;
+	private static final long serialVersionUID = 8431408036874215703L;
 
 	@ApiModelProperty(position = 0, required = true)
-	@NotNull(message = "o campo 'id' é de preenchimento obrigatório")
-	private Long id;
-
-	@ApiModelProperty(position = 1, required = true)
-	@NotEmpty(message = "o campo 'telefone' não pode ser vazio")
-	@NotNull(message = "o campo 'telefone' é de preenchimento obrigatório")
-	@Size(min = 8, max = 20, message = "o campo 'telefone' deve conter entre '8 e 20' caracteres")
-	private String telefone;
-
-	@ApiModelProperty(position = 2)
-	private boolean ativo;
+	@NotEmpty(message = "o campo 'nome' não pode ser vazio")
+	@NotNull(message = "o campo 'nome' é de preenchimento obrigatório")
+	@Size(max = 60, message = "o campo 'nome' deve conter no máximo '60' caracteres")
+	private String nome;
 
 	@Valid
-	@ApiModelProperty(position = 3, required = true)
+	@ApiModelProperty(position = 1, required = true)
 	private EnderecoVO endereco;
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public EnderecoVO getEndereco() {
+		return endereco;
+	}
 
 	@ApiModel(description = "endereco")
 	public class EnderecoVO {
 
-		@ApiModelProperty(position = 0, required = true)
+		@ApiModelProperty(position = 0, required = true, example = "12345678")
 		@NotEmpty(message = "o campo 'cep' não pode ser vazio")
 		@NotNull(message = "o campo 'cep' é de preenchimento obrigatório")
 		@Size(min = 8, max = 8, message = "o campo 'cep' deve conter '8' caracteres")
@@ -78,29 +77,4 @@ public class UsuarioAtualizaVO implements Serializable {
 			return localizacao;
 		}
 	}
-
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-
-
-	public EnderecoVO getEndereco() {
-		return endereco;
-	}
-	
 }

@@ -1,4 +1,4 @@
-package com.kids.moduloautorizacao;
+package com.kids.moduloautenticacao;
 
 import com.kids.exception.KidsException;
 

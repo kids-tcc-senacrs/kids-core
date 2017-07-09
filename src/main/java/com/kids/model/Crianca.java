@@ -73,6 +73,9 @@ public class Crianca implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Collection<Alergia> alergias;
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Collection<Creche> creches;
+
 
 
 	public Crianca() {
@@ -197,5 +200,11 @@ public class Crianca implements Serializable {
 
 	public void setAlergias(final Collection<Alergia> alergias) {
 		this.alergias = alergias;
+	}
+
+
+
+	public Collection<Creche> getCreches() {
+		return creches;
 	}
 }

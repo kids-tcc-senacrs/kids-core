@@ -26,7 +26,7 @@ import com.kids.enumeration.TipoUsuario;
  * 
  */
 @Entity
-@Table(name = "USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "email", name = "UK_usuario_email"))
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = -2561353904338124908L;
@@ -37,8 +37,9 @@ public class Usuario implements Serializable {
 	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize = 1)
 	private Long id;
 
-	@Column(name = "nome", nullable = false, length = 60)
-	private String nome;
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "pessoa_id", nullable = false)
+	private Pessoa pessoa;
 
 	@Column(name = "email", nullable = false, unique = true, length = 255)
 	private String email;
@@ -53,14 +54,11 @@ public class Usuario implements Serializable {
 	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "id_endereco")
-	private Endereco endereco;
-
 
 
 	public Usuario() {
 		super();
+		this.setPessoa(new Pessoa());
 	}
 
 
@@ -72,20 +70,26 @@ public class Usuario implements Serializable {
 
 
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-
-
 	public Long getId() {
 		return id;
+	}
+
+
+
+	public void setId(final Long id) {
+		this.id = id;
+	}
+
+
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+
+
+	public void setPessoa(final Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 
@@ -104,18 +108,6 @@ public class Usuario implements Serializable {
 
 	public String getTelefone() {
 		return telefone;
-	}
-
-
-
-	public String getNome() {
-		return nome;
-	}
-
-
-
-	public void setNome(final String nome) {
-		this.nome = nome;
 	}
 
 
@@ -144,7 +136,7 @@ public class Usuario implements Serializable {
 
 
 
-	public void setAtivo(final Boolean ativo) {
+	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.kids.exception.KidsException;
 import com.kids.model.Crianca;
+import com.kids.modulocrianca.vo.CriancaVO;
 import com.kids.util.RestErroVo;
 import com.kids.util.RestUtil;
 

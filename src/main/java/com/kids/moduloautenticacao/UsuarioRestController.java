@@ -1,4 +1,4 @@
-package com.kids.moduloautorizacao;
+package com.kids.moduloautenticacao;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -24,6 +24,8 @@ import com.google.gson.GsonBuilder;
 import com.kids.exception.KidsException;
 import com.kids.model.Endereco;
 import com.kids.model.Usuario;
+import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
+import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
 import com.kids.util.HibernateProxyTypeAdapter;
 import com.kids.util.RestErroVo;
 import com.kids.util.RestUtil;
@@ -46,12 +48,14 @@ public class UsuarioRestController {
 	@RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
 		final Usuario usuario = this.usuarioService.findUserByEmail(email);
-		if (usuario != null && usuario.getEndereco() == null) {
-			usuario.setEndereco(new Endereco());
+		if (usuario != null && usuario.getPessoa().getEndereco() == null) {
+			usuario.getPessoa().setEndereco(new Endereco());
 		}
-		final String gson = new Gson().toJson(usuario);
+		final GsonBuilder b = new GsonBuilder();
+		b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
+		final Gson gson = b.create();
 		final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-		return ResponseEntity.status(httpStatus).body(gson);
+		return ResponseEntity.status(httpStatus).body(gson.toJson(usuario));
 	}
 
 
@@ -92,5 +96,4 @@ public class UsuarioRestController {
 			return ResponseEntity.status(CONFLICT).body(erroVo);
 		}
 	}
-	
 }
