@@ -66,7 +66,7 @@ public class UsuarioRestController {
 			if (RestUtil.existeErroNaRequisicao(errors)) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
 			} else {
-				final Usuario u = this.usuarioService.createUsuario(usuario);
+				final Usuario u = this.usuarioService.saveUsuario(usuario);
 				return ResponseEntity.status(CREATED).body(new Gson().toJson(u));
 			}
 		} catch (final KidsException e) {

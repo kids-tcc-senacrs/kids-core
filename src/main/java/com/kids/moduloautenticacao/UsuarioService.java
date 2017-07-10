@@ -24,7 +24,7 @@ public class UsuarioService {
 
 
 
-	Usuario createUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
+	Usuario saveUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
 		if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
 			throw new UsuarioJaCadastradoException();
 		final Usuario usuario = this.create(vo);
