@@ -2,7 +2,6 @@ package com.kids.repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kids.enumeration.TipoUsuario;
+import com.kids.model.Creche;
+import com.kids.model.Familia;
 import com.kids.model.Usuario;
 
 /**
@@ -41,6 +42,11 @@ public class UsuarioRepository {
 	@Transactional
 	public Usuario save(final Usuario usuario) {
 		this.em.persist(usuario);
+		if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+			this.em.persist(new Creche(usuario.getPessoa()));
+		} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+			this.em.persist(new Familia(usuario.getPessoa()));
+		}
 		this.em.flush();
 		return usuario;
 	}
@@ -62,14 +68,10 @@ public class UsuarioRepository {
 
 
 	public Usuario findUsuarioByIdAndTipo(final Long usuarioId, final TipoUsuario tipoUsuario) {
-		try {
-			final String hql = "select u from Usuario u where u.id = :id and u.tipo = :tipo ";
-			final Query query = this.em.createQuery(hql, Usuario.class);
-			query.setParameter("id", usuarioId);
-			query.setParameter("tipo", tipoUsuario);
-			return (Usuario) query.getSingleResult();
-		} catch (final Exception e) {
-			return null;
-		}
+		final Session session = (Session) this.em.getDelegate();
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class);
+		criteria.add(Restrictions.eq("id", usuarioId));
+		criteria.add(Restrictions.eq("tipo", tipoUsuario));
+		return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
 	}
 }

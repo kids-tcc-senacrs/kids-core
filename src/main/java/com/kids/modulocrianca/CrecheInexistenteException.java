@@ -17,8 +17,7 @@ public class CrecheInexistenteException extends KidsException {
 
 
 
-	public CrecheInexistenteException(final Long id) {
-		super(MessageUtil.getMessage(MESSAGE, id));
+	public CrecheInexistenteException() {
+		super(MessageUtil.getMessage(MESSAGE));
 	}
-	
 }

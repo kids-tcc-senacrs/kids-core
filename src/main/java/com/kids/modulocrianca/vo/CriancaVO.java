@@ -8,6 +8,12 @@ import javax.validation.Valid;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @ApiModel(description = "crianca")
 public class CriancaVO implements Serializable {
 

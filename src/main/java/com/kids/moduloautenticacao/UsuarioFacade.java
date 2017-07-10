@@ -7,6 +7,12 @@ import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Usuario;
 import com.kids.repository.UsuarioRepository;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @Service
 public class UsuarioFacade {
 

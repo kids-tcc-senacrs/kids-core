@@ -9,10 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @Entity
-@Table(name = "ALERGIA", uniqueConstraints = @UniqueConstraint(columnNames = "descricao", name = "UK_alergia_descricao"))
+@Table(name = "ALERGIA")
 public class Alergia implements Serializable {
 
 	private static final long serialVersionUID = 8433449795250662499L;

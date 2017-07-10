@@ -1,6 +1,7 @@
 package com.kids.moduloautenticacao;
 
 import com.kids.exception.KidsException;
+import com.kids.util.MessageUtil;
 
 /**
  * 
@@ -12,9 +13,11 @@ class UsuarioJaCadastradoException extends KidsException {
 
 	private static final long serialVersionUID = 4751839521260932314L;
 
+	private static final String MESSAGE = "message_usuarioJaCadastradoException";
+
 
 
 	UsuarioJaCadastradoException() {
-		super("O usuário informado já possui cadastro!");
+		super(MessageUtil.getMessage(MESSAGE));
 	}
 }

@@ -5,6 +5,12 @@ import java.util.Map;
 
 import com.kids.modulocrianca.vo.AlergiaVO;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ *
+ */
 public class ValidaAlergiaAdicionada {
 
 	private Map<Integer, String> alergias = new HashMap<>();

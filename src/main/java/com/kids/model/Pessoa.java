@@ -14,6 +14,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @Entity
 @Table(name = "PESSOA")
 public class Pessoa implements Serializable {

@@ -3,21 +3,24 @@ package com.kids.modulocrianca;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kids.enumeration.TipoUsuario;
 import com.kids.exception.KidsException;
 import com.kids.model.Alergia;
 import com.kids.model.Contato;
+import com.kids.model.Creche;
 import com.kids.model.Crianca;
 import com.kids.model.Endereco;
 import com.kids.model.Medicamento;
-import com.kids.moduloautenticacao.UsuarioFacade;
+import com.kids.modulocreche.CrecheFacade;
 import com.kids.modulocrianca.vo.AlergiaVO;
+import com.kids.modulocrianca.vo.CrecheVo;
 import com.kids.modulocrianca.vo.CriancaVO;
 import com.kids.modulocrianca.vo.MedicamentoVO;
 import com.kids.repository.CriancaRepository;
@@ -26,7 +29,7 @@ import com.kids.repository.CriancaRepository;
 public class CriancaService {
 
 	@Autowired
-	private UsuarioFacade usuarioFacade;
+	private CrecheFacade crecheFacade;
 
 	@Autowired
 	private CriancaRepository criancaRepository;
@@ -41,24 +44,16 @@ public class CriancaService {
 
 
 	private void beforeSave(final CriancaVO vo) throws KidsException {
-		this.validarCrecheCadastrada(vo.getCreche().getId());
-		this.validarMatriculaDuplicada(vo.getCreche().getId(), vo.getGeral().getMatricula());
+		final Creche creche = this.crecheFacade.get(vo.getCreche().getId());
+		this.validarCrecheCadastrada(creche);
 		this.validarAlergiaDuplicada(vo.getAlergias());
 	}
 
 
 
-	private void validarCrecheCadastrada(final Long id) throws CrecheInexistenteException {
-		if (this.usuarioFacade.getUsuario(id, TipoUsuario.CRECHE) == null) {
-			throw new CrecheInexistenteException(id);
-		}
-	}
-
-
-
-	private void validarMatriculaDuplicada(final Long crecheId, final String matricula) throws CriancaJaCadastradaException {
-		if (this.criancaInformadaJaPossuiCadastro(crecheId, matricula)) {
-			throw new CriancaJaCadastradaException(matricula);
+	private void validarCrecheCadastrada(final Creche creche) throws CrecheInexistenteException {
+		if (creche == null) {
+			throw new CrecheInexistenteException();
 		}
 	}
 
@@ -81,24 +76,42 @@ public class CriancaService {
 		crianca.setNome(criancaVO.getGeral().getNome());
 		crianca.setSexo(criancaVO.getGeral().getSexo());
 		crianca.setDtNascimento(new Date());// TODO: CONVERTER DATE
+		
 		final Endereco endereco = new Endereco();
 		endereco.setCep(criancaVO.getEndereco().getCep());
 		endereco.setLogradouro(criancaVO.getEndereco().getLogradouro());
 		endereco.setLocalizacao(criancaVO.getEndereco().getLocalizacao());
+		
 		final Contato contato = new Contato();
 		contato.setResponsavel(criancaVO.getContato().getResponsavel());
 		contato.setEmail(criancaVO.getContato().getEmail());
 		contato.setFonePrincipal(criancaVO.getContato().getFonePrincipal());
 		contato.setFoneOutro(criancaVO.getContato().getFoneOutro());
-		final Collection<Medicamento> medicamentos = new ArrayList<>();
+		
+		final Set<Medicamento> medicamentos = new HashSet<>();
 		medicamentos.addAll(this.createMedicamentos(criancaVO.getMedicamentos()));
-		final Collection<Alergia> alergias = new ArrayList<>();
+		
+		final Set<Creche> creches = new HashSet<>();
+		creches.addAll(this.createCreches(criancaVO.getCreche()));
+		
+		final Set<Alergia> alergias = new HashSet<>();
 		alergias.addAll(this.createAlergias(criancaVO.getAlergias()));
+		
 		crianca.setEndereco(endereco);
 		crianca.setContato(contato);
 		crianca.setMedicamentos(medicamentos);
 		crianca.setAlergias(alergias);
+		crianca.setCreches(creches);
+		
 		return crianca;
+	}
+
+
+
+	private Collection<Creche> createCreches(final CrecheVo creche) {
+		final List<Creche> creches = new ArrayList<>();
+		creches.add(this.crecheFacade.get(creche.getId()));
+		return creches;
 	}
 
 
@@ -130,11 +143,5 @@ public class CriancaService {
 			});
 		}
 		return medicamentos;
-	}
-
-
-
-	private boolean criancaInformadaJaPossuiCadastro(final Long crecheId, final String matricula) {
-		return this.criancaRepository.findByCrecheIdAndMatricula(crecheId, matricula) == null ? Boolean.FALSE : Boolean.TRUE;
 	}
 }

@@ -7,6 +7,12 @@ import javax.validation.constraints.Size;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @ApiModel(description = "alergia")
 public class AlergiaVO implements Serializable {
 

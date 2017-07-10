@@ -11,6 +11,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @ApiModel(description = "pessoa")
 public class PessoaVO implements Serializable {
 

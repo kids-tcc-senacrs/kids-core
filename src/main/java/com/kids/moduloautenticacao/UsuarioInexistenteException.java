@@ -1,6 +1,7 @@
 package com.kids.moduloautenticacao;
 
 import com.kids.exception.KidsException;
+import com.kids.util.MessageUtil;
 
 /**
  * 
@@ -12,10 +13,11 @@ class UsuarioInexistenteException extends KidsException {
 
 	private static final long serialVersionUID = 5478545470932314L;
 
+	private static final String MESSAGE = "message_usuarioInexistenteException";
+
 
 
 	UsuarioInexistenteException() {
-		super("O usuário informado 'NÃO' possui cadastro!");
+		super(MessageUtil.getMessage(MESSAGE));
 	}
-	
 }

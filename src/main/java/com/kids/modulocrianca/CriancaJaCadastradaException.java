@@ -17,7 +17,7 @@ class CriancaJaCadastradaException extends KidsException {
 
 
 
-	public CriancaJaCadastradaException(final String matricula) {
-		super(MessageUtil.getMessage(MESSAGE, matricula));
+	public CriancaJaCadastradaException() {
+		super(MessageUtil.getMessage(MESSAGE));
 	}
 }

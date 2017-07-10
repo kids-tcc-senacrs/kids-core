@@ -12,10 +12,15 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @Entity
-@Table(name = "MEDICAMENTO", uniqueConstraints = @UniqueConstraint(columnNames = "nome", name = "UK_medicamento_nome"))
+@Table(name = "MEDICAMENTO")
 public class Medicamento implements Serializable {
 
 	private static final long serialVersionUID = -1376527019024736261L;
@@ -26,7 +31,7 @@ public class Medicamento implements Serializable {
 	@SequenceGenerator(name = "medicamento_id_seq", sequenceName = "medicamento_id_seq", allocationSize = 1)
 	private Long id;
 
-	@Column(name = "nome", length = 40, unique = true)
+	@Column(name = "nome", length = 40)
 	private String nome;
 
 	@Column(name = "dosagem", length = 25)

@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.kids.model.Crianca;
+import com.kids.model.Creche;
 
 /**
  * 
@@ -15,18 +14,14 @@ import com.kids.model.Crianca;
  * 
  */
 @Repository
-public class CriancaRepository {
+public class CrecheRepository {
 
 	@PersistenceContext
 	private EntityManager em;
 
 
 
-	@Transactional
-	public Crianca save(final Crianca crianca) {
-		this.em.persist(crianca);
-		this.em.flush();
-		return crianca;
+	public Creche find(final Long id) {
+		return this.em.find(Creche.class, id);
 	}
-	
 }

@@ -1,8 +1,8 @@
 package com.kids.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,13 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 import com.kids.enumeration.Sexo;
 
@@ -31,7 +32,7 @@ import com.kids.enumeration.Sexo;
  * 
  */
 @Entity
-@Table(name = "CRIANCA", uniqueConstraints = @UniqueConstraint(columnNames = "matricula"))
+@Table(name = "CRIANCA")
 public class Crianca implements Serializable {
 
 	private static final long serialVersionUID = -5831956911955418351L;
@@ -41,9 +42,6 @@ public class Crianca implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "crianca_id_seq")
 	@SequenceGenerator(name = "crianca_id_seq", sequenceName = "crianca_id_seq", allocationSize = 1)
 	private Long id;
-
-	@Column(name = "matricula", nullable = false, length = 10, unique = true)
-	private String matricula;
 
 	@Column(name = "nome", nullable = false, length = 60)
 	private String nome;
@@ -55,6 +53,9 @@ public class Crianca implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "sexo", nullable = false)
 	private Sexo sexo;
+
+	@Column(name = "matricula", length = 10)
+	private String matricula;
 
 	@Column(name = "foto")
 	private String foto;
@@ -68,19 +69,16 @@ public class Crianca implements Serializable {
 	private Contato contato;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Collection<Medicamento> medicamentos;
+	@JoinTable(name = "CRIANCA_MEDICAMENTO", joinColumns = @JoinColumn(name = "id_crianca",  table ="CRIANCA"), inverseJoinColumns = @JoinColumn(name = "id_medicamento",  table="MEDICAMENTO"))
+	private Set<Medicamento> medicamentos;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Collection<Alergia> alergias;
+	@JoinTable(name = "CRIANCA_ALERGIA", joinColumns = @JoinColumn(name = "id_crianca",  table = "CRIANCA"), inverseJoinColumns = @JoinColumn(name = "id_alergia", table = "ALERGIA"))
+	private Set<Alergia> alergias;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Collection<Creche> creches;
-
-
-
-	public Crianca() {
-		super();
-	}
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "CRIANCA_CRECHE", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA"), inverseJoinColumns = @JoinColumn(name = "id_creche", table = "CRECHE"))
+	private Set<Creche> creches;
 
 
 
@@ -92,18 +90,6 @@ public class Crianca implements Serializable {
 
 	public void setId(final Long id) {
 		this.id = id;
-	}
-
-
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-
-
-	public void setMatricula(final String matricula) {
-		this.matricula = matricula;
 	}
 
 
@@ -144,13 +130,25 @@ public class Crianca implements Serializable {
 
 
 
+	public String getMatricula() {
+		return matricula;
+	}
+
+
+
+	public void setMatricula(final String matricula) {
+		this.matricula = matricula;
+	}
+
+
+
 	public String getFoto() {
 		return foto;
 	}
 
 
 
-	public void setFoto(final String foto) {
+	public void setFoto(String foto) {
 		this.foto = foto;
 	}
 
@@ -180,31 +178,37 @@ public class Crianca implements Serializable {
 
 
 
-	public Collection<Medicamento> getMedicamentos() {
+	public Set<Medicamento> getMedicamentos() {
 		return medicamentos;
 	}
 
 
 
-	public void setMedicamentos(final Collection<Medicamento> medicamentos) {
+	public void setMedicamentos(final Set<Medicamento> medicamentos) {
 		this.medicamentos = medicamentos;
 	}
 
 
 
-	public Collection<Alergia> getAlergias() {
+	public Set<Alergia> getAlergias() {
 		return alergias;
 	}
 
 
 
-	public void setAlergias(final Collection<Alergia> alergias) {
+	public void setAlergias(final Set<Alergia> alergias) {
 		this.alergias = alergias;
 	}
 
 
 
-	public Collection<Creche> getCreches() {
+	public Set<Creche> getCreches() {
 		return creches;
+	}
+
+
+
+	public void setCreches(final Set<Creche> creches) {
+		this.creches = creches;
 	}
 }

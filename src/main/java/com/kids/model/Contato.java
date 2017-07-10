@@ -8,8 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 07/2017
+ * 
+ */
 @Entity
+@Table(name = "CONTATO")
 public class Contato implements Serializable {
 
 	private static final long serialVersionUID = 6705004934597445605L;
