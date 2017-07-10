@@ -1,6 +1,7 @@
 package com.kids.util;
 
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 
 import com.google.gson.Gson;
 
@@ -19,16 +20,14 @@ public class RestUtil {
 		return false;
 	}
 
-
-
 	public static String getErros(final Errors errors) {
 		final RestErroVo restErroVo = new RestErroVo();
 		if (errors.hasErrors()) {
-			errors.getAllErrors().forEach(e -> {
+			for (final ObjectError e : errors.getAllErrors()) {
 				restErroVo.addMessage(e.getDefaultMessage());
-			});
+			}
 		}
 		return new Gson().toJson(restErroVo);
 	}
-	
+
 }
