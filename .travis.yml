@@ -15,4 +15,5 @@ branches:
       - master  
 script:
   - sonar-scanner 
+  - mvn clean package -Pcoverage
 #configuracao sonar - final  
