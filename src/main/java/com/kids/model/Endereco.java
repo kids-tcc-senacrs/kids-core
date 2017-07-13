@@ -4,11 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * 
@@ -24,9 +28,13 @@ public class Endereco implements Serializable {
 
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_id_seq")
-	@SequenceGenerator(name = "endereco_id_seq", sequenceName = "endereco_id_seq", allocationSize = 1)
+	@GeneratedValue(generator = "sequenceEndereco", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "sequenceEndereco", allocationSize = 1)
 	private Long id;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_pessoa", foreignKey = @ForeignKey(name = "FK_pessoa"))
+	private Pessoa pessoa;
 
 	@Column(name = "cep", length = 8, nullable = false)
 	private String cep;
@@ -53,6 +61,18 @@ public class Endereco implements Serializable {
 
 	public void setId(final Long id) {
 		this.id = id;
+	}
+
+
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+
+
+	public void setPessoa(final Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 

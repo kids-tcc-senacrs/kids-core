@@ -8,14 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.TableGenerator;
 
 import com.kids.enumeration.TipoUsuario;
 
@@ -26,19 +26,19 @@ import com.kids.enumeration.TipoUsuario;
  * 
  */
 @Entity
-@Table(name = "USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "email", name = "UK_usuario_email"))
+@Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = -2561353904338124908L;
 
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_id_seq")
-	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize = 1)
+	@GeneratedValue(generator = "sequenceUsuario", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "sequenceUsuario", allocationSize = 1)
 	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "pessoa_id", nullable = false)
+	@JoinColumn(name = "id_pessoa", nullable = false, foreignKey = @ForeignKey(name = "FK_pessoa"))
 	private Pessoa pessoa;
 
 	@Column(name = "email", nullable = false, unique = true, length = 255)

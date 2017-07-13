@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +19,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -39,8 +40,8 @@ public class Crianca implements Serializable {
 
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "crianca_id_seq")
-	@SequenceGenerator(name = "crianca_id_seq", sequenceName = "crianca_id_seq", allocationSize = 1)
+	@GeneratedValue(generator = "sequenceCrianca", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "sequenceCrianca", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "nome", nullable = false, length = 60)
@@ -61,23 +62,23 @@ public class Crianca implements Serializable {
 	private String foto;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "endereco_id")
+	@JoinColumn(name = "endereco_id", foreignKey = @ForeignKey(name = "FK_endereco"))
 	private Endereco endereco;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "contato_id")
+	@JoinColumn(name = "contato_id", foreignKey = @ForeignKey(name = "FK_contato"))
 	private Contato contato;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "CRIANCA_MEDICAMENTO", joinColumns = @JoinColumn(name = "id_crianca",  table ="CRIANCA"), inverseJoinColumns = @JoinColumn(name = "id_medicamento",  table="MEDICAMENTO"))
+	@JoinTable(name = "CRIANCA_MEDICAMENTO", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_medicamento", table = "MEDICAMENTO", foreignKey = @ForeignKey(name = "FK_medicamento")))
 	private Set<Medicamento> medicamentos;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "CRIANCA_ALERGIA", joinColumns = @JoinColumn(name = "id_crianca",  table = "CRIANCA"), inverseJoinColumns = @JoinColumn(name = "id_alergia", table = "ALERGIA"))
+	@JoinTable(name = "CRIANCA_ALERGIA", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_alergia", table = "ALERGIA", foreignKey = @ForeignKey(name = "FK_alergia")))
 	private Set<Alergia> alergias;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "CRIANCA_CRECHE", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA"), inverseJoinColumns = @JoinColumn(name = "id_creche", table = "CRECHE"))
+	@JoinTable(name = "CRIANCA_CRECHE", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_creche", table = "CRECHE", foreignKey = @ForeignKey(name = "FK_creche")))
 	private Set<Creche> creches;
 
 

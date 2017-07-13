@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * 
@@ -24,8 +24,8 @@ public class Contato implements Serializable {
 
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contato_id_seq")
-	@SequenceGenerator(name = "contato_id_seq", sequenceName = "contato_id_seq", allocationSize = 1)
+	@GeneratedValue(generator = "sequenceContato", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "sequenceContato", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "responsavel", nullable = false, length = 60)

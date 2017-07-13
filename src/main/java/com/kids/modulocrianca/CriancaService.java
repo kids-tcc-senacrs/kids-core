@@ -1,5 +1,6 @@
 package com.kids.modulocrianca;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -34,10 +35,14 @@ public class CriancaService {
 	@Autowired
 	private CriancaRepository criancaRepository;
 
+
+
 	Crianca save(final CriancaVO vo) throws KidsException {
 		this.beforeSave(vo);
 		return this.criancaRepository.save(this.create(vo));
 	}
+
+
 
 	private void beforeSave(final CriancaVO vo) throws KidsException {
 		final Creche creche = this.crecheFacade.get(vo.getCreche().getId());
@@ -45,11 +50,15 @@ public class CriancaService {
 		this.validarAlergiaDuplicada(vo.getAlergias());
 	}
 
+
+
 	private void validarCrecheCadastrada(final Creche creche) throws CrecheInexistenteException {
 		if (creche == null) {
 			throw new CrecheInexistenteException();
 		}
 	}
+
+
 
 	private void validarAlergiaDuplicada(final List<AlergiaVO> alergias) throws AlergiaDuplicadaException {
 		if (CollectionUtils.isNotEmpty(alergias)) {
@@ -60,41 +69,38 @@ public class CriancaService {
 		}
 	}
 
+
+
 	private Crianca create(final CriancaVO criancaVO) {
 		final Crianca crianca = new Crianca();
 		crianca.setMatricula(criancaVO.getGeral().getMatricula());
 		crianca.setNome(criancaVO.getGeral().getNome());
 		crianca.setSexo(criancaVO.getGeral().getSexo());
 		crianca.setDtNascimento(new Date());// TODO: CONVERTER DATE
-
 		final Endereco endereco = new Endereco();
 		endereco.setCep(criancaVO.getEndereco().getCep());
 		endereco.setLogradouro(criancaVO.getEndereco().getLogradouro());
 		endereco.setLocalizacao(criancaVO.getEndereco().getLocalizacao());
-
 		final Contato contato = new Contato();
 		contato.setResponsavel(criancaVO.getContato().getResponsavel());
 		contato.setEmail(criancaVO.getContato().getEmail());
 		contato.setFonePrincipal(criancaVO.getContato().getFonePrincipal());
 		contato.setFoneOutro(criancaVO.getContato().getFoneOutro());
-
 		final Set<Medicamento> medicamentos = new HashSet<>();
 		medicamentos.addAll(this.createMedicamentos(criancaVO.getMedicamentos()));
-
 		final Set<Creche> creches = new HashSet<>();
 		creches.addAll(this.createCreches(criancaVO.getCreche()));
-
 		final Set<Alergia> alergias = new HashSet<>();
 		alergias.addAll(this.createAlergias(criancaVO.getAlergias()));
-
 		crianca.setEndereco(endereco);
 		crianca.setContato(contato);
 		crianca.setMedicamentos(medicamentos);
 		crianca.setAlergias(alergias);
 		crianca.setCreches(creches);
-
 		return crianca;
 	}
+
+
 
 	private Collection<Creche> createCreches(final CrecheVo creche) {
 		final List<Creche> creches = new ArrayList<>();
@@ -102,29 +108,33 @@ public class CriancaService {
 		return creches;
 	}
 
+
+
 	private Collection<Alergia> createAlergias(final List<AlergiaVO> alergiasVO) {
 		final List<Alergia> alergias = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(alergiasVO)) {
-			for (final Alergia a : alergias) {
+			alergias.forEach(a -> {
 				final Alergia alergia = new Alergia();
 				alergia.setDescricao(a.getDescricao());
 				alergias.add(alergia);
-			}
+			});
 		}
 		return alergias;
 	}
 
+
+
 	private Collection<Medicamento> createMedicamentos(final List<MedicamentoVO> medicamentosVO) {
 		final List<Medicamento> medicamentos = new ArrayList<>();
 		if (CollectionUtils.isNotEmpty(medicamentosVO)) {
-			for (final MedicamentoVO m : medicamentosVO) {
+			medicamentosVO.forEach(m -> {
 				final Medicamento medicamento = new Medicamento();
 				medicamento.setNome(m.getNome());
 				medicamento.setDosagem(m.getDosagem());
 				medicamento.setIntervaloHoras(m.getIntervaloHoras());
-				medicamento.setDtFinal(new Date());// TODO: CONVERTER DATE
+				medicamento.setDtFinal(LocalDate.now());// TODO: CONVERTER DATE
 				medicamentos.add(medicamento);
-			}
+			});
 		}
 		return medicamentos;
 	}

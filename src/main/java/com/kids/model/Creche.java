@@ -5,14 +5,14 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.TableGenerator;
 
 /**
  * 
@@ -21,19 +21,19 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "CRECHE", uniqueConstraints = @UniqueConstraint(columnNames = { "id_pessoa" }, name = "UK_creche"))
+@Table(name = "CRECHE")
 public class Creche implements Serializable {
 
 	private static final long serialVersionUID = 8164369067802692420L;
 
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "creche_id_seq")
-	@SequenceGenerator(name = "creche_id_seq", sequenceName = "creche_id_seq", allocationSize = 1)
+	@GeneratedValue(generator = "sequenceCreche", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "sequenceCreche", allocationSize = 1)
 	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_pessoa", nullable = false, unique = true)
+	@JoinColumn(name = "id_pessoa", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_pessoa"))
 	private Pessoa pessoa;
 
 

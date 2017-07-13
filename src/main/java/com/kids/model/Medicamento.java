@@ -1,17 +1,15 @@
 package com.kids.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.TableGenerator;
 
 /**
  * 
@@ -27,8 +25,8 @@ public class Medicamento implements Serializable {
 
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicamento_id_seq")
-	@SequenceGenerator(name = "medicamento_id_seq", sequenceName = "medicamento_id_seq", allocationSize = 1)
+	@GeneratedValue(generator = "sequenceMedicamento", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "sequenceMedicamento", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "nome", length = 40)
@@ -40,9 +38,8 @@ public class Medicamento implements Serializable {
 	@Column(name = "intervalo_horas", length = 10)
 	private String intervaloHoras;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dt_final")
-	private Date dtFinal;
+	private LocalDate dtFinal;
 
 
 
@@ -100,13 +97,14 @@ public class Medicamento implements Serializable {
 
 
 
-	public Date getDtFinal() {
+	public LocalDate getDtFinal() {
 		return dtFinal;
 	}
 
 
 
-	public void setDtFinal(final Date dtFinal) {
+	public void setDtFinal(final LocalDate dtFinal) {
 		this.dtFinal = dtFinal;
 	}
+	
 }
