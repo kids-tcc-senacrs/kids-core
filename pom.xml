@@ -111,6 +111,11 @@
 						<format>html</format>
 						<format>xml</format>
 					</formats>
+					<instrumentation>
+						<excludes>
+							<exclude>com/kids/model/*.class</exclude>
+						</excludes>
+					</instrumentation>
 				</configuration>
 			</plugin>
 			<plugin>
