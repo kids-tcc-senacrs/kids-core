@@ -69,11 +69,11 @@ public class Crianca implements Serializable {
 	@JoinColumn(name = "contato_id", foreignKey = @ForeignKey(name = "FK_contato"))
 	private Contato contato;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinTable(name = "CRIANCA_MEDICAMENTO", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_medicamento", table = "MEDICAMENTO", foreignKey = @ForeignKey(name = "FK_medicamento")))
 	private Set<Medicamento> medicamentos;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinTable(name = "CRIANCA_ALERGIA", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_alergia", table = "ALERGIA", foreignKey = @ForeignKey(name = "FK_alergia")))
 	private Set<Alergia> alergias;
 

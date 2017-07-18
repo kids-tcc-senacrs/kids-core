@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.kids.exception.KidsException;
 import com.kids.model.Endereco;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
 import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
-import com.kids.util.HibernateProxyTypeAdapter;
+import com.kids.util.JsonUtil;
 import com.kids.util.RestErroVo;
 import com.kids.util.RestUtil;
 
@@ -51,11 +50,8 @@ public class UsuarioRestController {
 		if (usuario != null && usuario.getPessoa().getEndereco() == null) {
 			usuario.getPessoa().setEndereco(new Endereco());
 		}
-		final GsonBuilder b = new GsonBuilder();
-		b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
-		final Gson gson = b.create();
 		final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-		return ResponseEntity.status(httpStatus).body(gson.toJson(usuario));
+		return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(usuario));
 	}
 
 
@@ -85,10 +81,7 @@ public class UsuarioRestController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
 			} else {
 				final Usuario u = this.usuarioService.updateUsuario(usuario);
-				final GsonBuilder b = new GsonBuilder();
-				b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
-				final Gson gson = b.create();
-				return ResponseEntity.status(OK).body(gson.toJson(u));
+				return ResponseEntity.status(OK).body(JsonUtil.convertToJson(u));
 			}
 		} catch (final KidsException e) {
 			final RestErroVo erroVo = new RestErroVo();

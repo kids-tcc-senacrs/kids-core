@@ -2,8 +2,10 @@ package com.kids.modulocrianca;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import javax.validation.Valid;
 
@@ -15,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.kids.exception.KidsException;
 import com.kids.model.Crianca;
-import com.kids.modulocrianca.vo.CriancaVO;
-import com.kids.util.HibernateProxyTypeAdapter;
+import com.kids.modulocrianca.vo.CriancaAtualizaVO;
+import com.kids.modulocrianca.vo.CriancaNovoVO;
+import com.kids.util.JsonUtil;
 import com.kids.util.RestErroVo;
 import com.kids.util.RestUtil;
 
@@ -40,16 +41,13 @@ public class CriancaRestController {
 
 
 	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaVO criancaVO, final Errors errors) {
+	public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
 		try {
 			if (RestUtil.existeErroNaRequisicao(errors)) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
 			} else {
-				final Crianca c = this.criancaService.save(criancaVO);
-				final GsonBuilder b = new GsonBuilder();
-				b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
-				final Gson gson = b.create();
-				return ResponseEntity.status(CREATED).body(gson.toJson(c));
+				final Crianca c = this.criancaService.save(criancaNovoVO);
+				return ResponseEntity.status(CREATED).body(JsonUtil.convertToJson(c));
 			}
 		} catch (final KidsException e) {
 			final RestErroVo erroVo = new RestErroVo();
@@ -57,4 +55,23 @@ public class CriancaRestController {
 			return ResponseEntity.status(CONFLICT).body(erroVo);
 		}
 	}
+
+
+
+	@RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
+		try {
+			if (RestUtil.existeErroNaRequisicao(errors)) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
+			} else {
+				final Crianca c = this.criancaService.update(criancaAtualizaVO);
+				return ResponseEntity.status(OK).body(JsonUtil.convertToJson(c));
+			}
+		} catch (final KidsException e) {
+			final RestErroVo erroVo = new RestErroVo();
+			erroVo.addMessage(e.getMessage());
+			return ResponseEntity.status(CONFLICT).body(erroVo);
+		}
+	}
+	
 }

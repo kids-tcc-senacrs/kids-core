@@ -22,6 +22,8 @@ import com.kids.model.Medicamento;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.modulocrianca.vo.AlergiaVO;
 import com.kids.modulocrianca.vo.CrecheVo;
+import com.kids.modulocrianca.vo.CriancaAtualizaVO;
+import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.modulocrianca.vo.CriancaVO;
 import com.kids.modulocrianca.vo.MedicamentoVO;
 import com.kids.repository.CriancaRepository;
@@ -37,17 +39,91 @@ public class CriancaService {
 
 
 
-	Crianca save(final CriancaVO vo) throws KidsException {
+	Crianca save(final CriancaNovoVO vo) throws KidsException {
 		this.beforeSave(vo);
 		return this.criancaRepository.save(this.create(vo));
 	}
 
 
 
-	private void beforeSave(final CriancaVO vo) throws KidsException {
+	public Crianca update(final CriancaAtualizaVO criancaAtualizaVO) throws KidsException {
+		this.beforeUpdate(criancaAtualizaVO);
+		
+		final Crianca crianca = this.criancaRepository.get(criancaAtualizaVO.getId());
+		crianca.setMatricula(criancaAtualizaVO.getGeral().getMatricula());
+		crianca.setNome(criancaAtualizaVO.getGeral().getNome());
+		crianca.setSexo(criancaAtualizaVO.getGeral().getSexo());
+		crianca.setDtNascimento(new Date());// TODO: CONVERTER DATE
+		
+		if (crianca.getEndereco() == null) {
+			crianca.setEndereco(new Endereco());
+		}
+		crianca.getEndereco().setCep(criancaAtualizaVO.getEndereco().getCep());
+		crianca.getEndereco().setLogradouro(criancaAtualizaVO.getEndereco().getLogradouro());
+		crianca.getEndereco().setLocalizacao(criancaAtualizaVO.getEndereco().getLocalizacao());
+		
+		
+		if(crianca.getContato() == null){
+			crianca.setContato(new Contato());
+		}
+		crianca.getContato().setResponsavel(criancaAtualizaVO.getContato().getResponsavel());
+		crianca.getContato().setEmail(criancaAtualizaVO.getContato().getEmail());
+		crianca.getContato().setFonePrincipal(criancaAtualizaVO.getContato().getFonePrincipal());
+		crianca.getContato().setFoneOutro(criancaAtualizaVO.getContato().getFoneOutro());
+		
+		if(crianca.getMedicamentos() == null){
+			crianca.setMedicamentos(new HashSet<>());
+		}
+		if(criancaAtualizaVO.getMedicamentos() == null){
+			crianca.setMedicamentos(null);
+		}else{
+			criancaAtualizaVO.getMedicamentos().forEach(m->{
+				final Medicamento medicamento = new Medicamento();
+				medicamento.setNome(m.getNome());
+				medicamento.setDosagem(m.getDosagem());
+				medicamento.setDtFinal(LocalDate.now());
+				medicamento.setIntervaloHoras(m.getIntervaloHoras());
+				crianca.getMedicamentos().add(medicamento);
+			});
+		}
+		
+		if(crianca.getAlergias() == null){
+			crianca.setAlergias(new HashSet<>());
+		}
+		if(criancaAtualizaVO.getAlergias() == null){
+			crianca.setAlergias(null);
+		}else{
+			criancaAtualizaVO.getAlergias().forEach(a->{
+				final Alergia alergia = new Alergia();
+				alergia.setDescricao(a.getDescricao());
+				crianca.getAlergias().add(alergia);
+			});
+		}
+		
+		return this.criancaRepository.update(crianca);
+	}
+
+
+
+	private void beforeSave(final CriancaNovoVO vo) throws KidsException {
 		final Creche creche = this.crecheFacade.get(vo.getCreche().getId());
 		this.validarCrecheCadastrada(creche);
 		this.validarAlergiaDuplicada(vo.getAlergias());
+	}
+
+
+
+	private void beforeUpdate(final CriancaAtualizaVO vo) throws KidsException {
+		this.validarCriancaCadastrada(vo.getId());
+	}
+
+
+
+	private void validarCriancaCadastrada(final Long id) throws CriancaInexistenteException {
+		final Crianca crianca = this.criancaRepository.get(id);
+		if (crianca == null) {
+			throw new CriancaInexistenteException();
+		}
 	}
 
 

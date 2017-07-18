@@ -28,5 +28,18 @@ public class CriancaRepository {
 		this.em.flush();
 		return crianca;
 	}
+
+
+
+	@Transactional
+	public Crianca update(final Crianca crianca) {
+		return this.em.merge(crianca);
+	}
+
+
+
+	public Crianca get(final Long id) {
+		return this.em.getReference(Crianca.class, id);
+	}
 	
 }
