@@ -20,46 +20,54 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "usuario")
 public class UsuarioAtualizaVO implements Serializable {
 
-	private static final long serialVersionUID = -4250740341959384029L;
+    private static final long serialVersionUID = -4250740341959384029L;
 
-	@ApiModelProperty(position = 0, required = true)
-	@NotNull(message = "o campo 'id' é de preenchimento obrigatório")
-	private Long id;
+    @ApiModelProperty(position = 0, required = true)
+    @NotNull(message = "o campo 'id' é de preenchimento obrigatório")
+    private Long id;
 
-	@ApiModelProperty(position = 1, required = true, example = "12345678")
-	@NotEmpty(message = "o campo 'telefone' não pode ser vazio")
-	@NotNull(message = "o campo 'telefone' é de preenchimento obrigatório")
-	@Size(min = 8, max = 20, message = "o campo 'telefone' deve conter entre '8 e 20' caracteres")
-	private String telefone;
+    @ApiModelProperty(position = 1, required = true, example = "12345678")
+    @NotEmpty(message = "o campo 'telefone' não pode ser vazio")
+    @NotNull(message = "o campo 'telefone' é de preenchimento obrigatório")
+    @Size(min = 8, max = 20, message = "o campo 'telefone' deve conter entre '8 e 20' caracteres")
+    private String telefone;
 
-	@ApiModelProperty(position = 2)
-	private boolean ativo;
+    @ApiModelProperty(position = 2)
+    private boolean ativo;
 
-	@Valid
-	@ApiModelProperty(position = 3, required = true)
-	private PessoaVO pessoa;
-
-
-
-	public Long getId() {
-		return id;
-	}
+    @Valid
+    @ApiModelProperty(position = 3, required = true)
+    private PessoaVO pessoa;
 
 
 
-	public String getTelefone() {
-		return telefone;
-	}
+
+
+    public Long getId() {
+	return id;
+    }
 
 
 
-	public boolean isAtivo() {
-		return ativo;
-	}
+
+
+    public String getTelefone() {
+	return telefone;
+    }
 
 
 
-	public PessoaVO getPessoa() {
-		return pessoa;
-	}
+
+
+    public boolean isAtivo() {
+	return ativo;
+    }
+
+
+
+
+
+    public PessoaVO getPessoa() {
+	return pessoa;
+    }
 }

@@ -16,12 +16,14 @@ import com.kids.model.Creche;
 @Repository
 public class CrecheRepository {
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
 
 
-	public Creche find(final Long id) {
-		return this.em.find(Creche.class, id);
-	}
+
+
+    public Creche find(final Long id) {
+	return this.em.find(Creche.class, id);
+    }
 }

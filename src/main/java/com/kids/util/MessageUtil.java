@@ -11,18 +11,22 @@ import java.util.ResourceBundle;
  */
 public class MessageUtil {
 
-	private static ResourceBundle resource = ResourceBundle.getBundle("messages");
+    private static ResourceBundle resource = ResourceBundle.getBundle("messages");
 
 
 
-	public static String getMessage(final String message) {
-		return resource.getString(message);
-	}
+
+
+    public static String getMessage(final String message) {
+	return resource.getString(message);
+    }
 
 
 
-	public static String getMessage(final String message, final Object... params) {
-		return MessageFormat.format(getMessage(message), params);
-	}
-	
+
+
+    public static String getMessage(final String message, final Object... params) {
+	return MessageFormat.format(getMessage(message), params);
+    }
+
 }

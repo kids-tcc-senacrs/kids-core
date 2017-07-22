@@ -20,44 +20,54 @@ import javax.persistence.TableGenerator;
 @Table(name = "ALERGIA")
 public class Alergia implements Serializable {
 
-	private static final long serialVersionUID = 8433449795250662499L;
+    private static final long serialVersionUID = 8433449795250662499L;
 
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(generator = "sequenceAlergia", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "sequenceAlergia", allocationSize = 1)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "sequenceAlergia", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequenceAlergia", allocationSize = 1)
+    private Long id;
 
-	@Column(name = "descricao", length = 60)
-	private String descricao;
-
-
-
-	public Alergia() {
-		super();
-	}
+    @Column(name = "descricao", length = 60)
+    private String descricao;
 
 
 
-	public Long getId() {
-		return id;
-	}
+
+
+    public Alergia() {
+	super();
+    }
 
 
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+
+
+    public Long getId() {
+	return id;
+    }
 
 
 
-	public String getDescricao() {
-		return descricao;
-	}
+
+
+    public void setId(final Long id) {
+	this.id = id;
+    }
 
 
 
-	public void setDescricao(final String descricao) {
-		this.descricao = descricao;
-	}
+
+
+    public String getDescricao() {
+	return descricao;
+    }
+
+
+
+
+
+    public void setDescricao(final String descricao) {
+	this.descricao = descricao;
+    }
 }

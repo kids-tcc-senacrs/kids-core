@@ -11,20 +11,40 @@ import java.util.ArrayList;
  */
 public class RestErroVo implements Serializable {
 
-	private static final long serialVersionUID = -4698748822672578829L;
+    private static final long serialVersionUID = -4698748822672578829L;
 
-	private ArrayList<String> messages = new ArrayList<>();
-
-
-
-	public ArrayList<String> getMessages() {
-		return messages;
-	}
+    private ArrayList<String> messages = new ArrayList<>();
 
 
 
-	public void addMessage(final String message) {
-		this.messages.add(message);
-	}
-	
+
+
+    public RestErroVo(final String message) {
+	this.addMessage(message);
+    }
+
+
+
+
+
+    public RestErroVo() {
+	super();
+    }
+
+
+
+
+
+    public ArrayList<String> getMessages() {
+	return messages;
+    }
+
+
+
+
+
+    public void addMessage(final String message) {
+	this.messages.add(message);
+    }
+
 }

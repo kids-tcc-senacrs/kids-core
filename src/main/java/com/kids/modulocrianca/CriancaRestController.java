@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.exception.KidsException;
-import com.kids.model.Crianca;
 import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.util.JsonUtil;
@@ -35,43 +34,41 @@ import com.kids.util.RestUtil;
 @RequestMapping("/crianca")
 public class CriancaRestController {
 
-	@Autowired
-	private CriancaService criancaService;
+    @Autowired
+    private CriancaService criancaService;
 
 
 
-	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
-		try {
-			if (RestUtil.existeErroNaRequisicao(errors)) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
-			} else {
-				final Crianca c = this.criancaService.save(criancaNovoVO);
-				return ResponseEntity.status(CREATED).body(JsonUtil.convertToJson(c));
-			}
-		} catch (final KidsException e) {
-			final RestErroVo erroVo = new RestErroVo();
-			erroVo.addMessage(e.getMessage());
-			return ResponseEntity.status(CONFLICT).body(erroVo);
-		}
+
+
+    @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
+	try {
+	    if (RestUtil.existeErroNaRequisicao(errors)) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
+	    } else {
+		return ResponseEntity.status(CREATED).body(JsonUtil.convertToJson(this.criancaService.save(criancaNovoVO)));
+	    }
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
 	}
+    }
 
 
 
-	@RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
-		try {
-			if (RestUtil.existeErroNaRequisicao(errors)) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
-			} else {
-				final Crianca c = this.criancaService.update(criancaAtualizaVO);
-				return ResponseEntity.status(OK).body(JsonUtil.convertToJson(c));
-			}
-		} catch (final KidsException e) {
-			final RestErroVo erroVo = new RestErroVo();
-			erroVo.addMessage(e.getMessage());
-			return ResponseEntity.status(CONFLICT).body(erroVo);
-		}
+
+
+    @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
+	try {
+	    if (RestUtil.existeErroNaRequisicao(errors)) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
+	    } else {
+		return ResponseEntity.status(OK).body(JsonUtil.convertToJson(this.criancaService.update(criancaAtualizaVO)));
+	    }
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
 	}
-	
+    }
+
 }

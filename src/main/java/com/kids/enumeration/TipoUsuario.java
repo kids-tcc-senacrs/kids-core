@@ -7,7 +7,7 @@ package com.kids.enumeration;
  * 
  */
 public enum TipoUsuario {
-	
-	CRECHE, FAMILIAR
-	
+
+    CRECHE, FAMILIAR
+
 }

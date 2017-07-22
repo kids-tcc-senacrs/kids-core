@@ -24,52 +24,64 @@ import javax.persistence.TableGenerator;
 @Table(name = "FAMILIA")
 public class Familia implements Serializable {
 
-	private static final long serialVersionUID = 8164369067802692420L;
+    private static final long serialVersionUID = 8164369067802692420L;
 
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(generator = "sequenceFamilia", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "sequenceFamilia", allocationSize = 1)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "sequenceFamilia", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequenceFamilia", allocationSize = 1)
+    private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_pessoa", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_pessoa"))
-	private Pessoa pessoa;
-
-
-
-	public Familia(final Pessoa pessoa) {
-		super();
-		this.pessoa = pessoa;
-	}
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pessoa", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_pessoa"))
+    private Pessoa pessoa;
 
 
 
-	public Familia() {
-		super();
-	}
+
+
+    public Familia(final Pessoa pessoa) {
+	super();
+	this.pessoa = pessoa;
+    }
 
 
 
-	public Long getId() {
-		return id;
-	}
+
+
+    public Familia() {
+	super();
+    }
 
 
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+
+
+    public Long getId() {
+	return id;
+    }
 
 
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
+
+
+    public void setId(final Long id) {
+	this.id = id;
+    }
 
 
 
-	public void setPessoa(final Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
+
+
+    public Pessoa getPessoa() {
+	return pessoa;
+    }
+
+
+
+
+
+    public void setPessoa(final Pessoa pessoa) {
+	this.pessoa = pessoa;
+    }
 }

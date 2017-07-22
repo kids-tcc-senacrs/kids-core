@@ -23,59 +23,73 @@ import javax.persistence.TableGenerator;
 @Table(name = "PESSOA")
 public class Pessoa implements Serializable {
 
-	private static final long serialVersionUID = -7055044189565625593L;
+    private static final long serialVersionUID = -7055044189565625593L;
 
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(generator = "sequencePessoa", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "sequencePessoa", allocationSize = 1)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "sequencePessoa", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequencePessoa", allocationSize = 1)
+    private Long id;
 
-	@Column(name = "nome", nullable = false, length = 60)
-	private String nome;
+    @Column(name = "nome", nullable = false, length = 60)
+    private String nome;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "pessoa")
-	private Endereco endereco;
-
-
-
-	public Pessoa() {
-		super();
-	}
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "pessoa")
+    private Endereco endereco;
 
 
 
-	public Long getId() {
-		return id;
-	}
+
+
+    public Pessoa() {
+	super();
+    }
 
 
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+
+
+    public Long getId() {
+	return id;
+    }
 
 
 
-	public String getNome() {
-		return nome;
-	}
+
+
+    public void setId(final Long id) {
+	this.id = id;
+    }
 
 
 
-	public void setNome(final String nome) {
-		this.nome = nome;
-	}
+
+
+    public String getNome() {
+	return nome;
+    }
 
 
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+
+
+    public void setNome(final String nome) {
+	this.nome = nome;
+    }
 
 
 
-	public void setEndereco(final Endereco endereco) {
-		this.endereco = endereco;
-	}
+
+
+    public Endereco getEndereco() {
+	return endereco;
+    }
+
+
+
+
+
+    public void setEndereco(final Endereco endereco) {
+	this.endereco = endereco;
+    }
 }

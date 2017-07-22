@@ -24,90 +24,112 @@ import javax.persistence.TableGenerator;
 @Table(name = "ENDERECO")
 public class Endereco implements Serializable {
 
-	private static final long serialVersionUID = 7505989989856840679L;
+    private static final long serialVersionUID = 7505989989856840679L;
 
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(generator = "sequenceEndereco", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "sequenceEndereco", allocationSize = 1)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "sequenceEndereco", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequenceEndereco", allocationSize = 1)
+    private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_pessoa", foreignKey = @ForeignKey(name = "FK_pessoa"))
-	private Pessoa pessoa;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pessoa", foreignKey = @ForeignKey(name = "FK_pessoa"))
+    private Pessoa pessoa;
 
-	@Column(name = "cep", length = 8, nullable = false)
-	private String cep;
+    @Column(name = "cep", length = 8, nullable = false)
+    private String cep;
 
-	@Column(name = "logradouro", length = 60, nullable = false)
-	private String logradouro;
+    @Column(name = "logradouro", length = 60, nullable = false)
+    private String logradouro;
 
-	@Column(name = "localizacao", length = 120, nullable = false)
-	private String localizacao;
-
-
-
-	public Endereco() {
-		super();
-	}
+    @Column(name = "localizacao", length = 120, nullable = false)
+    private String localizacao;
 
 
 
-	public Long getId() {
-		return id;
-	}
+
+
+    public Endereco() {
+	super();
+    }
 
 
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+
+
+    public Long getId() {
+	return id;
+    }
 
 
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
+
+
+    public void setId(final Long id) {
+	this.id = id;
+    }
 
 
 
-	public void setPessoa(final Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
+
+
+    public Pessoa getPessoa() {
+	return pessoa;
+    }
 
 
 
-	public String getCep() {
-		return cep;
-	}
+
+
+    public void setPessoa(final Pessoa pessoa) {
+	this.pessoa = pessoa;
+    }
 
 
 
-	public void setCep(final String cep) {
-		this.cep = cep;
-	}
+
+
+    public String getCep() {
+	return cep;
+    }
 
 
 
-	public String getLogradouro() {
-		return logradouro;
-	}
+
+
+    public void setCep(final String cep) {
+	this.cep = cep;
+    }
 
 
 
-	public void setLogradouro(final String logradouro) {
-		this.logradouro = logradouro;
-	}
+
+
+    public String getLogradouro() {
+	return logradouro;
+    }
 
 
 
-	public String getLocalizacao() {
-		return localizacao;
-	}
+
+
+    public void setLogradouro(final String logradouro) {
+	this.logradouro = logradouro;
+    }
 
 
 
-	public void setLocalizacao(final String localizacao) {
-		this.localizacao = localizacao;
-	}
+
+
+    public String getLocalizacao() {
+	return localizacao;
+    }
+
+
+
+
+
+    public void setLocalizacao(final String localizacao) {
+	this.localizacao = localizacao;
+    }
 }

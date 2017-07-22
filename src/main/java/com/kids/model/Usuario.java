@@ -29,114 +29,142 @@ import com.kids.enumeration.TipoUsuario;
 @Table(name = "USUARIO")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = -2561353904338124908L;
+    private static final long serialVersionUID = -2561353904338124908L;
 
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(generator = "sequenceUsuario", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "sequenceUsuario", allocationSize = 1)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "sequenceUsuario", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequenceUsuario", allocationSize = 1)
+    private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "id_pessoa", nullable = false, foreignKey = @ForeignKey(name = "FK_pessoa"))
-	private Pessoa pessoa;
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinColumn(name = "id_pessoa", nullable = false, foreignKey = @ForeignKey(name = "FK_pessoa"))
+    private Pessoa pessoa;
 
-	@Column(name = "email", nullable = false, unique = true, length = 255)
-	private String email;
+    @Column(name = "email", nullable = false, unique = true, length = 255)
+    private String email;
 
-	@Column(name = "telefone", nullable = true, length = 20)
-	private String telefone;
+    @Column(name = "telefone", nullable = true, length = 20)
+    private String telefone;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo", nullable = false, length = 8)
-	private TipoUsuario tipo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo", nullable = false, length = 8)
+    private TipoUsuario tipo;
 
-	@Column(name = "ativo", nullable = false)
-	private Boolean ativo;
-
-
-
-	public Usuario() {
-		super();
-		this.setPessoa(new Pessoa());
-	}
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo;
 
 
 
-	public Usuario(final String email) {
-		super();
-		this.email = email;
-	}
+
+
+    public Usuario() {
+	super();
+	this.setPessoa(new Pessoa());
+    }
 
 
 
-	public Long getId() {
-		return id;
-	}
+
+
+    public Usuario(final String email) {
+	super();
+	this.email = email;
+    }
 
 
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+
+
+    public Long getId() {
+	return id;
+    }
 
 
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
+
+
+    public void setId(final Long id) {
+	this.id = id;
+    }
 
 
 
-	public void setPessoa(final Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
+
+
+    public Pessoa getPessoa() {
+	return pessoa;
+    }
 
 
 
-	public String getEmail() {
-		return email;
-	}
+
+
+    public void setPessoa(final Pessoa pessoa) {
+	this.pessoa = pessoa;
+    }
 
 
 
-	public void setEmail(final String email) {
-		this.email = email;
-	}
+
+
+    public String getEmail() {
+	return email;
+    }
 
 
 
-	public String getTelefone() {
-		return telefone;
-	}
+
+
+    public void setEmail(final String email) {
+	this.email = email;
+    }
 
 
 
-	public void setTelefone(final String telefone) {
-		this.telefone = telefone;
-	}
+
+
+    public String getTelefone() {
+	return telefone;
+    }
 
 
 
-	public TipoUsuario getTipo() {
-		return tipo;
-	}
+
+
+    public void setTelefone(final String telefone) {
+	this.telefone = telefone;
+    }
 
 
 
-	public void setTipo(final TipoUsuario tipo) {
-		this.tipo = tipo;
-	}
+
+
+    public TipoUsuario getTipo() {
+	return tipo;
+    }
 
 
 
-	public Boolean getAtivo() {
-		return ativo;
-	}
+
+
+    public void setTipo(final TipoUsuario tipo) {
+	this.tipo = tipo;
+    }
 
 
 
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
+
+
+    public Boolean getAtivo() {
+	return ativo;
+    }
+
+
+
+
+
+    public void setAtivo(Boolean ativo) {
+	this.ativo = ativo;
+    }
 }

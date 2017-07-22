@@ -14,12 +14,14 @@ import com.kids.model.Creche;
 @Service
 public class CrecheFacade {
 
-	@Autowired
-	private CrecheService crecheService;
+    @Autowired
+    private CrecheService crecheService;
 
 
 
-	public Creche get(final Long id) {
-		return this.crecheService.getById(id);
-	}
+
+
+    public Creche get(final Long id) {
+	return this.crecheService.getById(id);
+    }
 }

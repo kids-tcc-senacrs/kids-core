@@ -24,87 +24,103 @@ import javax.persistence.TableGenerator;
 @Table(name = "CRECHE")
 public class Creche implements Serializable {
 
-	private static final long serialVersionUID = 8164369067802692420L;
+    private static final long serialVersionUID = 8164369067802692420L;
 
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(generator = "sequenceCreche", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "sequenceCreche", allocationSize = 1)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "sequenceCreche", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequenceCreche", allocationSize = 1)
+    private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_pessoa", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_pessoa"))
-	private Pessoa pessoa;
-
-
-
-	public Creche(final Pessoa pessoa) {
-		super();
-		this.pessoa = pessoa;
-	}
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pessoa", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_pessoa"))
+    private Pessoa pessoa;
 
 
 
-	public Creche() {
-		super();
-	}
+
+
+    public Creche(final Pessoa pessoa) {
+	super();
+	this.pessoa = pessoa;
+    }
 
 
 
-	public Long getId() {
-		return id;
-	}
+
+
+    public Creche() {
+	super();
+    }
 
 
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+
+
+    public Long getId() {
+	return id;
+    }
 
 
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
+
+
+    public void setId(final Long id) {
+	this.id = id;
+    }
 
 
 
-	public void setPessoa(final Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
+
+
+    public Pessoa getPessoa() {
+	return pessoa;
+    }
 
 
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
-		return result;
-	}
+
+
+    public void setPessoa(final Pessoa pessoa) {
+	this.pessoa = pessoa;
+    }
 
 
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Creche other = (Creche) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (pessoa == null) {
-			if (other.pessoa != null)
-				return false;
-		} else if (!pessoa.equals(other.pessoa))
-			return false;
-		return true;
-	}
+
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
+	return result;
+    }
+
+
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Creche other = (Creche) obj;
+	if (id == null) {
+	    if (other.id != null)
+		return false;
+	} else if (!id.equals(other.id))
+	    return false;
+	if (pessoa == null) {
+	    if (other.pessoa != null)
+		return false;
+	} else if (!pessoa.equals(other.pessoa))
+	    return false;
+	return true;
+    }
 }

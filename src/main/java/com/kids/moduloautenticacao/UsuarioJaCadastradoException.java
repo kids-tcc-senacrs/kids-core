@@ -11,13 +11,15 @@ import com.kids.util.MessageUtil;
  */
 class UsuarioJaCadastradoException extends KidsException {
 
-	private static final long serialVersionUID = 4751839521260932314L;
+    private static final long serialVersionUID = 4751839521260932314L;
 
-	private static final String MESSAGE = "message_usuarioJaCadastradoException";
+    private static final String MESSAGE = "message_usuarioJaCadastradoException";
 
 
 
-	UsuarioJaCadastradoException() {
-		super(MessageUtil.getMessage(MESSAGE));
-	}
+
+
+    UsuarioJaCadastradoException() {
+	super(MessageUtil.getMessage(MESSAGE));
+    }
 }

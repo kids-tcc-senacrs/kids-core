@@ -39,54 +39,55 @@ import com.kids.util.RestUtil;
 @RequestMapping("/usuario")
 public class UsuarioRestController {
 
-	@Autowired
-	private UsuarioService usuarioService;
+    @Autowired
+    private UsuarioService usuarioService;
 
 
 
-	@RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
-		final Usuario usuario = this.usuarioService.findUserByEmail(email);
-		if (usuario != null && usuario.getPessoa().getEndereco() == null) {
-			usuario.getPessoa().setEndereco(new Endereco());
-		}
-		final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-		return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(usuario));
+
+
+    @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
+	final Usuario usuario = this.usuarioService.findUserByEmail(email);
+	if (usuario != null && usuario.getPessoa().getEndereco() == null) {
+	    usuario.getPessoa().setEndereco(new Endereco());
 	}
+	final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(usuario));
+    }
 
 
 
-	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
-		try {
-			if (RestUtil.existeErroNaRequisicao(errors)) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
-			} else {
-				final Usuario u = this.usuarioService.saveUsuario(usuario);
-				return ResponseEntity.status(CREATED).body(new Gson().toJson(u));
-			}
-		} catch (final KidsException e) {
-			final RestErroVo erroVo = new RestErroVo();
-			erroVo.addMessage(e.getMessage());
-			return ResponseEntity.status(CONFLICT).body(erroVo);
-		}
+
+
+    @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
+	try {
+	    if (RestUtil.existeErroNaRequisicao(errors)) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
+	    } else {
+		return ResponseEntity.status(CREATED).body(new Gson().toJson(this.usuarioService.saveUsuario(usuario)));
+	    }
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
 	}
+    }
 
 
 
-	@RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
-		try {
-			if (RestUtil.existeErroNaRequisicao(errors)) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
-			} else {
-				final Usuario u = this.usuarioService.updateUsuario(usuario);
-				return ResponseEntity.status(OK).body(JsonUtil.convertToJson(u));
-			}
-		} catch (final KidsException e) {
-			final RestErroVo erroVo = new RestErroVo();
-			erroVo.addMessage(e.getMessage());
-			return ResponseEntity.status(CONFLICT).body(erroVo);
-		}
+
+
+    @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
+	try {
+	    if (RestUtil.existeErroNaRequisicao(errors)) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
+	    } else {
+		return ResponseEntity.status(OK).body(JsonUtil.convertToJson(this.usuarioService.updateUsuario(usuario)));
+	    }
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
 	}
+    }
+
 }

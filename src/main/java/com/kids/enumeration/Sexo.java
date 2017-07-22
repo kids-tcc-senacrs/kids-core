@@ -7,7 +7,7 @@ package com.kids.enumeration;
  * 
  */
 public enum Sexo {
-	
-	MASCULINO, FEMININO
-	
+
+    MASCULINO, FEMININO
+
 }

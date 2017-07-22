@@ -24,54 +24,64 @@ import com.kids.model.Usuario;
 @Repository
 public class UsuarioRepository {
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
 
 
-	public Usuario findByEmail(final String email) {
-		final Session session = (Session) this.em.getDelegate();
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class, "u");
-		criteria.setFetchMode("u.pessoa", FetchMode.SELECT);
-		criteria.add(Restrictions.eq("u.email", email));
-		return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
+
+
+    public Usuario findByEmail(final String email) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class, "u");
+	criteria.setFetchMode("u.pessoa", FetchMode.SELECT);
+	criteria.add(Restrictions.eq("u.email", email));
+	return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
+    }
+
+
+
+
+
+    @Transactional
+    public Usuario save(final Usuario usuario) {
+	this.em.persist(usuario);
+	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+	    this.em.persist(new Creche(usuario.getPessoa()));
+	} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+	    this.em.persist(new Familia(usuario.getPessoa()));
 	}
+	this.em.flush();
+	return usuario;
+    }
 
 
 
-	@Transactional
-	public Usuario save(final Usuario usuario) {
-		this.em.persist(usuario);
-		if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
-			this.em.persist(new Creche(usuario.getPessoa()));
-		} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
-			this.em.persist(new Familia(usuario.getPessoa()));
-		}
-		this.em.flush();
-		return usuario;
-	}
+
+
+    @Transactional
+    public void update(final Usuario usuario) {
+	this.em.merge(usuario);
+	this.em.flush();
+    }
 
 
 
-	@Transactional
-	public void update(final Usuario usuario) {
-		this.em.merge(usuario);
-		this.em.flush();
-	}
+
+
+    public Usuario findUsuarioById(final Long id) {
+	return this.em.find(Usuario.class, id);
+    }
 
 
 
-	public Usuario findUsuarioById(final Long id) {
-		return this.em.find(Usuario.class, id);
-	}
 
 
-
-	public Usuario findUsuarioByIdAndTipo(final Long usuarioId, final TipoUsuario tipoUsuario) {
-		final Session session = (Session) this.em.getDelegate();
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class);
-		criteria.add(Restrictions.eq("id", usuarioId));
-		criteria.add(Restrictions.eq("tipo", tipoUsuario));
-		return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
-	}
+    public Usuario findUsuarioByIdAndTipo(final Long usuarioId, final TipoUsuario tipoUsuario) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class);
+	criteria.add(Restrictions.eq("id", usuarioId));
+	criteria.add(Restrictions.eq("tipo", tipoUsuario));
+	return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
+    }
 }

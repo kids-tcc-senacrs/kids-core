@@ -13,14 +13,16 @@ import com.google.gson.GsonBuilder;
  */
 public class JsonUtil implements Serializable {
 
-	private static final long serialVersionUID = 6645086833069573829L;
+    private static final long serialVersionUID = 6645086833069573829L;
 
 
 
-	public static <T> String convertToJson(final T entity) {
-		final GsonBuilder b = new GsonBuilder();
-		b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
-		final Gson gson = b.create();
-		return gson.toJson(entity);
-	}
+
+
+    public static <T> String convertToJson(final T entity) {
+	final GsonBuilder b = new GsonBuilder();
+	b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
+	final Gson gson = b.create();
+	return gson.toJson(entity);
+    }
 }

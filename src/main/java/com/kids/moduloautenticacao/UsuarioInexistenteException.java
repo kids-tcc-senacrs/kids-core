@@ -11,13 +11,15 @@ import com.kids.util.MessageUtil;
  */
 class UsuarioInexistenteException extends KidsException {
 
-	private static final long serialVersionUID = 5478545470932314L;
+    private static final long serialVersionUID = 5478545470932314L;
 
-	private static final String MESSAGE = "message_usuarioInexistenteException";
+    private static final String MESSAGE = "message_usuarioInexistenteException";
 
 
 
-	UsuarioInexistenteException() {
-		super(MessageUtil.getMessage(MESSAGE));
-	}
+
+
+    UsuarioInexistenteException() {
+	super(MessageUtil.getMessage(MESSAGE));
+    }
 }

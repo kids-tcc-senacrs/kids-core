@@ -12,21 +12,25 @@ import io.swagger.annotations.ApiModelProperty;
  */
 public class CriancaAtualizaVO extends CriancaVO {
 
-	private static final long serialVersionUID = 7295084283092127744L;
+    private static final long serialVersionUID = 7295084283092127744L;
 
-	@Valid
-	@ApiModelProperty(position = 0, required = true)
-	private Long id;
-
-
-
-	public CriancaAtualizaVO() {
-		super();
-	}
+    @Valid
+    @ApiModelProperty(position = 0, required = true)
+    private Long id;
 
 
 
-	public Long getId() {
-		return id;
-	}
+
+
+    public CriancaAtualizaVO() {
+	super();
+    }
+
+
+
+
+
+    public Long getId() {
+	return id;
+    }
 }

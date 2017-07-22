@@ -16,12 +16,14 @@ import com.kids.repository.UsuarioRepository;
 @Service
 public class UsuarioFacade {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
 
 
-	public Usuario getUsuario(final Long usuarioId, final TipoUsuario tipoUsuario) {
-		return this.usuarioRepository.findUsuarioByIdAndTipo(usuarioId, tipoUsuario);
-	}
+
+
+    public Usuario getUsuario(final Long usuarioId, final TipoUsuario tipoUsuario) {
+	return this.usuarioRepository.findUsuarioByIdAndTipo(usuarioId, tipoUsuario);
+    }
 }
