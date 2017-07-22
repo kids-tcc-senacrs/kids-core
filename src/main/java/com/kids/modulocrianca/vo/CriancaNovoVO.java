@@ -32,5 +32,6 @@ public class CriancaNovoVO extends CriancaVO {
 
     public CriancaNovoVO() {
 	super();
+	this.creche = new CrecheVo();
     }
 }

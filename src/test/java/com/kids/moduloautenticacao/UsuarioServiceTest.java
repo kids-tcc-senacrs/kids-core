@@ -45,8 +45,8 @@ public class UsuarioServiceTest {
 	final UsuarioNovoVO usuarioNovoVO = new UsuarioNovoVO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", TipoUsuario.FAMILIAR);
 	final Usuario usuario = new Usuario(usuarioNovoVO.getEmail());
 	Mockito.when(this.usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(usuario);
-	thrown.expect(UsuarioJaCadastradoException.class);
-	thrown.expectMessage(MessageUtil.getMessage("message_usuarioJaCadastradoException"));
+	this.thrown.expect(UsuarioJaCadastradoException.class);
+	this.thrown.expectMessage(MessageUtil.getMessage("message_usuarioJaCadastradoException"));
 	this.usuarioService.saveUsuario(usuarioNovoVO);
     }
 
@@ -57,8 +57,8 @@ public class UsuarioServiceTest {
     @Test
     public void deveGerarUsuarioInexistenteException_quandoTentarAtualizarUsuarioInexistente() throws Exception {
 	Mockito.when(this.usuarioRepository.findUsuarioById(Mockito.anyLong())).thenReturn(null);
-	thrown.expect(UsuarioInexistenteException.class);
-	thrown.expectMessage(MessageUtil.getMessage("message_usuarioInexistenteException"));
+	this.thrown.expect(UsuarioInexistenteException.class);
+	this.thrown.expectMessage(MessageUtil.getMessage("message_usuarioInexistenteException"));
 	this.usuarioService.updateUsuario(new UsuarioAtualizaVO());
     }
 

@@ -26,6 +26,14 @@ public class AlergiaVO implements Serializable {
 
 
 
+    public AlergiaVO(final String descricao) {
+	this.descricao = descricao;
+    }
+
+
+
+
+
     public AlergiaVO() {
 	super();
     }

@@ -1,6 +1,7 @@
 package com.kids.modulocrianca.vo;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -45,6 +46,7 @@ public class CriancaVO implements Serializable {
 
     public CriancaVO() {
 	super();
+	this.alergias = new HashSet<>();
     }
 
 
