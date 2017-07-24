@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kids.model.Creche;
+import com.kids.model.Usuario;
 import com.kids.repository.CrecheRepository;
 
 /**
@@ -25,4 +26,13 @@ public class CrecheService {
     Creche getById(final Long id) {
 	return this.crecheRepository.find(id);
     }
+
+
+
+
+
+    public Creche getCrecheByUsuario(final Usuario u) {
+	return crecheRepository.findCrecheByUsuario(u);
+    }
+
 }

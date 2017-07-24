@@ -1,11 +1,20 @@
 package com.kids.repository;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kids.model.Creche;
 import com.kids.model.Crianca;
 
 /**
@@ -47,4 +56,47 @@ public class CriancaRepository {
     public Crianca find(final Long id) {
 	return this.em.find(Crianca.class, id);
     }
+
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public Set<Crianca> findCriancasByCreche(final Creche creche) {
+	final Set<Crianca> criancasbYCreches = new HashSet<>();
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class);
+	final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();
+	final Set<Crianca> criancasAll = result.stream().collect(Collectors.toSet());
+	if (CollectionUtils.isNotEmpty(criancasAll)) {
+	    for (final Crianca crianca : criancasAll) {
+		crianca.getCreches().forEach(c -> {
+		    if (creche.equals(c)) {
+			criancasbYCreches.add(crianca);
+		    }
+		});
+	    }
+	}
+	this.lazy(criancasbYCreches);
+	return criancasbYCreches;
+    }
+
+
+
+
+
+    private void lazy(final Set<Crianca> criancasbYCreches) {
+	if (CollectionUtils.isNotEmpty(criancasbYCreches)) {
+	    for (final Crianca crianca : criancasbYCreches) {
+		if (crianca.getContato() != null) {
+		    crianca.getContato().getId();
+		    crianca.getContato().getEmail();
+		    crianca.getContato().getFoneOutro();
+		    crianca.getContato().getResponsavel();
+		    crianca.getContato().getFonePrincipal();
+		}
+	    }
+	}
+    }
+
 }

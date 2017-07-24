@@ -48,7 +48,7 @@ public class UsuarioRestController {
 
     @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
-	final Usuario usuario = this.usuarioService.findUserByEmail(email);
+	final Usuario usuario = this.usuarioService.getUserByEmail(email);
 	if (usuario != null && usuario.getPessoa().getEndereco() == null) {
 	    usuario.getPessoa().setEndereco(new Endereco());
 	}

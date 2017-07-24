@@ -6,9 +6,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kids.enumeration.TipoUsuario;
 import com.kids.exception.KidsException;
 import com.kids.model.Creche;
 import com.kids.model.Crianca;
+import com.kids.model.Usuario;
+import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.modulocrianca.build.BuildCrianca;
 import com.kids.modulocrianca.vo.AlergiaVO;
@@ -27,6 +30,9 @@ public class CriancaService {
 
     @Autowired
     private CrecheFacade crecheFacade;
+
+    @Autowired
+    private UsuarioFacade usuarioFacade;
 
     @Autowired
     private CriancaRepository criancaRepository;
@@ -109,6 +115,22 @@ public class CriancaService {
 		validaAlergiaAdicionada.validar(alergia);
 	    }
 	}
+    }
+
+
+
+
+
+    public Set<Crianca> getCriancasByUsuario(final Usuario usuario) {
+	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+	    final Usuario u = this.usuarioFacade.getUsuarioById(usuario.getId());
+	    if (u.getAtivo()) {
+		return this.criancaRepository.findCriancasByCreche(this.crecheFacade.getCrecheByUsuario(u));
+	    }
+	} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+	    return null;
+	}
+	return null;
     }
 
 }

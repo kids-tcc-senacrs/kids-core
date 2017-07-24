@@ -52,7 +52,15 @@ public class UsuarioService {
 
 
 
-    Usuario findUserByEmail(final String email) {
+    Usuario getUserById(final Long id) {
+	return this.usuarioRepository.findUsuarioById(id);
+    }
+
+
+
+
+
+    Usuario getUserByEmail(final String email) {
 	return this.usuarioRepository.findByEmail(email);
     }
 

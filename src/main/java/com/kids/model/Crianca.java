@@ -1,7 +1,7 @@
 package com.kids.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.kids.enumeration.Sexo;
 
@@ -45,8 +47,9 @@ public class Crianca implements Serializable {
     @Column(name = "nome", nullable = false, length = 60)
     private String nome;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_nascimento", nullable = false)
-    private LocalDate dtNascimento;
+    private Date dtNascimento;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sexo", nullable = false)
@@ -114,7 +117,7 @@ public class Crianca implements Serializable {
 
 
 
-    public LocalDate getDtNascimento() {
+    public Date getDtNascimento() {
 	return dtNascimento;
     }
 
@@ -122,7 +125,7 @@ public class Crianca implements Serializable {
 
 
 
-    public void setDtNascimento(final LocalDate dtNascimento) {
+    public void setDtNascimento(final Date dtNascimento) {
 	this.dtNascimento = dtNascimento;
     }
 

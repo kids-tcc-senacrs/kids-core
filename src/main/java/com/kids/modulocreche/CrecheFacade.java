@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kids.model.Creche;
+import com.kids.model.Usuario;
 
 /**
  * 
@@ -24,4 +25,13 @@ public class CrecheFacade {
     public Creche get(final Long id) {
 	return this.crecheService.getById(id);
     }
+
+
+
+
+
+    public Creche getCrecheByUsuario(final Usuario u) {
+	return this.crecheService.getCrecheByUsuario(u);
+    }
+
 }

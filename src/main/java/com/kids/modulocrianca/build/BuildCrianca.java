@@ -1,6 +1,7 @@
 package com.kids.modulocrianca.build;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,7 +54,7 @@ public class BuildCrianca {
 	this.crianca.setMatricula(vo.getGeral().getMatricula());
 	this.crianca.setNome(vo.getGeral().getNome());
 	this.crianca.setSexo(vo.getGeral().getSexo());
-	this.crianca.setDtNascimento(LocalDate.now());// TODO: RECEBER A DATA E CONVERTER PARA LOCALDATE
+	this.crianca.setDtNascimento(new Date());// TODO: RECEBER A DATA E CONVERTER PARA LOCALDATE
 
 	final Endereco endereco = this.buildEndereco(vo);
 	final Contato contato = this.buildContato(vo);
@@ -80,7 +81,7 @@ public class BuildCrianca {
 	this.crianca.setMatricula(vo.getGeral().getMatricula());
 	this.crianca.setNome(vo.getGeral().getNome());
 	this.crianca.setSexo(vo.getGeral().getSexo());
-	this.crianca.setDtNascimento(LocalDate.now());// TODO: RECEBER A DATA E CONVERTER PARA LOCALDATE
+	this.crianca.setDtNascimento(new Date());// TODO: RECEBER A DATA E CONVERTER PARA LOCALDATE
 
 	this.updateEndereco(vo);
 	this.updateContato(vo);

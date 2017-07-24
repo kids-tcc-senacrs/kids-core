@@ -73,15 +73,4 @@ public class UsuarioRepository {
 	return this.em.find(Usuario.class, id);
     }
 
-
-
-
-
-    public Usuario findUsuarioByIdAndTipo(final Long usuarioId, final TipoUsuario tipoUsuario) {
-	final Session session = (Session) this.em.getDelegate();
-	final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class);
-	criteria.add(Restrictions.eq("id", usuarioId));
-	criteria.add(Restrictions.eq("tipo", tipoUsuario));
-	return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
-    }
 }
