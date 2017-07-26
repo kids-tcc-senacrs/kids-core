@@ -9,6 +9,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -47,7 +48,8 @@ public class CriancaRestController {
 
 
     @RequestMapping(method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario) {
+    public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario, final HttpServletResponse httpServletResponse) {
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuario(usuario);
 	final HttpStatus httpStatus = CollectionUtils.isEmpty(criancas) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(criancas));
@@ -58,7 +60,8 @@ public class CriancaRestController {
 
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final HttpServletResponse httpServletResponse, final Errors errors) {
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
@@ -75,7 +78,8 @@ public class CriancaRestController {
 
 
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final HttpServletResponse httpServletResponse, final Errors errors) {
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
