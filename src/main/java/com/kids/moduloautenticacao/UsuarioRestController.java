@@ -47,7 +47,7 @@ public class UsuarioRestController {
 
 
 
-    @CrossOrigin(origins = { "http://kids-web.herokuapp.com", "http://localhost:4200" })
+    @CrossOrigin(origins = { "https://kids-web.herokuapp.com", "http://localhost:4200" })
     @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
 	final Usuario usuario = this.usuarioService.getUserByEmail(email);
@@ -62,7 +62,7 @@ public class UsuarioRestController {
 
 
 
-    @CrossOrigin(origins = { "http://kids-web.herokuapp.com", "http://localhost:4200" })
+    @CrossOrigin(origins = { "https://kids-web.herokuapp.com", "http://localhost:4200" })
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
 	try {
@@ -80,7 +80,7 @@ public class UsuarioRestController {
 
 
 
-    @CrossOrigin(origins = { "http://kids-web.herokuapp.com", "http://localhost:4200" })
+    @CrossOrigin(origins = { "https://kids-web.herokuapp.com", "http://localhost:4200" })
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
 	try {
