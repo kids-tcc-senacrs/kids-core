@@ -49,7 +49,7 @@ public class CriancaRestController {
 
     @RequestMapping(method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario, final HttpServletResponse httpServletResponse) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
 	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuario(usuario);
 	final HttpStatus httpStatus = CollectionUtils.isEmpty(criancas) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(criancas));
@@ -61,7 +61,7 @@ public class CriancaRestController {
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
@@ -79,7 +79,7 @@ public class CriancaRestController {
 
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));

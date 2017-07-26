@@ -49,7 +49,7 @@ public class UsuarioRestController {
 
     @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email, final HttpServletResponse httpServletResponse) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
 
 	final Usuario usuario = this.usuarioService.getUserByEmail(email);
 	if (usuario != null && usuario.getPessoa().getEndereco() == null) {
@@ -65,7 +65,7 @@ public class UsuarioRestController {
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
 
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
@@ -84,7 +84,7 @@ public class UsuarioRestController {
 
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
 
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
