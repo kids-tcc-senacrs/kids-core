@@ -1,5 +1,7 @@
 package com.kids.moduloautenticacao;
 
+import static com.kids.util.KidsConstant.URL_WEB_DEV;
+import static com.kids.util.KidsConstant.URL_WEB_PROD;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -8,13 +10,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,10 +49,9 @@ public class UsuarioRestController {
 
 
 
+    @CrossOrigin(origins = { URL_WEB_DEV, URL_WEB_PROD }, allowCredentials = "true", exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
     @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email, final HttpServletResponse httpServletResponse) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
-
+    public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
 	final Usuario usuario = this.usuarioService.getUserByEmail(email);
 	if (usuario != null && usuario.getPessoa().getEndereco() == null) {
 	    usuario.getPessoa().setEndereco(new Endereco());
@@ -63,10 +64,9 @@ public class UsuarioRestController {
 
 
 
+    @CrossOrigin(origins = { URL_WEB_DEV, URL_WEB_PROD }, allowCredentials = "true", exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
-
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
@@ -82,10 +82,9 @@ public class UsuarioRestController {
 
 
 
+    @CrossOrigin(origins = { URL_WEB_DEV, URL_WEB_PROD }, allowCredentials = "true", exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
-
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));

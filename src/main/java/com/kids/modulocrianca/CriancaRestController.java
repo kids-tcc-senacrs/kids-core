@@ -1,5 +1,7 @@
 package com.kids.modulocrianca;
 
+import static com.kids.util.KidsConstant.URL_WEB_DEV;
+import static com.kids.util.KidsConstant.URL_WEB_PROD;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -9,7 +11,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.Set;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,9 +49,9 @@ public class CriancaRestController {
 
 
 
+    @CrossOrigin(origins = { URL_WEB_DEV, URL_WEB_PROD }, allowCredentials = "true", exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
     @RequestMapping(method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario, final HttpServletResponse httpServletResponse) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
+    public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario) {
 	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuario(usuario);
 	final HttpStatus httpStatus = CollectionUtils.isEmpty(criancas) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(criancas));
@@ -59,9 +61,9 @@ public class CriancaRestController {
 
 
 
+    @CrossOrigin(origins = { URL_WEB_DEV, URL_WEB_PROD }, allowCredentials = "true", exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
@@ -77,9 +79,9 @@ public class CriancaRestController {
 
 
 
+    @CrossOrigin(origins = { URL_WEB_DEV, URL_WEB_PROD }, allowCredentials = "true", exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final HttpServletResponse httpServletResponse, final Errors errors) {
-	httpServletResponse.addHeader("Access-Control-Allow-Origin", "https://kids-web.herokuapp.com");
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
