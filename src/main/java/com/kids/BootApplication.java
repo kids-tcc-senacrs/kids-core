@@ -46,7 +46,7 @@ public class BootApplication {
 	    @Override
 	    public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")//
-		        .allowedOrigins("http://localhost:4200", "https://kids-web.herokuapp.com")//
+		        .allowedOrigins("http://localhost:4200", "http://kids-web.herokuapp.com")//
 		        .allowedMethods("GET", "POST", "OPTIONS", "PUT")//
 		        .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers")//
 		        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")//
