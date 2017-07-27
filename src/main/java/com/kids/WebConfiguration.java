@@ -11,12 +11,17 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addCorsMappings(final CorsRegistry registry) {
-		registry.addMapping("/**")//
-				.allowedOrigins("https://kids-web.herokuapp.com")//
-				.allowedMethods("GET", "POST", "PUT")//
-				.allowedHeaders("Content-Type")//
-				.allowCredentials(false)//
-				.maxAge(3600);//
+		registry.addMapping("/**");
 	}
+
+//	@Override
+//	public void addCorsMappings(final CorsRegistry registry) {
+//		registry.addMapping("/**")//
+//				.allowedOrigins("https://kids-web.herokuapp.com")//
+//				.allowedMethods("GET", "POST", "PUT")//
+//				.allowedHeaders("Content-Type")//
+//				.allowCredentials(false)//
+//				.maxAge(3600);//
+//	}
 
 }
