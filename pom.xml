@@ -115,6 +115,7 @@
 					<instrumentation>
 						<excludes>
 							<exclude>com/kids/model/*.class</exclude>
+							<exclude>com/kids/repository/*.class</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>
