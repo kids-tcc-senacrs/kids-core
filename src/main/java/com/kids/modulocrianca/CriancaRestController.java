@@ -27,6 +27,7 @@ import com.kids.model.Usuario;
 import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.util.JsonUtil;
+import com.kids.util.KidsConstant;
 import com.kids.util.RestErroVo;
 import com.kids.util.RestUtil;
 
@@ -38,6 +39,7 @@ import com.kids.util.RestUtil;
  */
 @RestController
 @RequestMapping("/crianca")
+@CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
 public class CriancaRestController {
 
     @Autowired
@@ -46,7 +48,7 @@ public class CriancaRestController {
 
 
 
-    @CrossOrigin(origins = {"https://kids-web.herokuapp.com"})
+
     @RequestMapping(method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario) {
 	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuario(usuario);
@@ -57,7 +59,7 @@ public class CriancaRestController {
 
 
 
-    @CrossOrigin(origins = {"https://kids-web.herokuapp.com"})
+
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
 	try {
@@ -74,7 +76,7 @@ public class CriancaRestController {
 
 
 
-    @CrossOrigin(origins = {"https://kids-web.herokuapp.com"})
+
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
 	try {
