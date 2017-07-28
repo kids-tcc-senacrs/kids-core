@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +45,7 @@ public class UsuarioRestController {
 
 
 
-
-
+    @CrossOrigin(origins = {"https://kids-web.herokuapp.com"})
     @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
 	final Usuario usuario = this.usuarioService.getUserByEmail(email);
@@ -59,7 +59,7 @@ public class UsuarioRestController {
 
 
 
-
+    @CrossOrigin(origins = {"https://kids-web.herokuapp.com"})
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
 	try {
@@ -76,7 +76,7 @@ public class UsuarioRestController {
 
 
 
-
+    @CrossOrigin(origins = {"https://kids-web.herokuapp.com"})
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
 	try {
