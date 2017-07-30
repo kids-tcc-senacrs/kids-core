@@ -51,7 +51,7 @@ public class UsuarioRestController {
     public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
 	final Usuario usuario = this.usuarioService.getUserByEmail(email);
 	final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(usuario));
+	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(usuario));//
     }
 
 
