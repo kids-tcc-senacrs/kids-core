@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -32,6 +34,7 @@ public class Endereco implements Serializable {
     @TableGenerator(name = "sequenceEndereco", allocationSize = 1)
     private Long id;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pessoa", foreignKey = @ForeignKey(name = "FK_pessoa"))
     private Pessoa pessoa;
@@ -132,4 +135,5 @@ public class Endereco implements Serializable {
     public void setLocalizacao(final String localizacao) {
 	this.localizacao = localizacao;
     }
+
 }

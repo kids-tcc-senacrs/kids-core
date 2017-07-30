@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
 import com.kids.exception.KidsException;
-import com.kids.model.Endereco;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
 import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
@@ -39,7 +37,6 @@ import com.kids.util.RestUtil;
  */
 @RestController
 @RequestMapping("/usuario")
-@CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
 public class UsuarioRestController {
 
     @Autowired
@@ -49,12 +46,10 @@ public class UsuarioRestController {
 
 
 
+    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
 	final Usuario usuario = this.usuarioService.getUserByEmail(email);
-	if (usuario != null && usuario.getPessoa().getEndereco() == null) {
-	    usuario.getPessoa().setEndereco(new Endereco());
-	}
 	final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(usuario));
     }
@@ -63,13 +58,15 @@ public class UsuarioRestController {
 
 
 
+    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
 	    } else {
-		return ResponseEntity.status(CREATED).body(new Gson().toJson(this.usuarioService.saveUsuario(usuario)));
+		this.usuarioService.saveUsuario(usuario);
+		return ResponseEntity.status(CREATED).build();
 	    }
 	} catch (final KidsException e) {
 	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
@@ -80,13 +77,15 @@ public class UsuarioRestController {
 
 
 
+    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
 	try {
 	    if (RestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(RestUtil.getErros(errors));
 	    } else {
-		return ResponseEntity.status(OK).body(JsonUtil.convertToJson(this.usuarioService.updateUsuario(usuario)));
+		this.usuarioService.updateUsuario(usuario);
+		return ResponseEntity.status(OK).build();
 	    }
 	} catch (final KidsException e) {
 	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));

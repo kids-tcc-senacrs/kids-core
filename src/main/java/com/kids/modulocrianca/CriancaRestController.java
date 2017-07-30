@@ -39,7 +39,6 @@ import com.kids.util.RestUtil;
  */
 @RestController
 @RequestMapping("/crianca")
-@CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
 public class CriancaRestController {
 
     @Autowired
@@ -49,6 +48,7 @@ public class CriancaRestController {
 
 
 
+    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario) {
 	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuario(usuario);
@@ -60,6 +60,7 @@ public class CriancaRestController {
 
 
 
+    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
 	try {
@@ -77,6 +78,7 @@ public class CriancaRestController {
 
 
 
+    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
 	try {

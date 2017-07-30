@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 
 import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Endereco;
+import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
 import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
+import com.kids.repository.EnderecoRepository;
 import com.kids.repository.UsuarioRepository;
 
 /**
@@ -22,37 +24,38 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
 
 
 
-    Usuario saveUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
+
+    void saveUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
 	if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
 	    throw new UsuarioJaCadastradoException();
 	final Usuario usuario = this.create(vo);
-	return this.usuarioRepository.save(usuario);
+	this.usuarioRepository.persist(usuario);
     }
 
 
 
 
 
-    Usuario updateUsuario(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
+    void updateUsuario(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
 	if (!this.usuarioInformadoJaPossuiCadastro(vo.getId())) {
 	    throw new UsuarioInexistenteException();
 	}
-	Usuario usuario = this.usuarioRepository.findUsuarioById(vo.getId());
-	usuario = this.usuarioRepository.findByEmail(usuario.getEmail());
-	this.update(usuario, vo);
-	this.updateEndereco(usuario, vo);
-	return usuario;
+	final Usuario usuario = this.usuarioRepository.findUsuarioById(vo.getId());
+	this.updateEndereco(usuario.getPessoa(), vo);
+	this.updateUsuario(usuario, vo);
     }
 
 
 
 
 
-    Usuario getUserById(final Long id) {
+    Usuario getUsuarioById(final Long id) {
 	return this.usuarioRepository.findUsuarioById(id);
     }
 
@@ -68,14 +71,18 @@ public class UsuarioService {
 
 
 
-    private void updateEndereco(final Usuario usuario, final UsuarioAtualizaVO vo) {
+    private void updateEndereco(final Pessoa pessoa, final UsuarioAtualizaVO vo) {
+	Endereco endereco = this.getEndereco(pessoa);
+	if (endereco == null) {
+	    endereco = new Endereco();
+	}
+
 	if (vo.getPessoa().getEndereco() != null) {
-	    if (usuario.getPessoa().getEndereco() == null) {
-		usuario.getPessoa().setEndereco(new Endereco());
-	    }
-	    usuario.getPessoa().getEndereco().setCep(vo.getPessoa().getEndereco().getCep());
-	    usuario.getPessoa().getEndereco().setLogradouro(vo.getPessoa().getEndereco().getLogradouro());
-	    usuario.getPessoa().getEndereco().setLocalizacao(vo.getPessoa().getEndereco().getLocalizacao());
+	    endereco.setPessoa(pessoa);
+	    endereco.setLogradouro(vo.getPessoa().getEndereco().getLogradouro());
+	    endereco.setLocalizacao(vo.getPessoa().getEndereco().getLocalizacao());
+	    endereco.setCep(vo.getPessoa().getEndereco().getCep());
+	    this.enderecoRepository.save(endereco);
 	}
     }
 
@@ -83,9 +90,18 @@ public class UsuarioService {
 
 
 
-    private void update(final Usuario usuario, final UsuarioAtualizaVO vo) {
+    private Endereco getEndereco(final Pessoa pessoa) {
+	return this.enderecoRepository.findEnderecoByPessoa(pessoa);
+    }
+
+
+
+
+
+    private void updateUsuario(final Usuario usuario, final UsuarioAtualizaVO vo) {
 	usuario.setTelefone(vo.getTelefone());
 	usuario.setAtivo(vo.isAtivo());
+	this.usuarioRepository.update(usuario);
     }
 
 

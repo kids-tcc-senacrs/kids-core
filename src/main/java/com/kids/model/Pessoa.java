@@ -2,7 +2,6 @@ package com.kids.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +33,7 @@ public class Pessoa implements Serializable {
     @Column(name = "nome", nullable = false, length = 60)
     private String nome;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "pessoa")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "pessoa")
     private Endereco endereco;
 
 
@@ -92,4 +91,5 @@ public class Pessoa implements Serializable {
     public void setEndereco(final Endereco endereco) {
 	this.endereco = endereco;
     }
+
 }

@@ -164,7 +164,8 @@ public class Usuario implements Serializable {
 
 
 
-    public void setAtivo(Boolean ativo) {
+    public void setAtivo(final Boolean ativo) {
 	this.ativo = ativo;
     }
+
 }

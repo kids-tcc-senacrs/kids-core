@@ -70,7 +70,7 @@ public class UsuarioServiceTest {
     public void deveSalvarUsuarioComSucesso() throws Exception {
 	final UsuarioNovoVO usuarioNovoVO = new UsuarioNovoVO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", TipoUsuario.FAMILIAR);
 	this.usuarioService.saveUsuario(usuarioNovoVO);
-	Mockito.verify(usuarioRepository, times(1)).save(Mockito.any(Usuario.class));
+	Mockito.verify(usuarioRepository, times(1)).persist(Mockito.any(Usuario.class));
     }
 
 }

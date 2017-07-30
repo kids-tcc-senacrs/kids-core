@@ -2,8 +2,7 @@ package com.kids.util;
 
 import java.io.Serializable;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * 
@@ -20,9 +19,12 @@ public class JsonUtil implements Serializable {
 
 
     public static <T> String convertToJson(final T entity) {
-	final GsonBuilder b = new GsonBuilder();
-	b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
-	final Gson gson = b.create();
-	return gson.toJson(entity);
+	try {
+	    final ObjectMapper mapper = new ObjectMapper();
+	    return mapper.writeValueAsString(entity);
+	} catch (Exception e) {
+	    System.out.println(e);
+	}
+	return null;
     }
 }

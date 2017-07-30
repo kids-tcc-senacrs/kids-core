@@ -3,8 +3,6 @@ package com.kids.util;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
-import com.google.gson.Gson;
-
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -31,7 +29,7 @@ public class RestUtil {
 		restErroVo.addMessage(e.getDefaultMessage());
 	    }
 	}
-	return new Gson().toJson(restErroVo);
+	return JsonUtil.convertToJson(restErroVo);
     }
 
 }
