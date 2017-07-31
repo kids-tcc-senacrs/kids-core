@@ -31,8 +31,8 @@ public class CrecheService {
 
 
 
-    public Creche getCrecheByUsuario(final Usuario u) {
-	return crecheRepository.findCrecheByUsuario(u);
+    public Creche getCrecheByUsuario(final Usuario usuario) {
+	return crecheRepository.findCrecheByUsuario(usuario);
     }
 
 }

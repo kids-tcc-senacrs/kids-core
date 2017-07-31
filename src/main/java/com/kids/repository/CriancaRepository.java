@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,18 +67,10 @@ public class CriancaRepository {
 	final Set<Crianca> criancasbYCreches = new HashSet<>();
 	final Session session = (Session) this.em.getDelegate();
 	final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class);
+	criteria.add(Restrictions.eq("creche", creche));
 	final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();
-	final Set<Crianca> criancasAll = result.stream().collect(Collectors.toSet());
-	if (CollectionUtils.isNotEmpty(criancasAll)) {
-	    for (final Crianca crianca : criancasAll) {
-		crianca.getCreches().forEach(c -> {
-		    if (creche.equals(c)) {
-			criancasbYCreches.add(crianca);
-		    }
-		});
-	    }
-	}
-	this.lazy(criancasbYCreches);
+	final Set<Crianca> criancas = result.stream().collect(Collectors.toSet());
+	this.lazy(criancas);
 	return criancasbYCreches;
     }
 

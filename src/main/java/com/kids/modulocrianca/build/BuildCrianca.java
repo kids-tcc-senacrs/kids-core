@@ -13,6 +13,7 @@ import com.kids.model.Creche;
 import com.kids.model.Crianca;
 import com.kids.model.Endereco;
 import com.kids.model.Medicamento;
+import com.kids.model.Pessoa;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.modulocrianca.vo.AlergiaVO;
 import com.kids.modulocrianca.vo.CrecheVo;
@@ -39,34 +40,27 @@ public class BuildCrianca {
 
 
 
-    public BuildCrianca() {
-	super();
-    }
-
-
-
-
-
     public BuildCrianca(final CriancaNovoVO vo, final CrecheFacade crecheFacade, final CriancaRepository criancaRepository) {
 	this.crecheFacade = crecheFacade;
 	this.criancaRepository = criancaRepository;
+	this.crianca.setPessoa(new Pessoa());
 
-	this.crianca.setMatricula(vo.getGeral().getMatricula());
-	this.crianca.setNome(vo.getGeral().getNome());
-	this.crianca.setSexo(vo.getGeral().getSexo());
+	this.crianca.getPessoa().setNome(vo.getPessoa().getNome());
+	this.crianca.setMatricula(vo.getMatricula());
+	this.crianca.setSexo(vo.getSexo());
 	this.crianca.setDtNascimento(new Date());// TODO: RECEBER A DATA E CONVERTER PARA LOCALDATE
 
-	final Endereco endereco = this.buildEndereco(vo);
+	final Endereco endereco = this.buildEndereco(vo, this.crianca.getPessoa());
 	final Contato contato = this.buildContato(vo);
+	final Creche creche = this.buildCreche(vo.getCreche());
 	final Set<Medicamento> medicamentos = this.buildMedicamentos(vo);
-	final Set<Creche> creches = this.buildCreche(vo.getCreche());
 	final Set<Alergia> alergias = this.buildAlergias(vo.getAlergias());
 
 	this.crianca.setEndereco(endereco);
 	this.crianca.setContato(contato);
 	this.crianca.setMedicamentos(medicamentos);
 	this.crianca.setAlergias(alergias);
-	this.crianca.setCreches(creches);
+	this.crianca.setCreche(creche);
     }
 
 
@@ -78,9 +72,9 @@ public class BuildCrianca {
 	this.criancaRepository = criancaRepository;
 
 	this.crianca = this.criancaRepository.find(vo.getId());
-	this.crianca.setMatricula(vo.getGeral().getMatricula());
-	this.crianca.setNome(vo.getGeral().getNome());
-	this.crianca.setSexo(vo.getGeral().getSexo());
+	this.crianca.setMatricula(vo.getMatricula());
+	this.crianca.getPessoa().setNome(vo.getPessoa().getNome());
+	this.crianca.setSexo(vo.getSexo());
 	this.crianca.setDtNascimento(new Date());// TODO: RECEBER A DATA E CONVERTER PARA LOCALDATE
 
 	this.updateEndereco(vo);
@@ -177,10 +171,8 @@ public class BuildCrianca {
 
 
 
-    private Set<Creche> buildCreche(final CrecheVo creche) {
-	final Set<Creche> creches = new HashSet<>();
-	creches.add(this.crecheFacade.get(creche.getId()));
-	return creches;
+    private Creche buildCreche(final CrecheVo creche) {
+	return this.crecheFacade.get(creche.getId());
     }
 
 
@@ -219,8 +211,9 @@ public class BuildCrianca {
 
 
 
-    private Endereco buildEndereco(final CriancaNovoVO vo) {
+    private Endereco buildEndereco(final CriancaNovoVO vo, final Pessoa pessoa) {
 	final Endereco endereco = new Endereco();
+	endereco.setPessoa(pessoa);
 	endereco.setCep(vo.getEndereco().getCep());
 	endereco.setLogradouro(vo.getEndereco().getLogradouro());
 	endereco.setLocalizacao(vo.getEndereco().getLocalizacao());

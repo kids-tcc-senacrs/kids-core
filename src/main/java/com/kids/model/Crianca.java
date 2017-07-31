@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -44,8 +43,8 @@ public class Crianca implements Serializable {
     @TableGenerator(name = "sequenceCrianca", allocationSize = 1)
     private Long id;
 
-    @Column(name = "nome", nullable = false, length = 60)
-    private String nome;
+    @Column(name = "matricula", length = 10)
+    private String matricula;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_nascimento", nullable = false)
@@ -55,19 +54,24 @@ public class Crianca implements Serializable {
     @Column(name = "sexo", nullable = false)
     private Sexo sexo;
 
-    @Column(name = "matricula", length = 10)
-    private String matricula;
-
     @Column(name = "foto")
     private String foto;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinColumn(name = "endereco_id", foreignKey = @ForeignKey(name = "FK_endereco"))
+    @JoinColumn(name = "pessoa_id", foreignKey = @ForeignKey(name = "FK_pessoa"))
+    private Pessoa pessoa;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinColumn(name = "endereco_id", foreignKey = @ForeignKey(name = "FK_endereco"), nullable = false)
     private Endereco endereco;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinColumn(name = "contato_id", foreignKey = @ForeignKey(name = "FK_contato"))
+    @JoinColumn(name = "contato_id", foreignKey = @ForeignKey(name = "FK_contato"), nullable = false)
     private Contato contato;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creche_id", foreignKey = @ForeignKey(name = "FK_creche"), nullable = false)
+    private Creche creche;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
     @JoinTable(name = "CRIANCA_MEDICAMENTO", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_medicamento", table = "MEDICAMENTO", foreignKey = @ForeignKey(name = "FK_medicamento")))
@@ -77,9 +81,13 @@ public class Crianca implements Serializable {
     @JoinTable(name = "CRIANCA_ALERGIA", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_alergia", table = "ALERGIA", foreignKey = @ForeignKey(name = "FK_alergia")))
     private Set<Alergia> alergias;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "CRIANCA_CRECHE", joinColumns = @JoinColumn(name = "id_crianca", table = "CRIANCA", foreignKey = @ForeignKey(name = "FK_crianca")), inverseJoinColumns = @JoinColumn(name = "id_creche", table = "CRECHE", foreignKey = @ForeignKey(name = "FK_creche")))
-    private Set<Creche> creches;
+
+
+
+
+    public Crianca() {
+	super();
+    }
 
 
 
@@ -101,16 +109,16 @@ public class Crianca implements Serializable {
 
 
 
-    public String getNome() {
-	return nome;
+    public Pessoa getPessoa() {
+	return pessoa;
     }
 
 
 
 
 
-    public void setNome(final String nome) {
-	this.nome = nome;
+    public void setPessoa(final Pessoa pessoa) {
+	this.pessoa = pessoa;
     }
 
 
@@ -245,15 +253,16 @@ public class Crianca implements Serializable {
 
 
 
-    public Set<Creche> getCreches() {
-	return creches;
+    public Creche getCreche() {
+	return creche;
     }
 
 
 
 
 
-    public void setCreches(final Set<Creche> creches) {
-	this.creches = creches;
+    public void setCreche(final Creche creche) {
+	this.creche = creche;
     }
+
 }

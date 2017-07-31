@@ -19,7 +19,7 @@ public class CrecheVo implements Serializable {
     private static final long serialVersionUID = -3725043142340838639L;
 
     @ApiModelProperty(position = 0, required = true)
-    @NotNull(message = "o campo 'id' é de preenchimento obrigatório")
+    @NotNull(message = "o campo 'crecheId' é de preenchimento obrigatório")
     private Long id;
 
 
@@ -34,7 +34,8 @@ public class CrecheVo implements Serializable {
 
 
 
-    public void setId(final Long id) {
-	this.id = id;
+    public void setCrecheId(final Long crecheId) {
+	this.id = crecheId;
     }
+
 }
