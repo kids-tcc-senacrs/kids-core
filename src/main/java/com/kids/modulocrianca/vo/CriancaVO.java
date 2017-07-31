@@ -37,8 +37,7 @@ public class CriancaVO implements Serializable {
     @NotNull(message = "o campo 'data de nascimento' é de preenchimento obrigatório")
     private String dtNascimento;
 
-    @ApiModelProperty(position = 2, required = true)
-    @NotNull(message = "o campo 'sexo' é de preenchimento obrigatório")
+    @ApiModelProperty(position = 2)
     private Sexo sexo;
 
     @ApiModelProperty(position = 3)

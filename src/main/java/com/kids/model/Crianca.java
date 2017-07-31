@@ -51,7 +51,7 @@ public class Crianca implements Serializable {
     private Date dtNascimento;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "sexo", nullable = false)
+    @Column(name = "sexo", nullable = true)
     private Sexo sexo;
 
     @Column(name = "foto")
