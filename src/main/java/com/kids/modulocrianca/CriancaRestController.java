@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
@@ -17,13 +18,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.exception.KidsException;
 import com.kids.model.Crianca;
-import com.kids.model.Usuario;
 import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.util.JsonUtil;
@@ -49,9 +50,9 @@ public class CriancaRestController {
 
 
     @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
-    @RequestMapping(method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getCriancasByUsuario(@Valid @RequestBody(required = true) final Usuario usuario) {
-	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuario(usuario);
+    @RequestMapping(method = GET, path = "/{usuarioId}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getCriancasByUsuarioId(@PathVariable(required = true) final Long usuarioId) {
+	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuarioId(usuarioId);
 	final HttpStatus httpStatus = CollectionUtils.isEmpty(criancas) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(criancas));
     }

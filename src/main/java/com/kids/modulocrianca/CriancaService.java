@@ -121,7 +121,8 @@ public class CriancaService {
 
 
 
-    public Set<Crianca> getCriancasByUsuario(final Usuario usuario) {
+    public Set<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
+	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
 	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
 	    final Usuario u = this.usuarioFacade.getUsuarioById(usuario.getId());
 	    if (u.getAtivo()) {
