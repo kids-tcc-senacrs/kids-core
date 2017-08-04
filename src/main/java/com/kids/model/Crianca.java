@@ -23,6 +23,9 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.kids.enumeration.Sexo;
 
@@ -33,7 +36,7 @@ import com.kids.enumeration.Sexo;
  * 
  */
 @Entity
-@Table(name = "CRIANCA")
+@Table(name = "CRIANCA", uniqueConstraints = @UniqueConstraint(columnNames = { "creche_id", "matricula" }, name = "UQ_CRIANCA"))
 public class Crianca implements Serializable {
 
 	private static final long serialVersionUID = -5831956911955418351L;
@@ -85,6 +88,7 @@ public class Crianca implements Serializable {
 
 	public Crianca() {
 		super();
+		this.setPessoa(new Pessoa());
 	}
 
 	public Long getId() {
@@ -173,6 +177,23 @@ public class Crianca implements Serializable {
 
 	public void setCreche(final Creche creche) {
 		this.creche = creche;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)//
+				.append("id", this.id)//
+				.append("matricula", this.matricula)//
+				.append("dtNascimento", this.dtNascimento)//
+				.append("sexo", this.sexo)//
+				.append("foto", this.foto)//
+				.append("pessoa", this.pessoa)//
+				.append("endereco", this.endereco)//
+				.append("contato", this.contato)//
+				.append("creche", this.creche)//
+				.append("medicamentos", this.medicamentos)//
+				.append("alergias", this.alergias)//
+				.toString();//
 	}
 
 }

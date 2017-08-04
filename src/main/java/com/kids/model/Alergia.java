@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -20,54 +22,43 @@ import javax.persistence.TableGenerator;
 @Table(name = "ALERGIA")
 public class Alergia implements Serializable {
 
-    private static final long serialVersionUID = 8433449795250662499L;
+	private static final long serialVersionUID = 8433449795250662499L;
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequenceAlergia", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequenceAlergia", allocationSize = 1)
-    private Long id;
+	@Id
+	@Column(name = "id", nullable = false)
+	@GeneratedValue(generator = "sequenceAlergia", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "sequenceAlergia", allocationSize = 1)
+	private Long id;
 
-    @Column(name = "descricao", length = 60)
-    private String descricao;
+	@Column(name = "descricao", length = 60)
+	private String descricao;
 
+	public Alergia() {
+		super();
+	}
 
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(final Long id) {
+		this.id = id;
+	}
 
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public Alergia() {
-	super();
-    }
+	public void setDescricao(final String descricao) {
+		this.descricao = descricao;
+	}
 
-
-
-
-
-    public Long getId() {
-	return id;
-    }
-
-
-
-
-
-    public void setId(final Long id) {
-	this.id = id;
-    }
-
-
-
-
-
-    public String getDescricao() {
-	return descricao;
-    }
-
-
-
-
-
-    public void setDescricao(final String descricao) {
-	this.descricao = descricao;
-    }
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)//
+				.append("id", this.id)//
+				.append("descricao", this.descricao)//
+				.toString();//
+	}
+	
 }

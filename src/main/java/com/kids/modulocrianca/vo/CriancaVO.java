@@ -1,6 +1,8 @@
 package com.kids.modulocrianca.vo;
 
-import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +14,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.kids.enumeration.Sexo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * 
  * @author luciano - lucianoortizsilva@gmail.com
@@ -22,9 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "crianca")
-public class CriancaVO implements Serializable {
-
-	private static final long serialVersionUID = 8182810973491330809L;
+public class CriancaVO {
 
 	@ApiModelProperty(position = 0, required = true)
 	@NotEmpty(message = "o campo 'matricula' não pode ser vazio")
@@ -45,23 +42,23 @@ public class CriancaVO implements Serializable {
 
 	@Valid
 	@ApiModelProperty(position = 4, required = true)
-	private PessoaVO pessoa;
+	private transient PessoaVO pessoa;
 
 	@Valid
 	@ApiModelProperty(position = 5, required = true)
-	private EnderecoVO endereco;
+	private transient EnderecoVO endereco;
 
 	@Valid
 	@ApiModelProperty(position = 6, required = true)
-	private ContatoVO contato;
+	private transient ContatoVO contato;
 
 	@Valid
 	@ApiModelProperty(position = 7)
-	private Set<MedicamentoVO> medicamentos;
+	private transient Set<MedicamentoVO> medicamentos;
 
 	@Valid
 	@ApiModelProperty(position = 8)
-	private Set<AlergiaVO> alergias;
+	private transient Set<AlergiaVO> alergias;
 
 	public CriancaVO() {
 		super();

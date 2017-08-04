@@ -1,4 +1,4 @@
-package com.kids.modulocrianca;
+package com.kids.modulocrianca.validate;
 
 import com.kids.exception.KidsException;
 import com.kids.util.KidsMessageUtil;
@@ -9,11 +9,11 @@ import com.kids.util.KidsMessageUtil;
  * @since 07/2017
  * 
  */
-class CriancaJaCadastradaException extends KidsException {
+public class CriancaJaCadastradaException extends KidsException {
 
 	private static final long serialVersionUID = 7211135332200411498L;
 
-	private static final String MESSAGE = "message_criancaJaCadastradaException";
+	public static final String MESSAGE = "message_criancaJaCadastradaException";
 
 	public CriancaJaCadastradaException() {
 		super(KidsMessageUtil.getMessage(MESSAGE));

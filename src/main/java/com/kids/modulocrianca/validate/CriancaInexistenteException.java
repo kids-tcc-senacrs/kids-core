@@ -1,4 +1,4 @@
-package com.kids.modulocrianca;
+package com.kids.modulocrianca.validate;
 
 import com.kids.exception.KidsException;
 import com.kids.util.KidsMessageUtil;
@@ -9,11 +9,11 @@ import com.kids.util.KidsMessageUtil;
  * @since 07/2017
  *
  */
-class CriancaInexistenteException extends KidsException {
+public class CriancaInexistenteException extends KidsException {
 
 	private static final long serialVersionUID = 4903070745394897715L;
 
-	private final static String MESSAGE = "message_criancaInexistenteException";
+	public final static String MESSAGE = "message_criancaInexistenteException";
 
 	public CriancaInexistenteException() {
 		super(KidsMessageUtil.getMessage(MESSAGE));

@@ -31,7 +31,7 @@ public class CriancaRepository {
 	private EntityManager em;
 
 	@Transactional
-	public Crianca save(final Crianca crianca) {
+	public Crianca persist(final Crianca crianca) {
 		this.em.persist(crianca);
 		this.em.flush();
 		return crianca;
@@ -42,7 +42,7 @@ public class CriancaRepository {
 		return this.em.merge(crianca);
 	}
 
-	public Crianca find(final Long id) {
+	public Crianca findCrianca(final Long id) {
 		return this.em.find(Crianca.class, id);
 	}
 

@@ -3,10 +3,10 @@ package com.kids.moduloautenticacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kids.enumeration.TipoUsuario;
-import com.kids.model.Endereco;
-import com.kids.model.Pessoa;
+import com.kids.exception.KidsException;
 import com.kids.model.Usuario;
+import com.kids.moduloautenticacao.build.BuildUsuario;
+import com.kids.moduloautenticacao.validate.ValidateUsuario;
 import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
 import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
 import com.kids.repository.EnderecoRepository;
@@ -21,119 +21,30 @@ import com.kids.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private EnderecoRepository enderecoRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
-
-
-
-
-    void saveUsuario(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
-	if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
-	    throw new UsuarioJaCadastradoException();
-	final Usuario usuario = this.create(vo);
-	this.usuarioRepository.persist(usuario);
-    }
-
-
-
-
-
-    void updateUsuario(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
-	if (!this.usuarioInformadoJaPossuiCadastro(vo.getId())) {
-	    throw new UsuarioInexistenteException();
-	}
-	final Usuario usuario = this.usuarioRepository.findUsuarioById(vo.getId());
-	this.updateEndereco(usuario.getPessoa(), vo);
-	this.updateUsuario(usuario, vo);
-    }
-
-
-
-
-
-    Usuario getUsuarioById(final Long id) {
-	return this.usuarioRepository.findUsuarioById(id);
-    }
-
-
-
-
-
-    Usuario getUserByEmail(final String email) {
-	return this.usuarioRepository.findByEmail(email);
-    }
-
-
-
-
-
-    private void updateEndereco(final Pessoa pessoa, final UsuarioAtualizaVO vo) {
-	Endereco endereco = this.getEndereco(pessoa);
-	if (endereco == null) {
-	    endereco = new Endereco();
+	void saveUsuario(final UsuarioNovoVO vo) throws KidsException {
+		new ValidateUsuario(vo, usuarioRepository);
+		final BuildUsuario build = new BuildUsuario(vo);
+		this.usuarioRepository.persist(build.getUsuario());
 	}
 
-	if (vo.getPessoa().getEndereco() != null) {
-	    endereco.setPessoa(pessoa);
-	    endereco.setLogradouro(vo.getPessoa().getEndereco().getLogradouro());
-	    endereco.setLocalizacao(vo.getPessoa().getEndereco().getLocalizacao());
-	    endereco.setCep(vo.getPessoa().getEndereco().getCep());
-	    this.enderecoRepository.save(endereco);
+	void updateUsuario(final UsuarioAtualizaVO vo) throws KidsException {
+		new ValidateUsuario(vo, usuarioRepository);
+		final BuildUsuario build = new BuildUsuario(vo, this.usuarioRepository, this.enderecoRepository);
+		this.usuarioRepository.update(build.getUsuario());
 	}
-    }
 
-
-
-
-
-    private Endereco getEndereco(final Pessoa pessoa) {
-	return this.enderecoRepository.findEnderecoByPessoa(pessoa);
-    }
-
-
-
-
-
-    private void updateUsuario(final Usuario usuario, final UsuarioAtualizaVO vo) {
-	usuario.setTelefone(vo.getTelefone());
-	usuario.setAtivo(vo.isAtivo());
-	this.usuarioRepository.update(usuario);
-    }
-
-
-
-
-
-    private Usuario create(final UsuarioNovoVO vo) {
-	final Usuario usuario = new Usuario();
-	usuario.getPessoa().setNome(vo.getNome());
-	usuario.setEmail(vo.getEmail());
-	usuario.setTipo(vo.getTipo());
-	if (TipoUsuario.CRECHE.equals(vo.getTipo())) {
-	    usuario.setAtivo(Boolean.TRUE);
-	} else {
-	    usuario.setAtivo(Boolean.FALSE);
+	Usuario getUsuarioById(final Long id) {
+		return this.usuarioRepository.findUsuarioById(id);
 	}
-	return usuario;
-    }
 
+	Usuario getUserByEmail(final String email) {
+		return this.usuarioRepository.findByEmail(email);
+	}
 
-
-
-
-    private boolean usuarioInformadoJaPossuiCadastro(final String email) {
-	return this.usuarioRepository.findByEmail(email) == null ? Boolean.FALSE : Boolean.TRUE;
-    }
-
-
-
-
-
-    private boolean usuarioInformadoJaPossuiCadastro(final Long id) {
-	return this.usuarioRepository.findUsuarioById(id) == null ? Boolean.FALSE : Boolean.TRUE;
-    }
 }

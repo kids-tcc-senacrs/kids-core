@@ -1,11 +1,9 @@
 package com.kids.modulocrianca.vo;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 
@@ -14,28 +12,18 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "creche")
-public class CrecheVo implements Serializable {
+public class CrecheVo {
 
-    private static final long serialVersionUID = -3725043142340838639L;
+	@ApiModelProperty(position = 0, required = true)
+	@NotNull(message = "o campo 'crecheId' é de preenchimento obrigatório")
+	private Long id;
 
-    @ApiModelProperty(position = 0, required = true)
-    @NotNull(message = "o campo 'crecheId' é de preenchimento obrigatório")
-    private Long id;
+	public Long getId() {
+		return id;
+	}
 
-
-
-
-
-    public Long getId() {
-	return id;
-    }
-
-
-
-
-
-    public void setCrecheId(final Long crecheId) {
-	this.id = crecheId;
-    }
+	public void setCrecheId(final Long crecheId) {
+		this.id = crecheId;
+	}
 
 }

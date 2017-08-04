@@ -64,7 +64,7 @@ public class BuildCrianca {
 		this.crecheFacade = crecheFacade;
 		this.criancaRepository = criancaRepository;
 
-		this.crianca = this.criancaRepository.find(vo.getId());
+		this.crianca = this.criancaRepository.findCrianca(vo.getId());
 		this.crianca.setMatricula(vo.getMatricula());
 		this.crianca.getPessoa().setNome(vo.getPessoa().getNome());
 		this.crianca.setSexo(vo.getSexo());

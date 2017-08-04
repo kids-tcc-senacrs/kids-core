@@ -15,23 +15,15 @@ import com.kids.model.Usuario;
 @Service
 public class CrecheFacade {
 
-    @Autowired
-    private CrecheService crecheService;
+	@Autowired
+	private CrecheService crecheService;
 
+	public Creche getCreche(final Long id) {
+		return this.crecheService.getById(id);
+	}
 
-
-
-
-    public Creche getCreche(final Long id) {
-	return this.crecheService.getById(id);
-    }
-
-
-
-
-
-    public Creche getCrecheByUsuario(final Usuario u) {
-	return this.crecheService.getCrecheByUsuario(u);
-    }
+	public Creche getCrecheByUsuario(final Usuario u) {
+		return this.crecheService.getCrecheByUsuario(u);
+	}
 
 }
