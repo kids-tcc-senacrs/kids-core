@@ -9,10 +9,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.kids.exception.KidsException;
+import com.kids.model.Creche;
+import com.kids.model.Crianca;
 import com.kids.modulocreche.CrecheFacade;
+import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.repository.CriancaRepository;
-import com.kids.util.MessageUtil;
+import com.kids.util.KidsMessageUtil;
 
 /**
  * 
@@ -23,28 +27,40 @@ import com.kids.util.MessageUtil;
 @RunWith(MockitoJUnitRunner.class)
 public class CriancaServiceTest {
 
-    @InjectMocks
-    private CriancaService criancaService;
+	@InjectMocks
+	private CriancaService criancaService;
 
-    @Mock
-    private CriancaRepository criancaRepository;
+	@Mock
+	private CriancaRepository criancaRepository;
 
-    @Mock
-    private CrecheFacade crecheFacade;
+	@Mock
+	private CrecheFacade crecheFacade;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
+	@Test
+	public void deveGerarCrecheInexistenteException_quandoTentarCadastrarCriancaInformandoCrecheInexistente() throws KidsException {
+		Mockito.when(this.crecheFacade.getCreche(Mockito.anyLong())).thenReturn(null);
+		this.thrown.expect(CrecheInexistenteException.class);
+		this.thrown.expectMessage(KidsMessageUtil.getMessage("message_crecheInexistenteException"));
+		this.criancaService.save(new CriancaNovoVO());
+	}
 
+	@Test
+	public void deveGerarCriancaInexistenteException_quandoTentarAtualizarDadosDeAlgumaCriancaNaoCadastrada() throws KidsException {
+		Mockito.when(this.criancaRepository.find(Mockito.anyLong())).thenReturn(null);
+		this.thrown.expect(CriancaInexistenteException.class);
+		this.thrown.expectMessage(KidsMessageUtil.getMessage("message_criancaInexistenteException"));
+		this.criancaService.update(new CriancaAtualizaVO());
+	}
 
-
-
-    @Test
-    public void deveGerarCrecheInexistenteException_quandoTentarCadastrarCriancaComCrecheInexistente() throws Exception {
-	Mockito.when(this.crecheFacade.get(Mockito.anyLong())).thenReturn(null);
-	this.thrown.expect(CrecheInexistenteException.class);
-	this.thrown.expectMessage(MessageUtil.getMessage("message_crecheInexistenteException"));
-	this.criancaService.save(new CriancaNovoVO());
-    }
-
+	@Test
+	public void deveGerarCriancaJaCadastradaException_quandoTentarCadastrarUmMesmaCriancaJaCadastradaNaDevidaCreche() throws KidsException {
+		Mockito.when(this.crecheFacade.getCreche(Mockito.anyLong())).thenReturn(new Creche());
+		Mockito.when(this.criancaRepository.findCriancasByCrecheAndMatricula(Mockito.any(), Mockito.anyString())).thenReturn(new Crianca());
+		this.thrown.expect(CriancaJaCadastradaException.class);
+		this.thrown.expectMessage(KidsMessageUtil.getMessage("message_criancaJaCadastradaException"));
+		this.criancaService.save(new CriancaNovoVO());
+	}
 }

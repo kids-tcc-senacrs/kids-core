@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.model.Creche;
 import com.kids.model.Usuario;
-import com.kids.util.JsonUtil;
+import com.kids.util.KidsJsonUtil;
 import com.kids.util.KidsConstant;
 
 /**
@@ -40,7 +40,7 @@ public class CrecheRestController {
     public ResponseEntity<?> getCrecheByUsuario(@Valid @RequestBody(required = true) final Usuario usuario) {
 	final Creche creche = this.crecheService.getCrecheByUsuario(usuario);
 	final HttpStatus httpStatus = creche == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-	return ResponseEntity.status(httpStatus).body(JsonUtil.convertToJson(creche));
+	return ResponseEntity.status(httpStatus).body(KidsJsonUtil.convertToJson(creche));
     }
 
 }

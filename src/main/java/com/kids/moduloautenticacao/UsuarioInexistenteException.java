@@ -1,7 +1,7 @@
 package com.kids.moduloautenticacao;
 
 import com.kids.exception.KidsException;
-import com.kids.util.MessageUtil;
+import com.kids.util.KidsMessageUtil;
 
 /**
  * 
@@ -20,6 +20,6 @@ class UsuarioInexistenteException extends KidsException {
 
 
     UsuarioInexistenteException() {
-	super(MessageUtil.getMessage(MESSAGE));
+	super(KidsMessageUtil.getMessage(MESSAGE));
     }
 }

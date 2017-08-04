@@ -22,7 +22,7 @@ public class CrecheFacade {
 
 
 
-    public Creche get(final Long id) {
+    public Creche getCreche(final Long id) {
 	return this.crecheService.getById(id);
     }
 

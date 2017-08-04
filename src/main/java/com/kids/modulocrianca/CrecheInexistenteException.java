@@ -1,7 +1,7 @@
 package com.kids.modulocrianca;
 
 import com.kids.exception.KidsException;
-import com.kids.util.MessageUtil;
+import com.kids.util.KidsMessageUtil;
 
 /**
  * 
@@ -20,6 +20,6 @@ public class CrecheInexistenteException extends KidsException {
 
 
     public CrecheInexistenteException() {
-	super(MessageUtil.getMessage(MESSAGE));
+	super(KidsMessageUtil.getMessage(MESSAGE));
     }
 }

@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  * @since 01/2017
  *
  */
-public class JsonUtil implements Serializable {
+public class KidsJsonUtil implements Serializable {
 
     private static final long serialVersionUID = 6645086833069573829L;
 

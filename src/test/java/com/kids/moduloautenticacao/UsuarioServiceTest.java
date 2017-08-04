@@ -16,7 +16,7 @@ import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
 import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
 import com.kids.repository.UsuarioRepository;
-import com.kids.util.MessageUtil;
+import com.kids.util.KidsMessageUtil;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class UsuarioServiceTest {
 	final Usuario usuario = new Usuario(usuarioNovoVO.getEmail());
 	Mockito.when(this.usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(usuario);
 	this.thrown.expect(UsuarioJaCadastradoException.class);
-	this.thrown.expectMessage(MessageUtil.getMessage("message_usuarioJaCadastradoException"));
+	this.thrown.expectMessage(KidsMessageUtil.getMessage("message_usuarioJaCadastradoException"));
 	this.usuarioService.saveUsuario(usuarioNovoVO);
     }
 
@@ -58,7 +58,7 @@ public class UsuarioServiceTest {
     public void deveGerarUsuarioInexistenteException_quandoTentarAtualizarUsuarioInexistente() throws Exception {
 	Mockito.when(this.usuarioRepository.findUsuarioById(Mockito.anyLong())).thenReturn(null);
 	this.thrown.expect(UsuarioInexistenteException.class);
-	this.thrown.expectMessage(MessageUtil.getMessage("message_usuarioInexistenteException"));
+	this.thrown.expectMessage(KidsMessageUtil.getMessage("message_usuarioInexistenteException"));
 	this.usuarioService.updateUsuario(new UsuarioAtualizaVO());
     }
 

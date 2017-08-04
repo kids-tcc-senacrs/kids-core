@@ -28,110 +28,82 @@ import com.kids.repository.CriancaRepository;
 @Service
 public class CriancaService {
 
-    @Autowired
-    private CrecheFacade crecheFacade;
+	@Autowired
+	private CrecheFacade crecheFacade;
 
-    @Autowired
-    private UsuarioFacade usuarioFacade;
+	@Autowired
+	private UsuarioFacade usuarioFacade;
 
-    @Autowired
-    private CriancaRepository criancaRepository;
+	@Autowired
+	private CriancaRepository criancaRepository;
 
-
-
-
-
-    Crianca save(final CriancaNovoVO vo) throws KidsException {
-	this.beforeSave(vo);
-	final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
-	return this.criancaRepository.save(build.getCrianca());
-    }
-
-
-
-
-
-    Crianca update(final CriancaAtualizaVO vo) throws KidsException {
-	this.beforeUpdate(vo);
-	final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
-	return this.criancaRepository.update(build.getCrianca());
-    }
-
-
-
-
-
-    public Crianca get(final Long id) {
-	return this.criancaRepository.find(id);
-    }
-
-
-
-
-
-    private void beforeSave(final CriancaNovoVO vo) throws KidsException {
-	final Creche creche = this.crecheFacade.get(vo.getCreche().getId());
-	this.validarCrecheCadastrada(creche);
-	this.validarAlergiaDuplicada(vo.getAlergias());
-    }
-
-
-
-
-
-    private void beforeUpdate(final CriancaAtualizaVO vo) throws KidsException {
-	this.validarCriancaCadastrada(vo.getId());
-    }
-
-
-
-
-
-    private void validarCriancaCadastrada(final Long id) throws CriancaInexistenteException {
-	final Crianca crianca = this.get(id);
-	if (crianca == null) {
-	    throw new CriancaInexistenteException();
+	Crianca save(final CriancaNovoVO vo) throws KidsException {
+		this.beforeSave(vo);
+		final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
+		return this.criancaRepository.save(build.getCrianca());
 	}
-    }
 
-
-
-
-
-    private void validarCrecheCadastrada(final Creche creche) throws CrecheInexistenteException {
-	if (creche == null) {
-	    throw new CrecheInexistenteException();
+	Crianca update(final CriancaAtualizaVO vo) throws KidsException {
+		this.beforeUpdate(vo);
+		final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
+		return this.criancaRepository.update(build.getCrianca());
 	}
-    }
 
-
-
-
-
-    private void validarAlergiaDuplicada(final Set<AlergiaVO> alergias) throws AlergiaDuplicadaException {
-	if (CollectionUtils.isNotEmpty(alergias)) {
-	    final ValidaAlergiaAdicionada validaAlergiaAdicionada = new ValidaAlergiaAdicionada();
-	    for (final AlergiaVO alergia : alergias) {
-		validaAlergiaAdicionada.validar(alergia);
-	    }
+	public Crianca getCrianca(final Long id) {
+		return this.criancaRepository.find(id);
 	}
-    }
 
-
-
-
-
-    public Set<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
-	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
-	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
-	    final Usuario u = this.usuarioFacade.getUsuarioById(usuario.getId());
-	    if (u.getAtivo()) {
-		return this.criancaRepository.findCriancasByCreche(this.crecheFacade.getCrecheByUsuario(u));
-	    }
-	} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
-	    return null;
+	private void beforeSave(final CriancaNovoVO vo) throws KidsException {
+		final Creche creche = this.crecheFacade.getCreche(vo.getCreche().getId());
+		this.validarCrecheCadastrada(creche);
+		this.validarCriancaCadastrada(creche, vo.getMatricula());
+		this.validarAlergiaDuplicada(vo.getAlergias());
 	}
-	return null;
-    }
+
+	private void validarCriancaCadastrada(final Creche creche, final String matricula) throws CriancaJaCadastradaException {
+		final Crianca crianca = this.criancaRepository.findCriancasByCrecheAndMatricula(creche, matricula);
+		if (crianca != null) {
+			throw new CriancaJaCadastradaException();
+		}
+	}
+
+	private void beforeUpdate(final CriancaAtualizaVO vo) throws KidsException {
+		this.validarCriancaCadastrada(vo.getId());
+	}
+
+	private void validarCriancaCadastrada(final Long id) throws CriancaInexistenteException {
+		final Crianca crianca = this.getCrianca(id);
+		if (crianca == null) {
+			throw new CriancaInexistenteException();
+		}
+	}
+
+	private void validarCrecheCadastrada(final Creche creche) throws CrecheInexistenteException {
+		if (creche == null) {
+			throw new CrecheInexistenteException();
+		}
+	}
+
+	private void validarAlergiaDuplicada(final Set<AlergiaVO> alergias) throws AlergiaDuplicadaException {
+		if (CollectionUtils.isNotEmpty(alergias)) {
+			final ValidaAlergiaAdicionada validaAlergiaAdicionada = new ValidaAlergiaAdicionada();
+			for (final AlergiaVO alergia : alergias) {
+				validaAlergiaAdicionada.validar(alergia);
+			}
+		}
+	}
+
+	public Set<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
+		final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
+		if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+			final Usuario u = this.usuarioFacade.getUsuarioById(usuario.getId());
+			if (u.getAtivo()) {
+				return this.criancaRepository.findCriancasByCreche(this.crecheFacade.getCrecheByUsuario(u));
+			}
+		} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+			return null;
+		}
+		return null;
+	}
 
 }

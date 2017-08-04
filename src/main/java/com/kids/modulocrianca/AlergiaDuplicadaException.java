@@ -1,7 +1,7 @@
 package com.kids.modulocrianca;
 
 import com.kids.exception.KidsException;
-import com.kids.util.MessageUtil;
+import com.kids.util.KidsMessageUtil;
 
 /**
  * 
@@ -20,7 +20,7 @@ class AlergiaDuplicadaException extends KidsException {
 
 
     public AlergiaDuplicadaException(final String alergia) {
-	super(MessageUtil.getMessage(MESSAGE, alergia));
+	super(KidsMessageUtil.getMessage(MESSAGE, alergia));
     }
 
 }

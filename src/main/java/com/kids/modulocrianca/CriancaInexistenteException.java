@@ -1,7 +1,7 @@
 package com.kids.modulocrianca;
 
 import com.kids.exception.KidsException;
-import com.kids.util.MessageUtil;
+import com.kids.util.KidsMessageUtil;
 
 /**
  * 
@@ -11,16 +11,12 @@ import com.kids.util.MessageUtil;
  */
 class CriancaInexistenteException extends KidsException {
 
-    private static final long serialVersionUID = 4903070745394897715L;
+	private static final long serialVersionUID = 4903070745394897715L;
 
-    private final static String MESSAGE = "message_criancaInexistenteException";
+	private final static String MESSAGE = "message_criancaInexistenteException";
 
-
-
-
-
-    public CriancaInexistenteException() {
-	super(MessageUtil.getMessage(MESSAGE));
-    }
+	public CriancaInexistenteException() {
+		super(KidsMessageUtil.getMessage(MESSAGE));
+	}
 
 }

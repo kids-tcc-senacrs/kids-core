@@ -16,23 +16,15 @@ import com.kids.repository.CrecheRepository;
 @Service
 public class CrecheService {
 
-    @Autowired
-    private CrecheRepository crecheRepository;
+	@Autowired
+	private CrecheRepository crecheRepository;
 
+	Creche getById(final Long id) {
+		return this.crecheRepository.find(id);
+	}
 
-
-
-
-    Creche getById(final Long id) {
-	return this.crecheRepository.find(id);
-    }
-
-
-
-
-
-    public Creche getCrecheByUsuario(final Usuario usuario) {
-	return crecheRepository.findCrecheByUsuario(usuario);
-    }
+	public Creche getCrecheByUsuario(final Usuario usuario) {
+		return crecheRepository.findCrecheByUsuario(usuario);
+	}
 
 }

@@ -9,7 +9,7 @@ import org.springframework.validation.ObjectError;
  * @since 05/2017
  * 
  */
-public class RestUtil {
+public class KidsRestUtil {
 
     public static boolean existeErroNaRequisicao(final Errors errors) {
 	if (errors.hasErrors()) {
@@ -29,7 +29,7 @@ public class RestUtil {
 		restErroVo.addMessage(e.getDefaultMessage());
 	    }
 	}
-	return JsonUtil.convertToJson(restErroVo);
+	return KidsJsonUtil.convertToJson(restErroVo);
     }
 
 }

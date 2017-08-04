@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
  * @since 07/2017
  *
  */
-public class MessageUtil {
+public class KidsMessageUtil {
 
     private static ResourceBundle resource = ResourceBundle.getBundle("messages");
 
