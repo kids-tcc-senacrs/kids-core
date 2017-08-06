@@ -13,43 +13,75 @@ import com.kids.repository.UsuarioRepository;
  */
 public class ValidateUsuario {
 
-	private UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
-	public ValidateUsuario(final UsuarioNovoVO vo, final UsuarioRepository usuarioRepository) throws KidsException {
-		this.usuarioRepository = usuarioRepository;
-		this.validate(vo);
-	}
 
-	public ValidateUsuario(final UsuarioAtualizaVO vo, final UsuarioRepository usuarioRepository) throws KidsException {
-		this.usuarioRepository = usuarioRepository;
-		this.validate(vo);
-	}
 
-	private void validate(final UsuarioNovoVO vo) throws KidsException {
-		this.validarCadastroDuplicado(vo);
-	}
 
-	private void validate(final UsuarioAtualizaVO vo) throws KidsException {
-		this.validarUsuarioInexistente(vo);
-	}
 
-	private void validarUsuarioInexistente(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
-		if (!this.usuarioInformadoJaPossuiCadastro(vo.getId())) {
-			throw new UsuarioInexistenteException();
-		}
-	}
+    public ValidateUsuario(final UsuarioNovoVO vo, final UsuarioRepository usuarioRepository) throws KidsException {
+	this.usuarioRepository = usuarioRepository;
+	this.validate(vo);
+    }
 
-	private void validarCadastroDuplicado(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
-		if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
-			throw new UsuarioJaCadastradoException();
-	}
 
-	private boolean usuarioInformadoJaPossuiCadastro(final String email) {
-		return this.usuarioRepository.findByEmail(email) == null ? Boolean.FALSE : Boolean.TRUE;
-	}
 
-	private boolean usuarioInformadoJaPossuiCadastro(final Long id) {
-		return this.usuarioRepository.findUsuarioById(id) == null ? Boolean.FALSE : Boolean.TRUE;
+
+
+    public ValidateUsuario(final UsuarioAtualizaVO vo, final UsuarioRepository usuarioRepository) throws KidsException {
+	this.usuarioRepository = usuarioRepository;
+	this.validate(vo);
+    }
+
+
+
+
+
+    private void validate(final UsuarioNovoVO vo) throws KidsException {
+	this.validarCadastroDuplicado(vo);
+    }
+
+
+
+
+
+    private void validate(final UsuarioAtualizaVO vo) throws KidsException {
+	this.validarUsuarioInexistente(vo);
+    }
+
+
+
+
+
+    private void validarUsuarioInexistente(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
+	if (!this.usuarioInformadoJaPossuiCadastro(vo.getId())) {
+	    throw new UsuarioInexistenteException();
 	}
+    }
+
+
+
+
+
+    private void validarCadastroDuplicado(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
+	if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
+	    throw new UsuarioJaCadastradoException();
+    }
+
+
+
+
+
+    private boolean usuarioInformadoJaPossuiCadastro(final String email) {
+	return this.usuarioRepository.findByEmail(email) == null ? Boolean.FALSE : Boolean.TRUE;
+    }
+
+
+
+
+
+    private boolean usuarioInformadoJaPossuiCadastro(final Long id) {
+	return this.usuarioRepository.findUsuarioById(id) == null ? Boolean.FALSE : Boolean.TRUE;
+    }
 
 }

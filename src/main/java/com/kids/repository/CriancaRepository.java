@@ -9,9 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,57 +29,98 @@ import com.kids.model.Crianca;
 @Repository
 public class CriancaRepository {
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-	@Transactional
-	public Crianca persist(final Crianca crianca) {
-		this.em.persist(crianca);
-		this.em.flush();
-		return crianca;
-	}
 
-	@Transactional
-	public Crianca update(final Crianca crianca) {
-		return this.em.merge(crianca);
-	}
 
-	public Crianca findCrianca(final Long id) {
-		return this.em.find(Crianca.class, id);
-	}
 
-	@SuppressWarnings("unchecked")
-	public Set<Crianca> findCriancasByCreche(final Creche creche) {
-		final Set<Crianca> criancasbYCreches = new HashSet<>();
-		final Session session = (Session) this.em.getDelegate();
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class);
-		criteria.add(Restrictions.eq("creche", creche));
-		final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();
-		final Set<Crianca> criancas = result.stream().collect(Collectors.toSet());
-		this.lazy(criancas);
-		return criancasbYCreches;
-	}
 
-	public Crianca findCriancasByCrecheAndMatricula(final Creche creche, final String matricula) {
-		final Session session = (Session) this.em.getDelegate();
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class);
-		criteria.add(Restrictions.eq("creche", creche));
-		criteria.add(Restrictions.eq("matricula", matricula));
-		return (Crianca) criteria.getExecutableCriteria(session).uniqueResult();
-	}
+    @Transactional
+    public Crianca persist(final Crianca crianca) {
+	this.em.persist(crianca);
+	this.em.flush();
+	return crianca;
+    }
 
-	private void lazy(final Set<Crianca> criancasbYCreches) {
-		if (CollectionUtils.isNotEmpty(criancasbYCreches)) {
-			for (final Crianca crianca : criancasbYCreches) {
-				if (crianca.getContato() != null) {
-					crianca.getContato().getId();
-					crianca.getContato().getEmail();
-					crianca.getContato().getFoneOutro();
-					crianca.getContato().getResponsavel();
-					crianca.getContato().getFonePrincipal();
-				}
-			}
+
+
+
+
+    @Transactional
+    public Crianca update(final Crianca crianca) {
+	return this.em.merge(crianca);
+    }
+
+
+
+
+
+    public Crianca findCriancaById(final Long id) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class, "crianca");
+	criteria.createAlias("crianca.pessoa", "p", JoinType.INNER_JOIN);
+	criteria.createAlias("crianca.creche", "creche", JoinType.INNER_JOIN);
+	criteria.createAlias("creche.pessoa", "crechePessoa", JoinType.INNER_JOIN);
+	criteria.createAlias("crianca.endereco", "e", JoinType.INNER_JOIN);
+	criteria.createAlias("crianca.contato", "c", JoinType.INNER_JOIN);
+	criteria.createAlias("crianca.alergias", "a", JoinType.LEFT_OUTER_JOIN);
+	criteria.createAlias("crianca.medicamentos", "m", JoinType.LEFT_OUTER_JOIN);
+	criteria.setFetchMode("crianca.pessoa", FetchMode.SELECT);
+	criteria.setFetchMode("crianca.creche", FetchMode.SELECT);
+	criteria.setFetchMode("crianca.endereco", FetchMode.SELECT);
+	criteria.setFetchMode("crianca.contato", FetchMode.SELECT);
+	criteria.setFetchMode("crianca.alergias", FetchMode.SELECT);
+	criteria.setFetchMode("crianca.medicamentos", FetchMode.SELECT);
+	criteria.setFetchMode("creche.pessoa", FetchMode.SELECT);
+	criteria.add(Restrictions.eq("crianca.id", id));
+	return (Crianca) criteria.getExecutableCriteria(session).uniqueResult();
+    }
+
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public Set<Crianca> findCriancasByCreche(final Creche creche) {
+	final Set<Crianca> criancasbYCreches = new HashSet<>();
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class);
+	criteria.add(Restrictions.eq("creche", creche));
+	final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();
+	final Set<Crianca> criancas = result.stream().collect(Collectors.toSet());
+	this.lazy(criancas);
+	return criancasbYCreches;
+    }
+
+
+
+
+
+    public Crianca findCriancasByCrecheAndMatricula(final Creche creche, final String matricula) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class);
+	criteria.add(Restrictions.eq("creche", creche));
+	criteria.add(Restrictions.eq("matricula", matricula));
+	return (Crianca) criteria.getExecutableCriteria(session).uniqueResult();
+    }
+
+
+
+
+
+    private void lazy(final Set<Crianca> criancasbYCreches) {
+	if (CollectionUtils.isNotEmpty(criancasbYCreches)) {
+	    for (final Crianca crianca : criancasbYCreches) {
+		if (crianca.getContato() != null) {
+		    crianca.getContato().getId();
+		    crianca.getContato().getEmail();
+		    crianca.getContato().getFoneOutro();
+		    crianca.getContato().getResponsavel();
+		    crianca.getContato().getFonePrincipal();
 		}
+	    }
 	}
+    }
 
 }

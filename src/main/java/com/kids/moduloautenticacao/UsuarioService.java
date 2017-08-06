@@ -21,30 +21,46 @@ import com.kids.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-	@Autowired
-	private EnderecoRepository enderecoRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
-	void saveUsuario(final UsuarioNovoVO vo) throws KidsException {
-		new ValidateUsuario(vo, usuarioRepository);
-		final BuildUsuario build = new BuildUsuario(vo);
-		this.usuarioRepository.persist(build.getUsuario());
-	}
 
-	void updateUsuario(final UsuarioAtualizaVO vo) throws KidsException {
-		new ValidateUsuario(vo, usuarioRepository);
-		final BuildUsuario build = new BuildUsuario(vo, this.usuarioRepository, this.enderecoRepository);
-		this.usuarioRepository.update(build.getUsuario());
-	}
 
-	Usuario getUsuarioById(final Long id) {
-		return this.usuarioRepository.findUsuarioById(id);
-	}
 
-	Usuario getUserByEmail(final String email) {
-		return this.usuarioRepository.findByEmail(email);
-	}
+
+    void saveUsuario(final UsuarioNovoVO vo) throws KidsException {
+	new ValidateUsuario(vo, usuarioRepository);
+	final BuildUsuario build = new BuildUsuario(vo);
+	this.usuarioRepository.persist(build.getUsuario());
+    }
+
+
+
+
+
+    void updateUsuario(final UsuarioAtualizaVO vo) throws KidsException {
+	new ValidateUsuario(vo, usuarioRepository);
+	final BuildUsuario build = new BuildUsuario(vo, this.usuarioRepository, this.enderecoRepository);
+	this.usuarioRepository.update(build.getUsuario());
+    }
+
+
+
+
+
+    Usuario getUsuarioById(final Long id) {
+	return this.usuarioRepository.findUsuarioById(id);
+    }
+
+
+
+
+
+    Usuario getUserByEmail(final String email) {
+	return this.usuarioRepository.findByEmail(email);
+    }
 
 }

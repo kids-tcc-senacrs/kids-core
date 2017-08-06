@@ -22,25 +22,33 @@ import com.kids.model.Usuario;
 @Repository
 public class CrecheRepository {
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-	public Creche find(final Long id) {
-		final Session session = (Session) this.em.getDelegate();
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Creche.class, "creche");
-		criteria.createAlias("creche.pessoa", "pessoa", JoinType.INNER_JOIN);
-		criteria.setFetchMode("creche.pessoa", FetchMode.SELECT);
-		criteria.add(Restrictions.eq("creche.id", id));
-		return (Creche) criteria.getExecutableCriteria(session).uniqueResult();
-	}
 
-	public Creche findCrecheByUsuario(final Usuario usuario) {
-		final Session session = (Session) this.em.getDelegate();
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Creche.class, "creche");
-		criteria.createAlias("creche.pessoa", "pessoa", JoinType.INNER_JOIN);
-		criteria.setFetchMode("creche.pessoa", FetchMode.SELECT);
-		criteria.add(Restrictions.eq("creche.pessoa", usuario.getPessoa()));
-		return (Creche) criteria.getExecutableCriteria(session).uniqueResult();
-	}
+
+
+
+    public Creche find(final Long id) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Creche.class, "creche");
+	criteria.createAlias("creche.pessoa", "pessoa", JoinType.INNER_JOIN);
+	criteria.setFetchMode("creche.pessoa", FetchMode.SELECT);
+	criteria.add(Restrictions.eq("creche.id", id));
+	return (Creche) criteria.getExecutableCriteria(session).uniqueResult();
+    }
+
+
+
+
+
+    public Creche findCrecheByUsuario(final Usuario usuario) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Creche.class, "creche");
+	criteria.createAlias("creche.pessoa", "pessoa", JoinType.INNER_JOIN);
+	criteria.setFetchMode("creche.pessoa", FetchMode.SELECT);
+	criteria.add(Restrictions.eq("creche.pessoa", usuario.getPessoa()));
+	return (Creche) criteria.getExecutableCriteria(session).uniqueResult();
+    }
 
 }

@@ -11,12 +11,16 @@ import com.kids.util.KidsMessageUtil;
  */
 public class CriancaInexistenteException extends KidsException {
 
-	private static final long serialVersionUID = 4903070745394897715L;
+    private static final long serialVersionUID = 4903070745394897715L;
 
-	public final static String MESSAGE = "message_criancaInexistenteException";
+    public final static String MESSAGE = "message_criancaInexistenteException";
 
-	public CriancaInexistenteException() {
-		super(KidsMessageUtil.getMessage(MESSAGE));
-	}
+
+
+
+
+    public CriancaInexistenteException() {
+	super(KidsMessageUtil.getMessage(MESSAGE));
+    }
 
 }

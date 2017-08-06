@@ -26,37 +26,49 @@ import com.kids.repository.CriancaRepository;
 @Service
 public class CriancaService {
 
-	@Autowired
-	private CrecheFacade crecheFacade;
+    @Autowired
+    private CrecheFacade crecheFacade;
 
-	@Autowired
-	private UsuarioFacade usuarioFacade;
+    @Autowired
+    private UsuarioFacade usuarioFacade;
 
-	@Autowired
-	private CriancaRepository criancaRepository;
+    @Autowired
+    private CriancaRepository criancaRepository;
 
-	Crianca save(final CriancaNovoVO vo) throws KidsException {
-		new ValidateCrianca(vo, this.crecheFacade, this.criancaRepository);
-		final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
-		return this.criancaRepository.persist(build.getCrianca());
+
+
+
+
+    Crianca save(final CriancaNovoVO vo) throws KidsException {
+	new ValidateCrianca(vo, this.crecheFacade, this.criancaRepository);
+	final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
+	return this.criancaRepository.persist(build.getCrianca());
+    }
+
+
+
+
+
+    Crianca update(final CriancaAtualizaVO vo) throws KidsException {
+	new ValidateCrianca(vo, this.crecheFacade, this.criancaRepository);
+	final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
+	return this.criancaRepository.update(build.getCrianca());
+    }
+
+
+
+
+
+    Set<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
+	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
+	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+	    final Usuario u = this.usuarioFacade.getUsuarioById(usuario.getId());
+	    if (u.getAtivo()) {
+		return this.criancaRepository.findCriancasByCreche(this.crecheFacade.getCrecheByUsuario(u));
+	    }
+	} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+	    throw new UnsupportedOperationException("Operação indisponível no sistema!");
 	}
-
-	Crianca update(final CriancaAtualizaVO vo) throws KidsException {
-		new ValidateCrianca(vo, this.crecheFacade, this.criancaRepository);
-		final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
-		return this.criancaRepository.update(build.getCrianca());
-	}
-
-	Set<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
-		final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
-		if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
-			final Usuario u = this.usuarioFacade.getUsuarioById(usuario.getId());
-			if (u.getAtivo()) {
-				return this.criancaRepository.findCriancasByCreche(this.crecheFacade.getCrecheByUsuario(u));
-			}
-		} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
-			throw new UnsupportedOperationException("Operação indisponível no sistema!");
-		}
-		return null;
-	}
+	return null;
+    }
 }

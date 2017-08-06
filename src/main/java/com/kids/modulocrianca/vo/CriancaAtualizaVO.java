@@ -1,8 +1,8 @@
 package com.kids.modulocrianca.vo;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import javax.validation.Valid;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 
@@ -12,18 +12,28 @@ import javax.validation.Valid;
  */
 public class CriancaAtualizaVO extends CriancaVO {
 
-	@Valid
-	@ApiModelProperty(position = 0, required = true)
-	private Long id;
+    private static final long serialVersionUID = 1310079520043873124L;
 
-	public CriancaAtualizaVO() {
-		super();
-		this.setPessoa(new PessoaVO());
-		this.setEndereco(new EnderecoVO());
-		this.setContato(new ContatoVO());
-	}
+    @Valid
+    @ApiModelProperty(position = 0, required = true)
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+
+
+
+
+    public CriancaAtualizaVO() {
+	super();
+	this.setPessoa(new PessoaVO());
+	this.setEndereco(new EnderecoVO());
+	this.setContato(new ContatoVO());
+    }
+
+
+
+
+
+    public Long getId() {
+	return id;
+    }
 }

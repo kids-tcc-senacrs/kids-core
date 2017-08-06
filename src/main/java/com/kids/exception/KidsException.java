@@ -8,9 +8,14 @@ package com.kids.exception;
  */
 public class KidsException extends Exception {
 
-	private static final long serialVersionUID = -9100346630012284178L;
+    private static final long serialVersionUID = -9100346630012284178L;
 
-	public KidsException(final String message) {
-		super(message);
-	}
+
+
+
+
+    public KidsException(final String message) {
+	super(message);
+    }
+
 }

@@ -11,12 +11,16 @@ import com.kids.util.KidsMessageUtil;
  */
 public class AlergiaDuplicadaException extends KidsException {
 
-	private static final long serialVersionUID = -251317303212996013L;
+    private static final long serialVersionUID = -251317303212996013L;
 
-	public static final String MESSAGE = "message_alergiaDuplicadaException";
+    public static final String MESSAGE = "message_alergiaDuplicadaException";
 
-	public AlergiaDuplicadaException(final String alergia) {
-		super(KidsMessageUtil.getMessage(MESSAGE, alergia));
-	}
+
+
+
+
+    public AlergiaDuplicadaException(final String alergia) {
+	super(KidsMessageUtil.getMessage(MESSAGE, alergia));
+    }
 
 }

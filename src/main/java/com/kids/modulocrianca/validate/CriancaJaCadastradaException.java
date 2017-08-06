@@ -11,11 +11,15 @@ import com.kids.util.KidsMessageUtil;
  */
 public class CriancaJaCadastradaException extends KidsException {
 
-	private static final long serialVersionUID = 7211135332200411498L;
+    private static final long serialVersionUID = 7211135332200411498L;
 
-	public static final String MESSAGE = "message_criancaJaCadastradaException";
+    public static final String MESSAGE = "message_criancaJaCadastradaException";
 
-	public CriancaJaCadastradaException() {
-		super(KidsMessageUtil.getMessage(MESSAGE));
-	}
+
+
+
+
+    public CriancaJaCadastradaException() {
+	super(KidsMessageUtil.getMessage(MESSAGE));
+    }
 }

@@ -1,8 +1,8 @@
 package com.kids.modulocrianca.vo;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import javax.validation.Valid;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 
@@ -12,19 +12,29 @@ import javax.validation.Valid;
  */
 public class CriancaNovoVO extends CriancaVO {
 
-	@Valid
-	@ApiModelProperty(position = 5, required = true)
-	private transient CrecheVo creche;
+    private static final long serialVersionUID = 6970157527141653075L;
 
-	public CrecheVo getCreche() {
-		return creche;
-	}
+    @Valid
+    @ApiModelProperty(position = 5, required = true)
+    private transient CrecheVo creche;
 
-	public CriancaNovoVO() {
-		super();
-		this.creche = new CrecheVo();
-		this.setPessoa(new PessoaVO());
-		this.setEndereco(new EnderecoVO());
-		this.setContato(new ContatoVO());
-	}
+
+
+
+
+    public CrecheVo getCreche() {
+	return creche;
+    }
+
+
+
+
+
+    public CriancaNovoVO() {
+	super();
+	this.creche = new CrecheVo();
+	this.setPessoa(new PessoaVO());
+	this.setEndereco(new EnderecoVO());
+	this.setContato(new ContatoVO());
+    }
 }

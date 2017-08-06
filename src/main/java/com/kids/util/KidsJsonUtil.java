@@ -27,4 +27,12 @@ public class KidsJsonUtil implements Serializable {
 	}
 	return null;
     }
+
+    //    public static <T> String convertToJson(final T entity) {
+    //	final GsonBuilder b = new GsonBuilder();
+    //	b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
+    //	final Gson gson = b.create();
+    //	return gson.toJson(entity);
+    //    }
+
 }
