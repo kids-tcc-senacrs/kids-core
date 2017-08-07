@@ -17,6 +17,7 @@ import com.kids.modulocrianca.vo.AlergiaVO;
 import com.kids.modulocrianca.vo.CrecheVo;
 import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
+import com.kids.modulocrianca.vo.EnderecoVO;
 import com.kids.repository.CriancaRepository;
 
 /**
@@ -55,7 +56,7 @@ public class BuildCrianca {
 	final Set<Medicamento> medicamentos = this.buildMedicamentos(vo);
 	final Set<Alergia> alergias = this.buildAlergias(vo.getAlergias());
 
-	this.crianca.setEndereco(endereco);
+	this.crianca.getPessoa().setEndereco(endereco);
 	this.crianca.setContato(contato);
 	this.crianca.setMedicamentos(medicamentos);
 	this.crianca.setAlergias(alergias);
@@ -143,12 +144,12 @@ public class BuildCrianca {
 
 
     private void updateEndereco(CriancaAtualizaVO vo) {
-	if (this.crianca.getEndereco() == null) {
-	    this.crianca.setEndereco(new Endereco());
+	if (this.crianca.getPessoa().getEndereco() == null) {
+	    this.crianca.getPessoa().setEndereco(new Endereco());
 	}
-	this.crianca.getEndereco().setCep(vo.getEndereco().getCep());
-	this.crianca.getEndereco().setLogradouro(vo.getEndereco().getLogradouro());
-	this.crianca.getEndereco().setLocalizacao(vo.getEndereco().getLocalizacao());
+	this.crianca.getPessoa().getEndereco().setCep(vo.getPessoa().getEndereco().getCep());
+	this.crianca.getPessoa().getEndereco().setLogradouro(vo.getPessoa().getEndereco().getLogradouro());
+	this.crianca.getPessoa().getEndereco().setLocalizacao(vo.getPessoa().getEndereco().getLocalizacao());
     }
 
 
@@ -158,7 +159,7 @@ public class BuildCrianca {
     private Set<Alergia> buildAlergias(final Set<AlergiaVO> alergiasVO) {
 	final Set<Alergia> alergias = new HashSet<>();
 	if (CollectionUtils.isNotEmpty(alergiasVO)) {
-	    alergias.forEach(a -> {
+	    alergiasVO.forEach(a -> {
 		final Alergia alergia = new Alergia();
 		alergia.setDescricao(a.getDescricao());
 		alergias.add(alergia);
@@ -214,9 +215,11 @@ public class BuildCrianca {
     private Endereco buildEndereco(final CriancaNovoVO vo, final Pessoa pessoa) {
 	final Endereco endereco = new Endereco();
 	endereco.setPessoa(pessoa);
-	endereco.setCep(vo.getEndereco().getCep());
-	endereco.setLogradouro(vo.getEndereco().getLogradouro());
-	endereco.setLocalizacao(vo.getEndereco().getLocalizacao());
+	if (vo.getPessoa().getEndereco() == null)
+	    vo.getPessoa().setEndereco(new EnderecoVO());
+	endereco.setCep(vo.getPessoa().getEndereco().getCep());
+	endereco.setLogradouro(vo.getPessoa().getEndereco().getLogradouro());
+	endereco.setLocalizacao(vo.getPessoa().getEndereco().getLocalizacao());
 	return endereco;
     }
 

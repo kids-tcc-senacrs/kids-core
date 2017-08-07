@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * 
@@ -34,6 +35,7 @@ public class Creche implements Serializable {
     @TableGenerator(name = "sequenceCreche", allocationSize = 1)
     private Long id;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pessoa", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_pessoa"))
     private Pessoa pessoa;

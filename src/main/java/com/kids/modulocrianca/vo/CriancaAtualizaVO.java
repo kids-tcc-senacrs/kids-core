@@ -25,7 +25,7 @@ public class CriancaAtualizaVO extends CriancaVO {
     public CriancaAtualizaVO() {
 	super();
 	this.setPessoa(new PessoaVO());
-	this.setEndereco(new EnderecoVO());
+	this.getPessoa().setEndereco(new EnderecoVO());
 	this.setContato(new ContatoVO());
     }
 

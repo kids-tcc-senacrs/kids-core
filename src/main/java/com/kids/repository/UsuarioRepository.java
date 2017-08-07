@@ -41,8 +41,8 @@ public class UsuarioRepository {
 	criteria.setFetchMode("u.pessoa", FetchMode.SELECT);
 	criteria.setFetchMode("pessoa.endereco", FetchMode.SELECT);
 	criteria.add(Restrictions.eq("u.email", email));
-	final Usuario usuario = (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
-	return this.lazy(usuario);
+	final Usuario u = (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
+	return loadToCamposObrigatoriosNoJson(u);
     }
 
 
@@ -80,16 +80,14 @@ public class UsuarioRepository {
 
 
 
-    private Usuario lazy(final Usuario usuario) {
-	if (usuario != null) {
-	    if (usuario.getPessoa() != null) {
-		if (usuario.getPessoa().getEndereco() == null) {
-		    usuario.getPessoa().setEndereco(new Endereco());
-		}
-
+    private Usuario loadToCamposObrigatoriosNoJson(final Usuario u) {
+	if (u != null) {
+	    u.getPessoa();
+	    if (u.getPessoa().getEndereco() == null) {
+		u.getPessoa().setEndereco(new Endereco());
 	    }
 	}
-	return usuario;
+	return u;
     }
 
 }

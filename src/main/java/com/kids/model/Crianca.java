@@ -64,10 +64,6 @@ public class Crianca implements Serializable {
     private Pessoa pessoa;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinColumn(name = "endereco_id", foreignKey = @ForeignKey(name = "FK_endereco"), nullable = false)
-    private Endereco endereco;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "contato_id", foreignKey = @ForeignKey(name = "FK_contato"), nullable = false)
     private Contato contato;
 
@@ -192,22 +188,6 @@ public class Crianca implements Serializable {
 
 
 
-    public Endereco getEndereco() {
-	return endereco;
-    }
-
-
-
-
-
-    public void setEndereco(final Endereco endereco) {
-	this.endereco = endereco;
-    }
-
-
-
-
-
     public Contato getContato() {
 	return contato;
     }
@@ -281,7 +261,6 @@ public class Crianca implements Serializable {
 	        .append("sexo", this.sexo)//
 	        .append("foto", this.foto)//
 	        .append("pessoa", this.pessoa)//
-	        .append("endereco", this.endereco)//
 	        .append("contato", this.contato)//
 	        .append("creche", this.creche)//
 	        .append("medicamentos", this.medicamentos)//

@@ -34,7 +34,7 @@ public class CriancaNovoVO extends CriancaVO {
 	super();
 	this.creche = new CrecheVo();
 	this.setPessoa(new PessoaVO());
-	this.setEndereco(new EnderecoVO());
+	this.getPessoa().setEndereco(new EnderecoVO());
 	this.setContato(new ContatoVO());
     }
 }

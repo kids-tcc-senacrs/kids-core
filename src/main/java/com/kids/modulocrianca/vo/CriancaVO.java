@@ -52,18 +52,14 @@ public class CriancaVO implements Serializable {
 
     @Valid
     @ApiModelProperty(position = 5, required = true)
-    private transient EnderecoVO endereco;
-
-    @Valid
-    @ApiModelProperty(position = 6, required = true)
     private transient ContatoVO contato;
 
     @Valid
-    @ApiModelProperty(position = 7)
+    @ApiModelProperty(position = 6)
     private transient Set<MedicamentoVO> medicamentos;
 
     @Valid
-    @ApiModelProperty(position = 8)
+    @ApiModelProperty(position = 7)
     private transient Set<AlergiaVO> alergias;
 
 
@@ -159,14 +155,6 @@ public class CriancaVO implements Serializable {
 
 
 
-    public void setEndereco(final EnderecoVO endereco) {
-	this.endereco = endereco;
-    }
-
-
-
-
-
     public void setContato(final ContatoVO contato) {
 	this.contato = contato;
     }
@@ -185,14 +173,6 @@ public class CriancaVO implements Serializable {
 
     public void setAlergias(final Set<AlergiaVO> alergias) {
 	this.alergias = alergias;
-    }
-
-
-
-
-
-    public EnderecoVO getEndereco() {
-	return endereco;
     }
 
 
