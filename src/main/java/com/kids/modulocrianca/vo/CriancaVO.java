@@ -40,7 +40,9 @@ public class CriancaVO implements Serializable {
     @NotNull(message = "o campo 'data de nascimento' é de preenchimento obrigatório")
     private LocalDate dtNascimento;
 
-    @ApiModelProperty(position = 2)
+    @NotEmpty(message = "o campo 'sexo' não pode ser vazio")
+    @NotNull(message = "o campo 'sexo' é de preenchimento obrigatório")
+    @ApiModelProperty(position = 2, required = true)
     private Sexo sexo;
 
     @ApiModelProperty(position = 3)
@@ -139,7 +141,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public Byte[] getFoto() {
+    public Object getFoto() {
 	return foto;
     }
 

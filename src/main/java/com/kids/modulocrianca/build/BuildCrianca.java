@@ -47,7 +47,7 @@ public class BuildCrianca {
 	this.crianca.getPessoa().setNome(vo.getPessoa().getNome());
 	this.crianca.setMatricula(vo.getMatricula());
 	this.crianca.setSexo(vo.getSexo());
-	this.crianca.setFoto(vo.getFoto());
+	//this.crianca.setFoto(vo.getFoto());
 	this.crianca.setDtNascimento(vo.getDtNascimento());
 
 	final Endereco endereco = this.buildEndereco(vo, this.crianca.getPessoa());
@@ -75,7 +75,7 @@ public class BuildCrianca {
 	this.crianca.setMatricula(vo.getMatricula());
 	this.crianca.getPessoa().setNome(vo.getPessoa().getNome());
 	this.crianca.setSexo(vo.getSexo());
-	this.crianca.setFoto(vo.getFoto());
+	//this.crianca.setFoto(vo.getFoto());
 	this.crianca.setDtNascimento(vo.getDtNascimento());
 
 	this.updateEndereco(vo);

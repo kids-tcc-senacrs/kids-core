@@ -52,7 +52,7 @@ public class Crianca implements Serializable {
     private LocalDate dtNascimento;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "sexo", nullable = true)
+    @Column(name = "sexo", nullable = false, length = 9)
     private Sexo sexo;
 
     @Lob
