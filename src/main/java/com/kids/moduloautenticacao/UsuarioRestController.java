@@ -46,12 +46,12 @@ public class UsuarioRestController {
 
 
 
-    //@CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
+    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = GET, path = "/{email:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserByEmail(@PathVariable(required = true) final String email) {
 	final Usuario usuario = this.usuarioService.getUserByEmail(email);
 	final HttpStatus httpStatus = usuario == null ? HttpStatus.NO_CONTENT : HttpStatus.OK;
-	return ResponseEntity.status(httpStatus).header("Access-Control-Allow-Origin", "*").body(KidsJsonUtil.convertToJson(usuario));//
+	return ResponseEntity.status(httpStatus).body(KidsJsonUtil.convertToJson(usuario));//
     }
 
 
