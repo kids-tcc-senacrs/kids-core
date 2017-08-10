@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +27,8 @@ import com.kids.model.Crianca;
 import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.util.KidsJsonUtil;
-import com.kids.util.KidsConstant;
-import com.kids.util.RestErroVo;
 import com.kids.util.KidsRestUtil;
+import com.kids.util.RestErroVo;
 
 /**
  * 
@@ -49,7 +47,6 @@ public class CriancaRestController {
 
 
 
-    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = GET, path = "/{usuarioId}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCriancasByUsuarioId(@PathVariable(required = true) final Long usuarioId) {
 	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuarioId(usuarioId);
@@ -61,7 +58,6 @@ public class CriancaRestController {
 
 
 
-    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
 	try {
@@ -79,7 +75,6 @@ public class CriancaRestController {
 
 
 
-    @CrossOrigin(origins = { KidsConstant.URL_WEB_DEV, KidsConstant.URL_WEB_PROD })
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
 	try {
