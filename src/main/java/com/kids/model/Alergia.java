@@ -30,7 +30,7 @@ public class Alergia implements Serializable {
     @TableGenerator(name = "sequenceAlergia", allocationSize = 1)
     private Long id;
 
-    @Column(name = "descricao", length = 60)
+    @Column(name = "descricao", length = 50)
     private String descricao;
 
 

@@ -35,12 +35,22 @@ public class MedicamentoVO {
     @ApiModelProperty(position = 3, notes = "yyyy-MM-dd")
     private LocalDate dtFinal;
 
+    private Long id;
+
 
 
 
 
     public MedicamentoVO() {
 	super();
+    }
+
+
+
+
+
+    public Long getId() {
+	return id;
     }
 
 

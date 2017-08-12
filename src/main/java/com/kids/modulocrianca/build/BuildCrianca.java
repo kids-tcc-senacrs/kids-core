@@ -1,9 +1,6 @@
 package com.kids.modulocrianca.build;
 
-import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.commons.collections.CollectionUtils;
 
 import com.kids.model.Alergia;
 import com.kids.model.Contato;
@@ -13,7 +10,6 @@ import com.kids.model.Endereco;
 import com.kids.model.Medicamento;
 import com.kids.model.Pessoa;
 import com.kids.modulocreche.CrecheFacade;
-import com.kids.modulocrianca.vo.AlergiaVO;
 import com.kids.modulocrianca.vo.CrecheVo;
 import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
@@ -47,20 +43,36 @@ public class BuildCrianca {
 	this.crianca.getPessoa().setNome(vo.getPessoa().getNome());
 	this.crianca.setMatricula(vo.getMatricula());
 	this.crianca.setSexo(vo.getSexo());
-	//this.crianca.setFoto(vo.getFoto());
+	//this.crianca.setFoto(vo.getFoto());//TODO: VAI SER ADICIONADO EM UM FUTURO SPRINT
 	this.crianca.setDtNascimento(vo.getDtNascimento());
 
 	final Endereco endereco = this.buildEndereco(vo, this.crianca.getPessoa());
 	final Contato contato = this.buildContato(vo);
 	final Creche creche = this.buildCreche(vo.getCreche());
 	final Set<Medicamento> medicamentos = this.buildMedicamentos(vo);
-	final Set<Alergia> alergias = this.buildAlergias(vo.getAlergias());
+	final Set<Alergia> alergias = this.buildAlergias(vo);
 
 	this.crianca.getPessoa().setEndereco(endereco);
 	this.crianca.setContato(contato);
 	this.crianca.setMedicamentos(medicamentos);
 	this.crianca.setAlergias(alergias);
 	this.crianca.setCreche(creche);
+    }
+
+
+
+
+
+    private Set<Alergia> buildAlergias(final CriancaNovoVO vo) {
+	return new BuildAlergia().create(vo);
+    }
+
+
+
+
+
+    private Set<Medicamento> buildMedicamentos(final CriancaNovoVO vo) {
+	return new BuildMedicamento().create(vo);
     }
 
 
@@ -75,7 +87,7 @@ public class BuildCrianca {
 	this.crianca.setMatricula(vo.getMatricula());
 	this.crianca.getPessoa().setNome(vo.getPessoa().getNome());
 	this.crianca.setSexo(vo.getSexo());
-	//this.crianca.setFoto(vo.getFoto());
+	//this.crianca.setFoto(vo.getFoto());//TODO: VAI SER ADICIONADO EM UM FUTURO SPRINT
 	this.crianca.setDtNascimento(vo.getDtNascimento());
 
 	this.updateEndereco(vo);
@@ -88,41 +100,18 @@ public class BuildCrianca {
 
 
 
-    private void updateAlergias(final CriancaAtualizaVO vo) {
-	if (this.crianca.getAlergias() == null || this.crianca.getAlergias().isEmpty()) {
-	    this.crianca.setAlergias(new HashSet<>());
-	}
-	if (vo.getAlergias() == null || vo.getAlergias().isEmpty()) {
-	    this.crianca.setAlergias(null);
-	} else {
-	    vo.getAlergias().forEach(a -> {
-		final Alergia alergia = new Alergia();
-		alergia.setDescricao(a.getDescricao());
-		this.crianca.getAlergias().add(alergia);
-	    });
-	}
+    private void updateMedicamentos(final CriancaAtualizaVO vo) {
+	final BuildMedicamento buildMedicamento = new BuildMedicamento(this.crianca);
+	buildMedicamento.update(vo);
     }
 
 
 
 
 
-    private void updateMedicamentos(final CriancaAtualizaVO vo) {
-	if (this.crianca.getMedicamentos() == null) {
-	    this.crianca.setMedicamentos(new HashSet<>());
-	}
-	if (vo.getMedicamentos() == null) {
-	    this.crianca.setMedicamentos(null);
-	} else {
-	    vo.getMedicamentos().forEach(m -> {
-		final Medicamento medicamento = new Medicamento();
-		medicamento.setNome(m.getNome());
-		medicamento.setDosagem(m.getDosagem());
-		medicamento.setDtFinal(m.getDtFinal());
-		medicamento.setIntervaloHoras(m.getIntervaloHoras());
-		this.crianca.getMedicamentos().add(medicamento);
-	    });
-	}
+    private void updateAlergias(final CriancaAtualizaVO vo) {
+	final BuildAlergia buildAlergia = new BuildAlergia(this.crianca);
+	buildAlergia.update(vo);
     }
 
 
@@ -156,43 +145,8 @@ public class BuildCrianca {
 
 
 
-    private Set<Alergia> buildAlergias(final Set<AlergiaVO> alergiasVO) {
-	final Set<Alergia> alergias = new HashSet<>();
-	if (CollectionUtils.isNotEmpty(alergiasVO)) {
-	    alergiasVO.forEach(a -> {
-		final Alergia alergia = new Alergia();
-		alergia.setDescricao(a.getDescricao());
-		alergias.add(alergia);
-	    });
-	}
-	return alergias;
-    }
-
-
-
-
-
     private Creche buildCreche(final CrecheVo creche) {
 	return this.crecheFacade.getCreche(creche.getId());
-    }
-
-
-
-
-
-    private Set<Medicamento> buildMedicamentos(final CriancaNovoVO vo) {
-	final Set<Medicamento> medicamentos = new HashSet<>();
-	if (CollectionUtils.isNotEmpty(vo.getMedicamentos())) {
-	    vo.getMedicamentos().forEach(m -> {
-		final Medicamento medicamento = new Medicamento();
-		medicamento.setNome(m.getNome());
-		medicamento.setDosagem(m.getDosagem());
-		medicamento.setIntervaloHoras(m.getIntervaloHoras());
-		medicamento.setDtFinal(m.getDtFinal());
-		medicamentos.add(medicamento);
-	    });
-	}
-	return medicamentos;
     }
 
 

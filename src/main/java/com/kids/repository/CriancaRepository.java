@@ -37,8 +37,8 @@ public class CriancaRepository {
 
     @Transactional
     public Crianca persist(final Crianca crianca) {
-	this.em.persist(crianca.getPessoa().getEndereco());
 	this.em.persist(crianca);
+	this.em.persist(crianca.getPessoa().getEndereco());
 	this.em.flush();
 	return crianca;
     }
