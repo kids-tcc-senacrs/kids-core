@@ -37,6 +37,9 @@ public class UsuarioNovoVO {
     @NotNull(message = "o campo 'tipo' é de preenchimento obrigatório")
     private TipoUsuario tipo;
 
+    @ApiModelProperty(position = 3, required = false, notes = "default is false")
+    private Boolean ativo;
+
 
 
 
@@ -54,6 +57,18 @@ public class UsuarioNovoVO {
 	this.nome = nome;
 	this.email = email;
 	this.tipo = tipo;
+    }
+
+
+
+
+
+    public UsuarioNovoVO(final String nome, final String email, final TipoUsuario tipo, final Boolean ativo) {
+	super();
+	this.nome = nome;
+	this.email = email;
+	this.tipo = tipo;
+	this.ativo = ativo;
     }
 
 
@@ -79,4 +94,13 @@ public class UsuarioNovoVO {
     public TipoUsuario getTipo() {
 	return tipo;
     }
+
+
+
+
+
+    public Boolean getAtivo() {
+	return ativo;
+    }
+
 }

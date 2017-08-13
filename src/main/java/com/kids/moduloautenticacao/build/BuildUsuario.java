@@ -1,6 +1,5 @@
 package com.kids.moduloautenticacao.build;
 
-import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Endereco;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
@@ -46,15 +45,10 @@ public class BuildUsuario {
 
     private void build(final UsuarioNovoVO vo) {
 	this.usuario.getPessoa().setNome(vo.getNome());
+	this.usuario.getPessoa().setEndereco(null);
 	this.usuario.setEmail(vo.getEmail());
 	this.usuario.setTipo(vo.getTipo());
-	if (TipoUsuario.CRECHE.equals(vo.getTipo())) {
-	    this.usuario.setAtivo(Boolean.TRUE);
-	} else if (TipoUsuario.FAMILIAR.equals(vo.getTipo())) {
-	    this.usuario.setAtivo(Boolean.FALSE);
-	} else {
-	    throw new UnsupportedOperationException("[KIDS] - Operação não suportada pelo sistema");
-	}
+	this.usuario.setAtivo(vo.getAtivo() == null ? Boolean.FALSE : vo.getAtivo());
     }
 
 

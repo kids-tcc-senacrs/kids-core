@@ -1,9 +1,12 @@
 package com.kids.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +18,8 @@ import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.kids.enumeration.Parentesco;
 
 /**
  * 
@@ -36,12 +41,22 @@ public class CriancaFamilia implements Serializable {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_crianca")
+    @JoinColumn(name = "id_crianca", nullable = false)
     private Crianca crianca;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_familia")
+    @JoinColumn(name = "id_familia", nullable = false)
     private Familia familia;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "parentesco", nullable = false)
+    private Parentesco parentesco;
+
+    @Column(name = "dt_vinculo", nullable = false)
+    private LocalDateTime dtVinculo;
+
+    @Column(name = "familiar_notificado", nullable = false)
+    private Boolean familiarNotificado;
 
 
 
@@ -89,6 +104,54 @@ public class CriancaFamilia implements Serializable {
 
     public void setFamilia(final Familia familia) {
 	this.familia = familia;
+    }
+
+
+
+
+
+    public Parentesco getParentesco() {
+	return parentesco;
+    }
+
+
+
+
+
+    public void setParentesco(final Parentesco parentesco) {
+	this.parentesco = parentesco;
+    }
+
+
+
+
+
+    public LocalDateTime getDtVinculo() {
+	return dtVinculo;
+    }
+
+
+
+
+
+    public void setDtVinculo(final LocalDateTime dtVinculo) {
+	this.dtVinculo = dtVinculo;
+    }
+
+
+
+
+
+    public Boolean getFamiliarNotificado() {
+	return familiarNotificado;
+    }
+
+
+
+
+
+    public void setFamiliarNotificado(final Boolean familiarNotificado) {
+	this.familiarNotificado = familiarNotificado;
     }
 
 }
