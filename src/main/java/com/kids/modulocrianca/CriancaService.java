@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.kids.enumeration.TipoUsuario;
 import com.kids.exception.KidsException;
+import com.kids.model.Creche;
 import com.kids.model.Crianca;
+import com.kids.model.Familia;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocreche.CrecheFacade;
@@ -16,6 +18,7 @@ import com.kids.modulocrianca.validate.ValidateCrianca;
 import com.kids.modulocrianca.vo.CriancaAtualizaVO;
 import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.repository.CriancaRepository;
+import com.kids.repository.FamiliaRepository;
 
 /**
  * 
@@ -34,6 +37,9 @@ public class CriancaService {
 
     @Autowired
     private CriancaRepository criancaRepository;
+
+    @Autowired
+    private FamiliaRepository familiaRepository;
 
 
 
@@ -61,13 +67,16 @@ public class CriancaService {
 
     Set<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
 	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
-	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
-	    final Usuario u = this.usuarioFacade.getUsuarioById(usuario.getId());
-	    if (u.getAtivo()) {
-		return this.criancaRepository.findCriancasByCreche(this.crecheFacade.getCrecheByUsuario(u));
+	if (usuario.getAtivo()) {
+	    if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+		final Creche creche = this.crecheFacade.getCrecheByUsuario(usuario);
+		return this.criancaRepository.findCriancasByCreche(creche);
+	    } else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+		final Familia familia = this.familiaRepository.findFamiliarByUsuario(usuario);
+		return this.criancaRepository.findCriancasByFamiliar(familia);
+	    } else {
+		throw new UnsupportedOperationException("Tipo de usuário NÃO operado pelo sistema!");
 	    }
-	} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
-	    throw new UnsupportedOperationException("Operação indisponível no sistema!");
 	}
 	return null;
     }

@@ -22,7 +22,8 @@ public class KidsJsonUtil implements Serializable {
 	try {
 	    final ObjectMapper mapper = new ObjectMapper();
 	    return mapper.writeValueAsString(entity);
-	} catch (Exception e) {
+	} catch (final Exception e) {
+	    //TODO: ADD LOG
 	    System.out.println(e);
 	}
 	return null;

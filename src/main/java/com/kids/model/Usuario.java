@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.kids.enumeration.TipoUsuario;
 
@@ -29,6 +30,7 @@ import com.kids.enumeration.TipoUsuario;
  */
 @Entity
 @Table(name = "USUARIO")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = -2561353904338124908L;

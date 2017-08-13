@@ -16,6 +16,7 @@ import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * 
@@ -25,6 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @Entity
 @Table(name = "CRECHE")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Creche implements Serializable {
 
     private static final long serialVersionUID = 8164369067802692420L;

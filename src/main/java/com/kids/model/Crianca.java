@@ -24,6 +24,7 @@ import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.kids.enumeration.Sexo;
 
@@ -35,6 +36,7 @@ import com.kids.enumeration.Sexo;
  */
 @Entity
 @Table(name = "CRIANCA", uniqueConstraints = @UniqueConstraint(columnNames = { "creche_id", "matricula" }, name = "UQ_CRIANCA"))
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Crianca implements Serializable {
 
     private static final long serialVersionUID = -5831956911955418351L;
