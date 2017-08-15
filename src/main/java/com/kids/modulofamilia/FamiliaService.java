@@ -56,4 +56,17 @@ public class FamiliaService {
 	return this.criancaFamiliaRepository.findByCriancaId(criancaId);
     }
 
+
+
+
+
+    public void delete(final Long criancaFamiliaId) throws FamiliarInexistenteException {
+	final CriancaFamilia criancaFamilia = this.criancaFamiliaRepository.findByCriancaFamiliaId(criancaFamiliaId);
+	if (criancaFamilia == null) {
+	    throw new FamiliarInexistenteException();
+	} else {
+	    this.criancaFamiliaRepository.remove(criancaFamilia);
+	}
+    }
+
 }

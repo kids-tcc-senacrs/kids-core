@@ -55,4 +55,24 @@ public class CriancaFamiliaRepository {
 	return (Set<CriancaFamilia>) criteria.getExecutableCriteria(session).list().stream().collect(Collectors.toSet());
     }
 
+
+
+
+
+    public CriancaFamilia findByCriancaFamiliaId(final Long criancaFamiliaId) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(CriancaFamilia.class);
+	criteria.add(Restrictions.eq("id", criancaFamiliaId));
+	return (CriancaFamilia) criteria.getExecutableCriteria(session).uniqueResult();
+    }
+
+
+
+
+
+    @Transactional
+    public void remove(final CriancaFamilia criancaFamilia) {
+	this.em.remove(criancaFamilia);
+    }
+
 }

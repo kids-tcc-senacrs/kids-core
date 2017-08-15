@@ -3,6 +3,7 @@ package com.kids.modulofamilia;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -58,6 +59,20 @@ public class FamiliaRestController {
 	} catch (final KidsException e) {
 	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
 	}
+    }
+
+
+
+
+
+    @RequestMapping(method = DELETE, path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> delete(@PathVariable(required = true) final Long id) {
+	try {
+	    this.familiaService.delete(id);
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
+	}
+	return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
