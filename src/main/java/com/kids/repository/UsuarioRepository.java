@@ -15,6 +15,7 @@ import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Creche;
 import com.kids.model.Endereco;
 import com.kids.model.Familia;
+import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
 
 /**
@@ -88,6 +89,19 @@ public class UsuarioRepository {
 	    }
 	}
 	return u;
+    }
+
+
+
+
+
+    public Usuario findUsuarioByPessoa(final Pessoa pessoa) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Usuario.class, "u");
+	criteria.createAlias("u.pessoa", "pessoa", JoinType.INNER_JOIN);
+	criteria.setFetchMode("u.pessoa", FetchMode.SELECT);
+	criteria.add(Restrictions.eq("u.pessoa", pessoa));
+	return (Usuario) criteria.getExecutableCriteria(session).uniqueResult();
     }
 
 }

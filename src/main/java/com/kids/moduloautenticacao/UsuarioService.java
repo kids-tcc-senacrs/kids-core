@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kids.exception.KidsException;
+import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.build.BuildUsuario;
 import com.kids.moduloautenticacao.validate.ValidateUsuario;
@@ -61,6 +62,14 @@ public class UsuarioService {
 
     Usuario getUserByEmail(final String email) {
 	return this.usuarioRepository.findByEmail(email);
+    }
+
+
+
+
+
+    public Usuario getUsuarioByPessoa(final Pessoa pessoa) {
+	return this.usuarioRepository.findUsuarioByPessoa(pessoa);
     }
 
 }

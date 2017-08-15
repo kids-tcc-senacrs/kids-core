@@ -48,7 +48,7 @@ public class ValidateFamilia {
 
     private void validarEmailAceito(final String email) throws DominioEmailInvalidoException {
 	final String emailCompleto[] = email.trim().split("@");
-	final String dominio[] = emailCompleto[1].split("./");
+	final String dominio[] = emailCompleto[1].split("\\.");
 	if (!(dominio.length == 2) || !"gmail".equals(dominio[0]) || !"com".equals(dominio[1])) {
 	    throw new DominioEmailInvalidoException();
 	}

@@ -8,6 +8,7 @@ import com.kids.exception.KidsException;
 import com.kids.model.Crianca;
 import com.kids.model.CriancaFamilia;
 import com.kids.model.Familia;
+import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
@@ -51,14 +52,25 @@ public class BuildCriancaFamilia {
     public void associar(final FamiliaVO vo) throws KidsException {
 	final Crianca crianca = this.criancaFacade.getCriancaById(vo.getCriancaId());
 	final Familia familia = this.getFamilia(vo);
+	final Usuario usuario = this.getUsuario(familia.getPessoa());
 	this.criancaFamilia.setCrianca(crianca);
 	this.criancaFamilia.setFamilia(familia);
+	this.criancaFamilia.setUsuario(usuario);
 	this.criancaFamilia.setDtVinculo(LocalDateTime.now());
 	this.criancaFamilia.setParentesco(vo.getParentesco());
+	this.criancaFamilia.setAtivo(vo.getAtivo());
 	this.criancaFamilia.setFamiliarNotificado(Boolean.FALSE);
 	if (this.criancaFamilia.getFamilia().getPessoa().getEndereco().getId() == null) {
 	    this.criancaFamilia.getFamilia().getPessoa().setEndereco(null);
 	}
+    }
+
+
+
+
+
+    private Usuario getUsuario(final Pessoa pessoa) {
+	return this.usuarioFacade.getUsuarioByPessoa(pessoa);
     }
 
 

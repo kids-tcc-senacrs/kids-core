@@ -48,12 +48,19 @@ public class CriancaFamilia implements Serializable {
     @JoinColumn(name = "id_familia", nullable = false)
     private Familia familia;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "parentesco", nullable = false)
     private Parentesco parentesco;
 
     @Column(name = "dt_vinculo", nullable = false)
     private LocalDateTime dtVinculo;
+
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo;
 
     @Column(name = "familiar_notificado", nullable = false)
     private Boolean familiarNotificado;
@@ -152,6 +159,38 @@ public class CriancaFamilia implements Serializable {
 
     public void setFamiliarNotificado(final Boolean familiarNotificado) {
 	this.familiarNotificado = familiarNotificado;
+    }
+
+
+
+
+
+    public Boolean getAtivo() {
+	return ativo;
+    }
+
+
+
+
+
+    public void setAtivo(final Boolean ativo) {
+	this.ativo = ativo;
+    }
+
+
+
+
+
+    public Usuario getUsuario() {
+	return usuario;
+    }
+
+
+
+
+
+    public void setUsuario(final Usuario usuario) {
+	this.usuario = usuario;
     }
 
 }

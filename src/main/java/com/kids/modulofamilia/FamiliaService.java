@@ -1,9 +1,12 @@
 package com.kids.modulofamilia;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kids.exception.KidsException;
+import com.kids.model.CriancaFamilia;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocrianca.CriancaFacade;
 import com.kids.modulofamilia.build.BuildCriancaFamilia;
@@ -49,8 +52,8 @@ public class FamiliaService {
 
 
 
-    public void atualizar(final FamiliaVO vo) throws KidsException {
-	throw new UnsupportedOperationException("EM DESENVOLVIMENTO");
+    public Set<CriancaFamilia> getByCriancaId(final Long criancaId) {
+	return this.criancaFamiliaRepository.findByCriancaId(criancaId);
     }
 
 }
