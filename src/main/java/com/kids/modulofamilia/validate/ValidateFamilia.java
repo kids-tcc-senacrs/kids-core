@@ -5,10 +5,12 @@ import java.util.Objects;
 import com.kids.enumeration.TipoUsuario;
 import com.kids.exception.KidsException;
 import com.kids.model.Crianca;
+import com.kids.model.CriancaFamilia;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocrianca.CriancaFacade;
 import com.kids.modulofamilia.vo.FamiliaVO;
+import com.kids.repository.FamiliaRepository;
 
 /**
  * 
@@ -22,14 +24,19 @@ public class ValidateFamilia {
 
     private UsuarioFacade usuarioFacade;
 
+    private FamiliaRepository familiaRepository;
 
 
 
 
-    public ValidateFamilia(final CriancaFacade criancaFacade, final UsuarioFacade usuarioFacade) {
+
+    public ValidateFamilia(final CriancaFacade criancaFacade, final UsuarioFacade usuarioFacade, final FamiliaRepository familiaRepository) {
 	this.criancaFacade = criancaFacade;
 	this.usuarioFacade = usuarioFacade;
+	this.familiaRepository = familiaRepository;
 	Objects.requireNonNull(this.criancaFacade, "informe uma instancia de CriancaFacade");
+	Objects.requireNonNull(this.usuarioFacade, "informe uma instancia de UsuarioFacade");
+	Objects.requireNonNull(this.familiaRepository, "informe uma instancia de FamiliaRepository");
     }
 
 
@@ -40,6 +47,19 @@ public class ValidateFamilia {
 	this.validarCrianca(vo.getCriancaId());
 	this.validarTipoUsuario(vo.getEmail());
 	this.validarEmailAceito(vo.getEmail());
+	this.validarUsuarioJaVinculado(vo.getEmail(), vo.getCriancaId());
+    }
+
+
+
+
+
+    private void validarUsuarioJaVinculado(final String email, final Long criancaId) throws UsuarioJaVinculadoException {
+	final Usuario usuario = this.usuarioFacade.getUsuarioByEmail(email);
+	final CriancaFamilia criancaFamilia = this.familiaRepository.findCriancaFamilia(usuario, criancaId);
+	if (criancaFamilia != null) {
+	    throw new UsuarioJaVinculadoException();
+	}
     }
 
 

@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
+import com.kids.model.CriancaFamilia;
 import com.kids.model.Familia;
 import com.kids.model.Usuario;
 
@@ -36,6 +37,20 @@ public class FamiliaRepository {
 	criteria.setFetchMode("f.pessoa", FetchMode.SELECT);
 	criteria.add(Restrictions.eq("f.pessoa", usuario.getPessoa()));
 	return (Familia) criteria.getExecutableCriteria(session).uniqueResult();
+    }
+
+
+
+
+
+    public CriancaFamilia findCriancaFamilia(final Usuario usuario, final Long criancaId) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(CriancaFamilia.class, "cf");
+	criteria.createAlias("cf.usuario", "usuario", JoinType.INNER_JOIN);
+	criteria.createAlias("cf.crianca", "crianca", JoinType.INNER_JOIN);
+	criteria.add(Restrictions.eq("cf.usuario", usuario));
+	criteria.add(Restrictions.eq("crianca.id", criancaId));
+	return (CriancaFamilia) criteria.getExecutableCriteria(session).uniqueResult();
     }
 
 }

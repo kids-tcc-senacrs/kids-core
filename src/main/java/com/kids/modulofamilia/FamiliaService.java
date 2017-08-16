@@ -41,7 +41,7 @@ public class FamiliaService {
 
 
     void save(final FamiliaVO vo) throws KidsException {
-	final ValidateFamilia validateFamilia = new ValidateFamilia(this.criancaFacade, this.usuarioFacade);
+	final ValidateFamilia validateFamilia = new ValidateFamilia(this.criancaFacade, this.usuarioFacade, this.familiaRepository);
 	validateFamilia.validarCadastroNovo(vo);
 	final BuildCriancaFamilia buildCriancaFamilia = new BuildCriancaFamilia(this.criancaFacade, this.usuarioFacade, this.familiaRepository);
 	buildCriancaFamilia.associar(vo);
