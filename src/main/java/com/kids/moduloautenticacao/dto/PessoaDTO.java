@@ -1,4 +1,4 @@
-package com.kids.moduloautenticacao.vo;
+package com.kids.moduloautenticacao.dto;
 
 import java.io.Serializable;
 
@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "pessoa")
-public class PessoaVO implements Serializable {
+public class PessoaDTO implements Serializable {
 
     private static final long serialVersionUID = 8431408036874215703L;
 

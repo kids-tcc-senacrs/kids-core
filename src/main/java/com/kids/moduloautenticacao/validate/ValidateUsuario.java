@@ -1,8 +1,8 @@
 package com.kids.moduloautenticacao.validate;
 
 import com.kids.exception.KidsException;
-import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
-import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
+import com.kids.moduloautenticacao.dto.UsuarioAtualizaDTO;
+import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 import com.kids.repository.UsuarioRepository;
 
 /**
@@ -19,7 +19,7 @@ public class ValidateUsuario {
 
 
 
-    public ValidateUsuario(final UsuarioNovoVO vo, final UsuarioRepository usuarioRepository) throws KidsException {
+    public ValidateUsuario(final UsuarioNovoDTO vo, final UsuarioRepository usuarioRepository) throws KidsException {
 	this.usuarioRepository = usuarioRepository;
 	this.validate(vo);
     }
@@ -28,7 +28,7 @@ public class ValidateUsuario {
 
 
 
-    public ValidateUsuario(final UsuarioAtualizaVO vo, final UsuarioRepository usuarioRepository) throws KidsException {
+    public ValidateUsuario(final UsuarioAtualizaDTO vo, final UsuarioRepository usuarioRepository) throws KidsException {
 	this.usuarioRepository = usuarioRepository;
 	this.validate(vo);
     }
@@ -37,7 +37,7 @@ public class ValidateUsuario {
 
 
 
-    private void validate(final UsuarioNovoVO vo) throws KidsException {
+    private void validate(final UsuarioNovoDTO vo) throws KidsException {
 	this.validarCadastroDuplicado(vo);
     }
 
@@ -45,7 +45,7 @@ public class ValidateUsuario {
 
 
 
-    private void validate(final UsuarioAtualizaVO vo) throws KidsException {
+    private void validate(final UsuarioAtualizaDTO vo) throws KidsException {
 	this.validarUsuarioInexistente(vo);
     }
 
@@ -53,7 +53,7 @@ public class ValidateUsuario {
 
 
 
-    private void validarUsuarioInexistente(final UsuarioAtualizaVO vo) throws UsuarioInexistenteException {
+    private void validarUsuarioInexistente(final UsuarioAtualizaDTO vo) throws UsuarioInexistenteException {
 	if (!this.usuarioInformadoJaPossuiCadastro(vo.getId())) {
 	    throw new UsuarioInexistenteException();
 	}
@@ -63,7 +63,7 @@ public class ValidateUsuario {
 
 
 
-    private void validarCadastroDuplicado(final UsuarioNovoVO vo) throws UsuarioJaCadastradoException {
+    private void validarCadastroDuplicado(final UsuarioNovoDTO vo) throws UsuarioJaCadastradoException {
 	if (this.usuarioInformadoJaPossuiCadastro(vo.getEmail()))
 	    throw new UsuarioJaCadastradoException();
     }

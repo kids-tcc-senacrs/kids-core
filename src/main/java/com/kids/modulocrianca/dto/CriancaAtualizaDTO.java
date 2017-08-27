@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import javax.validation.Valid;
 
@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 07/2017
  *
  */
-public class CriancaAtualizaVO extends CriancaVO {
+public class CriancaAtualizaDTO extends CriancaDTO {
 
     private static final long serialVersionUID = 1310079520043873124L;
 
@@ -22,11 +22,11 @@ public class CriancaAtualizaVO extends CriancaVO {
 
 
 
-    public CriancaAtualizaVO() {
+    public CriancaAtualizaDTO() {
 	super();
-	this.setPessoa(new PessoaVO());
-	this.getPessoa().setEndereco(new EnderecoVO());
-	this.setContato(new ContatoVO());
+	this.setPessoa(new PessoaDTO());
+	this.getPessoa().setEndereco(new EnderecoDTO());
+	this.setContato(new ContatoDTO());
     }
 
 

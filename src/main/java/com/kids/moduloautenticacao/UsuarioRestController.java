@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.exception.KidsException;
 import com.kids.model.Usuario;
-import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
-import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
+import com.kids.moduloautenticacao.dto.UsuarioAtualizaDTO;
+import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 import com.kids.util.KidsJsonUtil;
 import com.kids.util.KidsRestUtil;
 import com.kids.util.RestErroVo;
@@ -56,7 +56,7 @@ public class UsuarioRestController {
 
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoVO usuario, final Errors errors) {
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final UsuarioNovoDTO usuario, final Errors errors) {
 	try {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));
@@ -74,7 +74,7 @@ public class UsuarioRestController {
 
 
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaVO usuario, final Errors errors) {
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final UsuarioAtualizaDTO usuario, final Errors errors) {
 	try {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));

@@ -8,9 +8,9 @@ import com.kids.exception.KidsException;
 import com.kids.model.Creche;
 import com.kids.model.Crianca;
 import com.kids.modulocreche.CrecheFacade;
-import com.kids.modulocrianca.vo.AlergiaVO;
-import com.kids.modulocrianca.vo.CriancaAtualizaVO;
-import com.kids.modulocrianca.vo.CriancaNovoVO;
+import com.kids.modulocrianca.dto.AlergiaDTO;
+import com.kids.modulocrianca.dto.CriancaAtualizaDTO;
+import com.kids.modulocrianca.dto.CriancaNovoDTO;
 import com.kids.repository.CriancaRepository;
 
 /**
@@ -29,7 +29,7 @@ public class ValidateCrianca {
 
 
 
-    public ValidateCrianca(final CriancaNovoVO vo, final CrecheFacade crecheFacade, final CriancaRepository criancaRepository) throws KidsException {
+    public ValidateCrianca(final CriancaNovoDTO vo, final CrecheFacade crecheFacade, final CriancaRepository criancaRepository) throws KidsException {
 	this.crecheFacade = crecheFacade;
 	this.criancaRepository = criancaRepository;
 	this.validar(vo);
@@ -39,7 +39,7 @@ public class ValidateCrianca {
 
 
 
-    public ValidateCrianca(final CriancaAtualizaVO vo, final CrecheFacade crecheFacade, final CriancaRepository criancaRepository) throws KidsException {
+    public ValidateCrianca(final CriancaAtualizaDTO vo, final CrecheFacade crecheFacade, final CriancaRepository criancaRepository) throws KidsException {
 	this.crecheFacade = crecheFacade;
 	this.criancaRepository = criancaRepository;
 	this.validar(vo);
@@ -49,7 +49,7 @@ public class ValidateCrianca {
 
 
 
-    private void validar(final CriancaNovoVO vo) throws KidsException {
+    private void validar(final CriancaNovoDTO vo) throws KidsException {
 	final Creche creche = this.crecheFacade.getCreche(vo.getCreche().getId());
 	this.validarCrecheCadastrada(creche);
 	this.validarCriancaCadastrada(creche, vo.getMatricula());
@@ -60,7 +60,7 @@ public class ValidateCrianca {
 
 
 
-    private void validar(final CriancaAtualizaVO vo) throws KidsException {
+    private void validar(final CriancaAtualizaDTO vo) throws KidsException {
 	this.validarCriancaCadastrada(vo.getId());
     }
 
@@ -100,10 +100,10 @@ public class ValidateCrianca {
 
 
 
-    private void validarAlergiaDuplicada(final Set<AlergiaVO> alergias) throws AlergiaDuplicadaException {
+    private void validarAlergiaDuplicada(final Set<AlergiaDTO> alergias) throws AlergiaDuplicadaException {
 	if (CollectionUtils.isNotEmpty(alergias)) {
 	    final ValidaAlergiaAdicionada validaAlergiaAdicionada = new ValidaAlergiaAdicionada();
-	    for (final AlergiaVO alergia : alergias) {
+	    for (final AlergiaDTO alergia : alergias) {
 		validaAlergiaAdicionada.validar(alergia);
 	    }
 	}

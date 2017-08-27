@@ -1,4 +1,4 @@
-package com.kids.moduloautenticacao.vo;
+package com.kids.moduloautenticacao.dto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "usuario")
-public class UsuarioAtualizaVO {
+public class UsuarioAtualizaDTO {
 
     @ApiModelProperty(position = 0, required = true)
     @NotNull(message = "o campo 'id' é de preenchimento obrigatório")
@@ -33,7 +33,7 @@ public class UsuarioAtualizaVO {
 
     @Valid
     @ApiModelProperty(position = 3, required = true)
-    private transient PessoaVO pessoa;
+    private transient PessoaDTO pessoa;
 
 
 
@@ -63,7 +63,7 @@ public class UsuarioAtualizaVO {
 
 
 
-    public PessoaVO getPessoa() {
+    public PessoaDTO getPessoa() {
 	return pessoa;
     }
 }

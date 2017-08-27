@@ -11,7 +11,7 @@ import com.kids.model.Familia;
 import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
-import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
+import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 import com.kids.modulocrianca.CriancaFacade;
 import com.kids.modulofamilia.vo.FamiliaVO;
 import com.kids.repository.FamiliaRepository;
@@ -100,7 +100,7 @@ public class BuildCriancaFamilia {
 
 
     private Familia criarUsuarioFamiliar(final String nome, final String email) throws KidsException {
-	this.usuarioFacade.cadastrar(new UsuarioNovoVO(nome, email, TipoUsuario.FAMILIAR, Boolean.TRUE));
+	this.usuarioFacade.cadastrar(new UsuarioNovoDTO(nome, email, TipoUsuario.FAMILIAR, Boolean.TRUE));
 	final Usuario usuario = this.usuarioFacade.getUsuarioByEmail(email);
 	return this.familiaRepository.findFamiliarByUsuario(usuario);
     }

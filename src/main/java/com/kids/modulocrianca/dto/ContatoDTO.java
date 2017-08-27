@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * 
  */
 @ApiModel(description = "contato")
-public class ContatoVO {
+public class ContatoDTO {
 
 	@ApiModelProperty(position = 0, required = true)
 	@NotEmpty(message = "o campo 'responsavel' não pode ser vazio")
@@ -41,7 +41,7 @@ public class ContatoVO {
 	@Size(max = 20, message = "o campo 'fone outro' deve conter no máximo '20' caracteres")
 	private String foneOutro;
 
-	public ContatoVO() {
+	public ContatoDTO() {
 		super();
 	}
 

@@ -7,9 +7,9 @@ import com.kids.exception.KidsException;
 import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.build.BuildUsuario;
+import com.kids.moduloautenticacao.dto.UsuarioAtualizaDTO;
+import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 import com.kids.moduloautenticacao.validate.ValidateUsuario;
-import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
-import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
 import com.kids.repository.EnderecoRepository;
 import com.kids.repository.UsuarioRepository;
 
@@ -32,7 +32,7 @@ public class UsuarioService {
 
 
 
-    void saveUsuario(final UsuarioNovoVO vo) throws KidsException {
+    void saveUsuario(final UsuarioNovoDTO vo) throws KidsException {
 	new ValidateUsuario(vo, usuarioRepository);
 	final BuildUsuario build = new BuildUsuario(vo);
 	this.usuarioRepository.persist(build.getUsuario());
@@ -42,7 +42,7 @@ public class UsuarioService {
 
 
 
-    void updateUsuario(final UsuarioAtualizaVO vo) throws KidsException {
+    void updateUsuario(final UsuarioAtualizaDTO vo) throws KidsException {
 	new ValidateUsuario(vo, usuarioRepository);
 	final BuildUsuario build = new BuildUsuario(vo, this.usuarioRepository, this.enderecoRepository);
 	this.usuarioRepository.update(build.getUsuario());

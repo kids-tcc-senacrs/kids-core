@@ -8,8 +8,8 @@ import org.apache.commons.collections.CollectionUtils;
 
 import com.kids.model.Alergia;
 import com.kids.model.Crianca;
-import com.kids.modulocrianca.vo.CriancaAtualizaVO;
-import com.kids.modulocrianca.vo.CriancaNovoVO;
+import com.kids.modulocrianca.dto.CriancaAtualizaDTO;
+import com.kids.modulocrianca.dto.CriancaNovoDTO;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class BuildAlergia {
 
 
 
-    public void update(final CriancaAtualizaVO vo) {
+    public void update(final CriancaAtualizaDTO vo) {
 	this.updateAlergia(vo);
     }
 
@@ -50,7 +50,7 @@ public class BuildAlergia {
 
 
 
-    public Set<Alergia> create(final CriancaNovoVO vo) {
+    public Set<Alergia> create(final CriancaNovoDTO vo) {
 	final Set<Alergia> alergias = new HashSet<>();
 	if (CollectionUtils.isNotEmpty(vo.getAlergias())) {
 	    vo.getAlergias().forEach(a -> {
@@ -66,7 +66,7 @@ public class BuildAlergia {
 
 
 
-    private void adicionarAlergias(final CriancaAtualizaVO vo) {
+    private void adicionarAlergias(final CriancaAtualizaDTO vo) {
 	vo.getAlergias().forEach(a -> {
 	    if (a.getId() == null) {
 		final Alergia alergia = new Alergia();
@@ -80,7 +80,7 @@ public class BuildAlergia {
 
 
 
-    private void updateAlergia(final CriancaAtualizaVO vo) {
+    private void updateAlergia(final CriancaAtualizaDTO vo) {
 	if (this.crianca.getAlergias() == null) {
 	    this.crianca.setAlergias(new HashSet<>());
 	}
@@ -96,7 +96,7 @@ public class BuildAlergia {
 
 
 
-    private void removerAlergias(final CriancaAtualizaVO vo) {
+    private void removerAlergias(final CriancaAtualizaDTO vo) {
 	final Set<Long> idAlergiasQuePermacemNoCadastro = this.getIdAlergiasQuePermanecemNoCadastro(vo);
 	final Set<Long> idAlergiasQueEstaoCadastradosNoMomento = this.getIdAlergiasQueEstaoCadastradosNoMomento();
 	final Set<Long> idAlergiasParaRemoverDaBaseDeDados = this.getIdAlergiasParaRemoverDaBaseDeDados(idAlergiasQueEstaoCadastradosNoMomento, idAlergiasQuePermacemNoCadastro);
@@ -131,7 +131,7 @@ public class BuildAlergia {
 
 
 
-    private Set<Long> getIdAlergiasQuePermanecemNoCadastro(final CriancaAtualizaVO vo) {
+    private Set<Long> getIdAlergiasQuePermanecemNoCadastro(final CriancaAtualizaDTO vo) {
 	final Set<Long> idAlergias = new HashSet<>();
 	vo.getAlergias().forEach(a -> {
 	    if (a.getId() != null) {

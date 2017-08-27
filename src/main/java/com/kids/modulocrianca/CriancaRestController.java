@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.exception.KidsException;
 import com.kids.model.Crianca;
-import com.kids.modulocrianca.vo.CriancaAtualizaVO;
-import com.kids.modulocrianca.vo.CriancaNovoVO;
+import com.kids.modulocrianca.dto.CriancaAtualizaDTO;
+import com.kids.modulocrianca.dto.CriancaNovoDTO;
 import com.kids.util.KidsJsonUtil;
 import com.kids.util.KidsRestUtil;
 import com.kids.util.RestErroVo;
@@ -59,7 +59,7 @@ public class CriancaRestController {
 
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoVO criancaNovoVO, final Errors errors) {
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final CriancaNovoDTO criancaNovoVO, final Errors errors) {
 	try {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));
@@ -76,7 +76,7 @@ public class CriancaRestController {
 
 
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaVO criancaAtualizaVO, final Errors errors) {
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final CriancaAtualizaDTO criancaAtualizaVO, final Errors errors) {
 	try {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));

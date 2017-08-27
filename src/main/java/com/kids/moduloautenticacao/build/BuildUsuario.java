@@ -2,8 +2,8 @@ package com.kids.moduloautenticacao.build;
 
 import com.kids.model.Endereco;
 import com.kids.model.Usuario;
-import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
-import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
+import com.kids.moduloautenticacao.dto.UsuarioAtualizaDTO;
+import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 import com.kids.repository.EnderecoRepository;
 import com.kids.repository.UsuarioRepository;
 
@@ -25,7 +25,7 @@ public class BuildUsuario {
 
 
 
-    public BuildUsuario(final UsuarioNovoVO vo) {
+    public BuildUsuario(final UsuarioNovoDTO vo) {
 	this.build(vo);
     }
 
@@ -33,7 +33,7 @@ public class BuildUsuario {
 
 
 
-    public BuildUsuario(final UsuarioAtualizaVO vo, final UsuarioRepository usuarioRepository, final EnderecoRepository enderecoRepository) {
+    public BuildUsuario(final UsuarioAtualizaDTO vo, final UsuarioRepository usuarioRepository, final EnderecoRepository enderecoRepository) {
 	this.usuarioRepository = usuarioRepository;
 	this.enderecoRepository = enderecoRepository;
 	this.build(vo);
@@ -43,7 +43,7 @@ public class BuildUsuario {
 
 
 
-    private void build(final UsuarioNovoVO vo) {
+    private void build(final UsuarioNovoDTO vo) {
 	this.usuario.getPessoa().setNome(vo.getNome());
 	this.usuario.getPessoa().setEndereco(null);
 	this.usuario.setEmail(vo.getEmail());
@@ -55,7 +55,7 @@ public class BuildUsuario {
 
 
 
-    private void build(final UsuarioAtualizaVO vo) {
+    private void build(final UsuarioAtualizaDTO vo) {
 	this.usuario = this.usuarioRepository.findUsuarioById(vo.getId());
 	this.usuario.setTelefone(vo.getTelefone());
 	this.usuario.setAtivo(vo.isAtivo());
@@ -66,7 +66,7 @@ public class BuildUsuario {
 
 
 
-    private void updateEndereco(final UsuarioAtualizaVO vo) {
+    private void updateEndereco(final UsuarioAtualizaDTO vo) {
 	Endereco endereco = this.enderecoRepository.findEnderecoByPessoa(this.usuario.getPessoa());
 	if (endereco == null) {
 	    endereco = new Endereco();

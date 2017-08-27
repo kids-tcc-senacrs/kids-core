@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * 
  */
 @ApiModel(description = "endereco")
-public class EnderecoVO {
+public class EnderecoDTO {
 
 	@ApiModelProperty(position = 0, required = true, example = "12345678")
 	@NotEmpty(message = "o campo 'cep' não pode ser vazio")
@@ -35,7 +35,7 @@ public class EnderecoVO {
 	@Size(max = 120, message = "o campo 'complemento' deve conter no máximo '120' caracteres")
 	private String localizacao;
 
-	public EnderecoVO() {
+	public EnderecoDTO() {
 		super();
 	}
 

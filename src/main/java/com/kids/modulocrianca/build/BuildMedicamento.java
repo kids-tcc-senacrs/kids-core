@@ -8,8 +8,8 @@ import org.apache.commons.collections.CollectionUtils;
 
 import com.kids.model.Crianca;
 import com.kids.model.Medicamento;
-import com.kids.modulocrianca.vo.CriancaAtualizaVO;
-import com.kids.modulocrianca.vo.CriancaNovoVO;
+import com.kids.modulocrianca.dto.CriancaAtualizaDTO;
+import com.kids.modulocrianca.dto.CriancaNovoDTO;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class BuildMedicamento {
 
 
 
-    public void update(final CriancaAtualizaVO vo) {
+    public void update(final CriancaAtualizaDTO vo) {
 	this.updateMedicamentos(vo);
     }
 
@@ -50,7 +50,7 @@ public class BuildMedicamento {
 
 
 
-    public Set<Medicamento> create(final CriancaNovoVO vo) {
+    public Set<Medicamento> create(final CriancaNovoDTO vo) {
 	final Set<Medicamento> medicamentos = new HashSet<>();
 	if (CollectionUtils.isNotEmpty(vo.getMedicamentos())) {
 	    vo.getMedicamentos().forEach(m -> {
@@ -69,7 +69,7 @@ public class BuildMedicamento {
 
 
 
-    private void adicionarMedicamentos(final CriancaAtualizaVO vo) {
+    private void adicionarMedicamentos(final CriancaAtualizaDTO vo) {
 	vo.getMedicamentos().forEach(m -> {
 	    if (m.getId() == null) {
 		final Medicamento medicamento = new Medicamento();
@@ -86,7 +86,7 @@ public class BuildMedicamento {
 
 
 
-    private void updateMedicamentos(final CriancaAtualizaVO vo) {
+    private void updateMedicamentos(final CriancaAtualizaDTO vo) {
 	if (this.crianca.getMedicamentos() == null) {
 	    this.crianca.setMedicamentos(new HashSet<>());
 	}
@@ -102,7 +102,7 @@ public class BuildMedicamento {
 
 
 
-    private void removerMedicamentos(final CriancaAtualizaVO vo) {
+    private void removerMedicamentos(final CriancaAtualizaDTO vo) {
 	final Set<Long> idMedicamentosQuePermacemNoCadastro = this.getIdMedicamentosQuePermanecemNoCadastro(vo);
 	final Set<Long> idMedicamentosQueEstaoCadastradosNoMomento = this.getIdMedicamentosQueEstaoCadastradosNoMomento();
 	final Set<Long> idMedicamentosParaRemoverDaBaseDeDados = this.getIdMedicamentosParaRemoverDaBaseDeDados(idMedicamentosQueEstaoCadastradosNoMomento, idMedicamentosQuePermacemNoCadastro);
@@ -137,7 +137,7 @@ public class BuildMedicamento {
 
 
 
-    private Set<Long> getIdMedicamentosQuePermanecemNoCadastro(final CriancaAtualizaVO vo) {
+    private Set<Long> getIdMedicamentosQuePermanecemNoCadastro(final CriancaAtualizaDTO vo) {
 	final Set<Long> medicamentos = new HashSet<>();
 	vo.getMedicamentos().forEach(m -> {
 	    if (m.getId() != null) {

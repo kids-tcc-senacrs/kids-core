@@ -14,9 +14,9 @@ import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.modulocrianca.build.BuildCrianca;
+import com.kids.modulocrianca.dto.CriancaAtualizaDTO;
+import com.kids.modulocrianca.dto.CriancaNovoDTO;
 import com.kids.modulocrianca.validate.ValidateCrianca;
-import com.kids.modulocrianca.vo.CriancaAtualizaVO;
-import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.repository.CriancaRepository;
 import com.kids.repository.FamiliaRepository;
 
@@ -45,7 +45,7 @@ public class CriancaService {
 
 
 
-    Crianca save(final CriancaNovoVO vo) throws KidsException {
+    Crianca save(final CriancaNovoDTO vo) throws KidsException {
 	new ValidateCrianca(vo, this.crecheFacade, this.criancaRepository);
 	final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
 	return this.criancaRepository.persist(build.getCrianca());
@@ -55,7 +55,7 @@ public class CriancaService {
 
 
 
-    Crianca update(final CriancaAtualizaVO vo) throws KidsException {
+    Crianca update(final CriancaAtualizaDTO vo) throws KidsException {
 	new ValidateCrianca(vo, this.crecheFacade, this.criancaRepository);
 	final BuildCrianca build = new BuildCrianca(vo, this.crecheFacade, this.criancaRepository);
 	return this.criancaRepository.update(build.getCrianca());

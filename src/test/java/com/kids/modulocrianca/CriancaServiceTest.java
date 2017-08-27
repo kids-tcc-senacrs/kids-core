@@ -15,11 +15,11 @@ import com.kids.exception.KidsException;
 import com.kids.model.Creche;
 import com.kids.model.Crianca;
 import com.kids.modulocreche.CrecheFacade;
+import com.kids.modulocrianca.dto.CriancaAtualizaDTO;
+import com.kids.modulocrianca.dto.CriancaNovoDTO;
 import com.kids.modulocrianca.validate.CrecheInexistenteException;
 import com.kids.modulocrianca.validate.CriancaInexistenteException;
 import com.kids.modulocrianca.validate.CriancaJaCadastradaException;
-import com.kids.modulocrianca.vo.CriancaAtualizaVO;
-import com.kids.modulocrianca.vo.CriancaNovoVO;
 import com.kids.repository.CriancaRepository;
 import com.kids.util.KidsMessageUtil;
 
@@ -53,7 +53,7 @@ public class CriancaServiceTest {
 	Mockito.when(this.crecheFacade.getCreche(Mockito.anyLong())).thenReturn(null);
 	this.thrown.expect(CrecheInexistenteException.class);
 	this.thrown.expectMessage(KidsMessageUtil.getMessage(CrecheInexistenteException.MESSAGE));
-	this.criancaService.save(new CriancaNovoVO());
+	this.criancaService.save(new CriancaNovoDTO());
     }
 
 
@@ -65,7 +65,7 @@ public class CriancaServiceTest {
 	Mockito.when(this.criancaRepository.findCriancaById(Mockito.anyLong())).thenReturn(null);
 	this.thrown.expect(CriancaInexistenteException.class);
 	this.thrown.expectMessage(KidsMessageUtil.getMessage(CriancaInexistenteException.MESSAGE));
-	this.criancaService.update(new CriancaAtualizaVO());
+	this.criancaService.update(new CriancaAtualizaDTO());
     }
 
 
@@ -78,7 +78,7 @@ public class CriancaServiceTest {
 	Mockito.when(this.criancaRepository.findCriancasByCrecheAndMatricula(Mockito.any(), Mockito.anyString())).thenReturn(new Crianca());
 	this.thrown.expect(CriancaJaCadastradaException.class);
 	this.thrown.expectMessage(KidsMessageUtil.getMessage(CriancaJaCadastradaException.MESSAGE));
-	this.criancaService.save(new CriancaNovoVO());
+	this.criancaService.save(new CriancaNovoDTO());
     }
 
 
@@ -89,7 +89,7 @@ public class CriancaServiceTest {
     public void deveCadastrarCriancaComSucesso() throws KidsException {
 	Mockito.when(this.crecheFacade.getCreche(Mockito.anyLong())).thenReturn(new Creche());
 	Mockito.when(this.criancaRepository.findCriancasByCrecheAndMatricula(Mockito.any(), Mockito.anyString())).thenReturn(null);
-	this.criancaService.save(new CriancaNovoVO());
+	this.criancaService.save(new CriancaNovoDTO());
 	Mockito.verify(this.criancaRepository, times(1)).persist(Mockito.any(Crianca.class));
     }
 
@@ -102,7 +102,7 @@ public class CriancaServiceTest {
 	Mockito.when(this.crecheFacade.getCreche(Mockito.anyLong())).thenReturn(new Creche());
 	Mockito.when(this.criancaRepository.findCriancasByCrecheAndMatricula(Mockito.any(), Mockito.anyString())).thenReturn(null);
 	Mockito.when(this.criancaRepository.findCriancaById(Mockito.anyLong())).thenReturn(new Crianca());
-	this.criancaService.update(new CriancaAtualizaVO());
+	this.criancaService.update(new CriancaAtualizaDTO());
 	Mockito.verify(this.criancaRepository, times(1)).update(Mockito.any(Crianca.class));
     }
 

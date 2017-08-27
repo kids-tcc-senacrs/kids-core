@@ -1,4 +1,4 @@
-package com.kids.moduloautenticacao.vo;
+package com.kids.moduloautenticacao.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "usuario")
-public class UsuarioNovoVO {
+public class UsuarioNovoDTO {
 
     @ApiModelProperty(position = 0, required = true)
     @NotEmpty(message = "o campo 'nome' não pode ser vazio")
@@ -44,7 +44,7 @@ public class UsuarioNovoVO {
 
 
 
-    public UsuarioNovoVO() {
+    public UsuarioNovoDTO() {
 	super();
     }
 
@@ -52,7 +52,7 @@ public class UsuarioNovoVO {
 
 
 
-    public UsuarioNovoVO(final String nome, final String email, final TipoUsuario tipo) {
+    public UsuarioNovoDTO(final String nome, final String email, final TipoUsuario tipo) {
 	super();
 	this.nome = nome;
 	this.email = email;
@@ -63,7 +63,7 @@ public class UsuarioNovoVO {
 
 
 
-    public UsuarioNovoVO(final String nome, final String email, final TipoUsuario tipo, final Boolean ativo) {
+    public UsuarioNovoDTO(final String nome, final String email, final TipoUsuario tipo, final Boolean ativo) {
 	super();
 	this.nome = nome;
 	this.email = email;

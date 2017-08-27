@@ -3,7 +3,7 @@ package com.kids.modulocrianca.validate;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kids.modulocrianca.vo.AlergiaVO;
+import com.kids.modulocrianca.dto.AlergiaDTO;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class ValidaAlergiaAdicionada {
 
 
 
-    public void validar(final AlergiaVO alergia) throws AlergiaDuplicadaException {
+    public void validar(final AlergiaDTO alergia) throws AlergiaDuplicadaException {
 	if (this.alergias.containsValue(alergia.getDescricao().trim())) {
 	    throw new AlergiaDuplicadaException(alergia.getDescricao().trim());
 	} else {

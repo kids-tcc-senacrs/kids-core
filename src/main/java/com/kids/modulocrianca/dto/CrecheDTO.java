@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "creche")
-public class CrecheVo {
+public class CrecheDTO {
 
     @ApiModelProperty(position = 0, required = true)
     @NotNull(message = "o campo 'crecheId' é de preenchimento obrigatório")

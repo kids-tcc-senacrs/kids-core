@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import java.time.LocalDate;
 
@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "medicamento")
-public class MedicamentoVO {
+public class MedicamentoDTO {
 
     @ApiModelProperty(position = 0)
     @Size(max = 40, message = "o campo 'nome' deve conter '40' caracteres")
@@ -41,7 +41,7 @@ public class MedicamentoVO {
 
 
 
-    public MedicamentoVO() {
+    public MedicamentoDTO() {
 	super();
     }
 
@@ -109,7 +109,7 @@ public class MedicamentoVO {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	MedicamentoVO other = (MedicamentoVO) obj;
+	MedicamentoDTO other = (MedicamentoDTO) obj;
 	if (nome == null) {
 	    if (other.nome != null)
 		return false;

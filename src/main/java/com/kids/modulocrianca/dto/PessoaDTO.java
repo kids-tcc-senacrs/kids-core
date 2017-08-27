@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "pessoa")
-public class PessoaVO {
+public class PessoaDTO {
 
     @ApiModelProperty(position = 0, required = true)
     @NotEmpty(message = "o campo 'nome' não pode ser vazio")
@@ -20,7 +20,7 @@ public class PessoaVO {
 
     @Valid
     @ApiModelProperty(position = 1, required = true)
-    private transient EnderecoVO endereco;
+    private transient EnderecoDTO endereco;
 
 
 
@@ -42,7 +42,7 @@ public class PessoaVO {
 
 
 
-    public EnderecoVO getEndereco() {
+    public EnderecoDTO getEndereco() {
 	return endereco;
     }
 
@@ -50,7 +50,7 @@ public class PessoaVO {
 
 
 
-    public void setEndereco(final EnderecoVO endereco) {
+    public void setEndereco(final EnderecoDTO endereco) {
 	this.endereco = endereco;
     }
 

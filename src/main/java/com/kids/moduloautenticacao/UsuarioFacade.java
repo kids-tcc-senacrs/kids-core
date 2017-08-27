@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.kids.exception.KidsException;
 import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
-import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
+import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 
 /**
  * 
@@ -40,7 +40,7 @@ public class UsuarioFacade {
 
 
 
-    public void cadastrar(final UsuarioNovoVO vo) throws KidsException {
+    public void cadastrar(final UsuarioNovoDTO vo) throws KidsException {
 	this.usuarioService.saveUsuario(vo);
     }
 

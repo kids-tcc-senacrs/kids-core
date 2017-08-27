@@ -13,10 +13,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.kids.enumeration.TipoUsuario;
 import com.kids.model.Usuario;
+import com.kids.moduloautenticacao.dto.UsuarioAtualizaDTO;
+import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 import com.kids.moduloautenticacao.validate.UsuarioInexistenteException;
 import com.kids.moduloautenticacao.validate.UsuarioJaCadastradoException;
-import com.kids.moduloautenticacao.vo.UsuarioAtualizaVO;
-import com.kids.moduloautenticacao.vo.UsuarioNovoVO;
 import com.kids.repository.UsuarioRepository;
 import com.kids.util.KidsMessageUtil;
 
@@ -44,7 +44,7 @@ public class UsuarioServiceTest {
 
     @Test
     public void deveGerarUsuarioJaCadastradoException_quandoTentarCadastrarMesmoUsuario() throws Exception {
-	final UsuarioNovoVO usuarioNovoVO = new UsuarioNovoVO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", TipoUsuario.FAMILIAR);
+	final UsuarioNovoDTO usuarioNovoVO = new UsuarioNovoDTO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", TipoUsuario.FAMILIAR);
 	final Usuario usuario = new Usuario(usuarioNovoVO.getEmail());
 	Mockito.when(this.usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(usuario);
 	this.thrown.expect(UsuarioJaCadastradoException.class);
@@ -61,7 +61,7 @@ public class UsuarioServiceTest {
 	Mockito.when(this.usuarioRepository.findUsuarioById(Mockito.anyLong())).thenReturn(null);
 	this.thrown.expect(UsuarioInexistenteException.class);
 	this.thrown.expectMessage(KidsMessageUtil.getMessage(UsuarioInexistenteException.MESSAGE));
-	this.usuarioService.updateUsuario(new UsuarioAtualizaVO());
+	this.usuarioService.updateUsuario(new UsuarioAtualizaDTO());
     }
 
 
@@ -70,7 +70,7 @@ public class UsuarioServiceTest {
 
     @Test
     public void deveSalvarUsuarioComSucesso() throws Exception {
-	final UsuarioNovoVO usuarioNovoVO = new UsuarioNovoVO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", TipoUsuario.FAMILIAR);
+	final UsuarioNovoDTO usuarioNovoVO = new UsuarioNovoDTO("Luciano Ortiz Silva", "lucianoortizsilva@gmail.com", TipoUsuario.FAMILIAR);
 	this.usuarioService.saveUsuario(usuarioNovoVO);
 	Mockito.verify(usuarioRepository, times(1)).persist(Mockito.any(Usuario.class));
     }

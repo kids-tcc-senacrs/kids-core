@@ -40,10 +40,11 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<!-- para trabalhar com query.setResultTransformer no hibernate 5 -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
+			<groupId>com.github.v-ladynev</groupId>
+			<artifactId>fluent-hibernate-core</artifactId>
+			<version>0.3.1</version>
 		</dependency>
 
 		<dependency>

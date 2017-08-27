@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import javax.validation.constraints.Size;
 
@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "alergia")
-public class AlergiaVO {
+public class AlergiaDTO {
 
     @ApiModelProperty(position = 0, required = true)
     @Size(max = 50, message = "o campo 'descricao' deve conter no máximo '50' caracteres")
@@ -24,7 +24,7 @@ public class AlergiaVO {
 
 
 
-    public AlergiaVO(final String descricao) {
+    public AlergiaDTO(final String descricao) {
 	this.descricao = descricao;
     }
 
@@ -40,7 +40,7 @@ public class AlergiaVO {
 
 
 
-    public AlergiaVO() {
+    public AlergiaDTO() {
 	super();
     }
 
@@ -76,7 +76,7 @@ public class AlergiaVO {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	AlergiaVO other = (AlergiaVO) obj;
+	AlergiaDTO other = (AlergiaDTO) obj;
 	if (descricao == null) {
 	    if (other.descricao != null)
 		return false;

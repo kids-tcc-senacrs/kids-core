@@ -1,4 +1,4 @@
-package com.kids.modulocrianca.vo;
+package com.kids.modulocrianca.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "crianca")
-public class CriancaVO implements Serializable {
+public class CriancaDTO implements Serializable {
 
     private static final long serialVersionUID = 2355844712015820471L;
 
@@ -49,25 +49,25 @@ public class CriancaVO implements Serializable {
 
     @Valid
     @ApiModelProperty(position = 4, required = true)
-    private transient PessoaVO pessoa;
+    private transient PessoaDTO pessoa;
 
     @Valid
     @ApiModelProperty(position = 5, required = true)
-    private transient ContatoVO contato;
+    private transient ContatoDTO contato;
 
     @Valid
     @ApiModelProperty(position = 6)
-    private transient Set<MedicamentoVO> medicamentos;
+    private transient Set<MedicamentoDTO> medicamentos;
 
     @Valid
     @ApiModelProperty(position = 7)
-    private transient Set<AlergiaVO> alergias;
+    private transient Set<AlergiaDTO> alergias;
 
 
 
 
 
-    public CriancaVO() {
+    public CriancaDTO() {
 	super();
 	this.alergias = new HashSet<>();
     }
@@ -76,7 +76,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public PessoaVO getPessoa() {
+    public PessoaDTO getPessoa() {
 	return pessoa;
     }
 
@@ -84,7 +84,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public void setPessoa(final PessoaVO pessoa) {
+    public void setPessoa(final PessoaDTO pessoa) {
 	this.pessoa = pessoa;
     }
 
@@ -156,7 +156,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public void setContato(final ContatoVO contato) {
+    public void setContato(final ContatoDTO contato) {
 	this.contato = contato;
     }
 
@@ -164,7 +164,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public void setMedicamentos(final Set<MedicamentoVO> medicamentos) {
+    public void setMedicamentos(final Set<MedicamentoDTO> medicamentos) {
 	this.medicamentos = medicamentos;
     }
 
@@ -172,7 +172,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public void setAlergias(final Set<AlergiaVO> alergias) {
+    public void setAlergias(final Set<AlergiaDTO> alergias) {
 	this.alergias = alergias;
     }
 
@@ -180,7 +180,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public ContatoVO getContato() {
+    public ContatoDTO getContato() {
 	return contato;
     }
 
@@ -188,7 +188,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public Set<MedicamentoVO> getMedicamentos() {
+    public Set<MedicamentoDTO> getMedicamentos() {
 	return medicamentos;
     }
 
@@ -196,7 +196,7 @@ public class CriancaVO implements Serializable {
 
 
 
-    public Set<AlergiaVO> getAlergias() {
+    public Set<AlergiaDTO> getAlergias() {
 	return alergias;
     }
 }
