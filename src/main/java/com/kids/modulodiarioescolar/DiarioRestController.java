@@ -43,10 +43,21 @@ public class DiarioRestController {
 
 
 
-    @RequestMapping(method = GET, path = "/{crecheId}/{tipo}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getDiarios(@PathVariable(required = true) final Integer crecheId, @PathVariable(required = true) final DiarioTipo tipo) {
-	final List<DiarioVO> diarios = this.diarioService.getDiarios(crecheId, tipo);
-	return ResponseEntity.status(HttpStatus.OK).body(KidsJsonUtil.convertToJson(diarios));//
+    @RequestMapping(method = GET, path = "/{crecheId}/{tipoDiario}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getDiariosByCreche(@PathVariable(required = true) final Integer crecheId, @PathVariable(required = true) final DiarioTipo tipoDiario) {
+	final List<DiarioVO> diarios = this.diarioService.getDiariosByCreche(crecheId, tipoDiario);
+	return ResponseEntity.status(HttpStatus.OK).body(KidsJsonUtil.convertToJson(diarios));
+    }
+
+
+
+
+
+    @RequestMapping(method = GET, path = "/{usuarioId}/{tipoDiario}/{gambiarraUrgente}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getDiariosByFamiliar(@PathVariable(required = true) Integer usuarioId, //
+            @PathVariable(required = true) final DiarioTipo tipoDiario, @PathVariable(required = false) final Boolean gambiarraUrgente) {
+	final List<DiarioVO> diarios = this.diarioService.getDiariosByFamiliar(usuarioId, tipoDiario);
+	return ResponseEntity.status(HttpStatus.OK).body(KidsJsonUtil.convertToJson(diarios));
     }
 
 
@@ -62,7 +73,7 @@ public class DiarioRestController {
 
 		this.diarioService.save(dtos);
 
-		return ResponseEntity.status(OK).body(KidsJsonUtil.convertToJson(this.diarioService.getDiarios(dtos.get(0).getCrecheId().intValue(), dtos.get(0).getTipo())));
+		return ResponseEntity.status(OK).body(KidsJsonUtil.convertToJson(this.diarioService.getDiariosByCreche(dtos.get(0).getCrecheId().intValue(), dtos.get(0).getTipo())));
 	    }
 	} catch (final Exception e) {
 	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));

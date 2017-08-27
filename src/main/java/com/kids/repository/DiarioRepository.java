@@ -96,4 +96,35 @@ public class DiarioRepository {
 	return (Diario) criteria.getExecutableCriteria(session).uniqueResult();
     }
 
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public List<DiarioVO> findDiariosByFamiliar(final Integer usuarioId, final DiarioTipo tipoDiario) {
+	final StringBuilder nativeQuery = new StringBuilder();
+	nativeQuery.append(" select  diario.id    as \"diarioId\",");
+	nativeQuery.append("         crianca.id   as \"criancaId\",");
+	nativeQuery.append("         pessoa.nome  as \"criancaNome\",");
+	nativeQuery.append("         crianca.sexo as \"criancaSexo\",");
+	nativeQuery.append("         diario.tipo  as \"tipo\",");
+	nativeQuery.append("         diario.nota  as \"nota\",");
+	nativeQuery.append("         diario.dt_lancamento as dtLancamento");
+	nativeQuery.append("   FROM PESSOA pessoa");
+	nativeQuery.append("  INNER JOIN CRIANCA crianca ON pessoa.id = crianca.pessoa_id");
+	nativeQuery.append("  INNER JOIN CRECHE creche   ON crianca.creche_id = creche.id");
+	nativeQuery.append("  INNER JOIN CRIANCA_FAMILIA familia ON familia.id_crianca = crianca.id");
+	nativeQuery.append("   LEFT JOIN DIARIO diario   ON crianca.id = diario.id_crianca");
+	nativeQuery.append("  WHERE (diario.tipo = :diarioTipo OR diario.id is null)");
+	nativeQuery.append("    AND familia.id_usuario = :usuarioId");
+
+	final Session session = (Session) this.em.getDelegate();
+	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
+	query.setParameter("usuarioId", usuarioId.intValue());
+	query.setParameter("diarioTipo", tipoDiario.name());
+	query.setResultTransformer(new FluentHibernateResultTransformer(DiarioVO.class));
+
+	return query.list();
+    }
+
 }

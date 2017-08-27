@@ -33,7 +33,7 @@ public class DiarioService {
 
 
 
-    public List<DiarioVO> getDiarios(final Integer crecheId, final DiarioTipo tipo) {
+    public List<DiarioVO> getDiariosByCreche(final Integer crecheId, final DiarioTipo tipo) {
 	return this.diarioRepository.findDiarios(crecheId, tipo);
     }
 
@@ -47,6 +47,14 @@ public class DiarioService {
 	build.create(dtos);
 	final Set<Diario> diarios = build.getDiarios();
 	this.diarioRepository.persistOrUpdate(diarios);
+    }
+
+
+
+
+
+    public List<DiarioVO> getDiariosByFamiliar(final Integer usuarioId, final DiarioTipo tipoDiario) {
+	return this.diarioRepository.findDiariosByFamiliar(usuarioId, tipoDiario);
     }
 
 }
