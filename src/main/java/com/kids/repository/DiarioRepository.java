@@ -44,9 +44,10 @@ public class DiarioRepository {
 	nativeQuery.append("   FROM PESSOA pessoa");
 	nativeQuery.append("  INNER JOIN CRIANCA crianca ON pessoa.id = crianca.pessoa_id");
 	nativeQuery.append("  INNER JOIN CRECHE creche   ON crianca.creche_id = creche.id");
-	nativeQuery.append("   LEFT JOIN DIARIO diario   ON crianca.id = diario.id_crianca");
-	nativeQuery.append("  WHERE creche.id   = :crecheId");
-	nativeQuery.append("    AND (diario.tipo = :diarioTipo OR diario.id is null)");
+	nativeQuery.append("   LEFT JOIN DIARIO diario   ON crianca.id = diario.id_crianca AND diario.tipo = :diarioTipo");
+	nativeQuery.append("  WHERE creche.id            = :crecheId");
+	nativeQuery.append("    AND diario.dt_lancamento = current_date");
+	nativeQuery.append("  ORDER BY pessoa.nome");
 
 	final Session session = (Session) this.em.getDelegate();
 	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
@@ -70,6 +71,7 @@ public class DiarioRepository {
 		} else {
 		    this.em.merge(d);
 		}
+		this.em.flush();
 	    }
 	}
     }

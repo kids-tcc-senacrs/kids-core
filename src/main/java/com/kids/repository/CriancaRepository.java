@@ -98,18 +98,15 @@ public class CriancaRepository {
 	criteria.createAlias("crianca.contato", "contato", JoinType.INNER_JOIN);
 	criteria.createAlias("crianca.alergias", "a", JoinType.LEFT_OUTER_JOIN);
 	criteria.createAlias("crianca.medicamentos", "m", JoinType.LEFT_OUTER_JOIN);
-
 	criteria.setFetchMode("crianca.pessoa", FetchMode.SELECT);
 	criteria.setFetchMode("criancaPessoa.endereco", FetchMode.SELECT);
 	criteria.setFetchMode("crianca.creche", FetchMode.SELECT);
 	criteria.setFetchMode("crianca.contato", FetchMode.SELECT);
 	criteria.setFetchMode("crianca.alergias", FetchMode.SELECT);
 	criteria.setFetchMode("crianca.medicamentos", FetchMode.SELECT);
-
 	criteria.add(Restrictions.eq("creche", creche));
 	final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();
 	final Set<Crianca> criancas = result.stream().collect(Collectors.toSet());
-
 	return this.lazy(criancas);
     }
 

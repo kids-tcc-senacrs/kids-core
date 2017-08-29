@@ -62,7 +62,9 @@ public class BuildDiario {
 		}
 		diario.setNota(dto.getNota());
 		diario.setDtLancamento(LocalDate.now());
-		this.diarios.add(diario);
+		if (diario.getNota() != null) {
+		    this.diarios.add(diario);
+		}
 	    }
 	}
     }

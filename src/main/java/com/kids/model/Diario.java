@@ -172,7 +172,10 @@ public class Diario implements Serializable {
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + ((creche == null) ? 0 : creche.hashCode());
+	result = prime * result + ((crianca == null) ? 0 : crianca.hashCode());
+	result = prime * result + ((dtLancamento == null) ? 0 : dtLancamento.hashCode());
+	result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 	return result;
     }
 
@@ -189,10 +192,22 @@ public class Diario implements Serializable {
 	if (getClass() != obj.getClass())
 	    return false;
 	Diario other = (Diario) obj;
-	if (id == null) {
-	    if (other.id != null)
+	if (creche == null) {
+	    if (other.creche != null)
 		return false;
-	} else if (!id.equals(other.id))
+	} else if (!creche.equals(other.creche))
+	    return false;
+	if (crianca == null) {
+	    if (other.crianca != null)
+		return false;
+	} else if (!crianca.equals(other.crianca))
+	    return false;
+	if (dtLancamento == null) {
+	    if (other.dtLancamento != null)
+		return false;
+	} else if (!dtLancamento.equals(other.dtLancamento))
+	    return false;
+	if (tipo != other.tipo)
 	    return false;
 	return true;
     }

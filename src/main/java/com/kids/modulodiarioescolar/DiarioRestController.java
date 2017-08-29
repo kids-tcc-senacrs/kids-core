@@ -73,7 +73,9 @@ public class DiarioRestController {
 
 		this.diarioService.save(dtos);
 
-		return ResponseEntity.status(OK).body(KidsJsonUtil.convertToJson(this.diarioService.getDiariosByCreche(dtos.get(0).getCrecheId().intValue(), dtos.get(0).getTipo())));
+		final DiarioDTO dto = dtos.get(0);
+
+		return ResponseEntity.status(OK).body(KidsJsonUtil.convertToJson(this.diarioService.getDiariosByCreche(dto.getCrecheId().intValue(), dto.getTipo())));
 	    }
 	} catch (final Exception e) {
 	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
