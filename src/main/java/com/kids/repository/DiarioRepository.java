@@ -46,7 +46,7 @@ public class DiarioRepository {
 	nativeQuery.append("  INNER JOIN CRECHE creche   ON crianca.creche_id = creche.id");
 	nativeQuery.append("   LEFT JOIN DIARIO diario   ON crianca.id = diario.id_crianca AND diario.tipo = :diarioTipo");
 	nativeQuery.append("  WHERE creche.id            = :crecheId");
-	nativeQuery.append("    AND diario.dt_lancamento = current_date");
+	//nativeQuery.append("    AND diario.dt_lancamento = current_date");
 	nativeQuery.append("  ORDER BY pessoa.nome");
 
 	final Session session = (Session) this.em.getDelegate();
