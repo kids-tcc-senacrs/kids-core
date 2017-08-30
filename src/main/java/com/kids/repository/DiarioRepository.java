@@ -116,9 +116,8 @@ public class DiarioRepository {
 	nativeQuery.append("  INNER JOIN CRIANCA crianca ON pessoa.id = crianca.pessoa_id");
 	nativeQuery.append("  INNER JOIN CRECHE creche   ON crianca.creche_id = creche.id");
 	nativeQuery.append("  INNER JOIN CRIANCA_FAMILIA familia ON familia.id_crianca = crianca.id");
-	nativeQuery.append("   LEFT JOIN DIARIO diario   ON crianca.id = diario.id_crianca");
-	nativeQuery.append("  WHERE (diario.tipo = :diarioTipo OR diario.id is null)");
-	nativeQuery.append("    AND familia.id_usuario = :usuarioId");
+	nativeQuery.append("   LEFT JOIN DIARIO diario   ON crianca.id = diario.id_crianca AND diario.tipo = :diarioTipo");
+	nativeQuery.append("  WHERE familia.id_usuario = :usuarioId");
 
 	final Session session = (Session) this.em.getDelegate();
 	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
