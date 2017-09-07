@@ -22,19 +22,31 @@ public class EventoVO implements Serializable {
     private Number eventoId;
 
     @ApiModelProperty(position = 1)
-    private Number criancaId;
-
-    @ApiModelProperty(position = 2)
     private String eventoNome;
 
-    @ApiModelProperty(position = 3)
-    private String criancaNome;
-
-    @ApiModelProperty(position = 4)
+    @ApiModelProperty(position = 2)
     private String descricao;
 
+    @ApiModelProperty(position = 3)
+    private String crecheNome;
+
+    @ApiModelProperty(position = 4)
+    private String crecheLogradouro;
+
     @ApiModelProperty(position = 5)
+    private String crecheLocalizacao;
+
+    @ApiModelProperty(position = 6)
+    private Number criancaId;
+
+    @ApiModelProperty(position = 7)
+    private String criancaNome;
+
+    @ApiModelProperty(position = 8)
     private Date dtRealizacao;
+
+    @ApiModelProperty(position = 9)
+    private String pessoaUserResposta;
 
 
 
@@ -130,6 +142,70 @@ public class EventoVO implements Serializable {
 
     public void setDtRealizacao(Date dtRealizacao) {
 	this.dtRealizacao = dtRealizacao;
+    }
+
+
+
+
+
+    public String getCrecheNome() {
+	return crecheNome;
+    }
+
+
+
+
+
+    public void setCrecheNome(String crecheNome) {
+	this.crecheNome = crecheNome;
+    }
+
+
+
+
+
+    public String getCrecheLogradouro() {
+	return crecheLogradouro;
+    }
+
+
+
+
+
+    public void setCrecheLogradouro(String crecheLogradouro) {
+	this.crecheLogradouro = crecheLogradouro;
+    }
+
+
+
+
+
+    public String getCrecheLocalizacao() {
+	return crecheLocalizacao;
+    }
+
+
+
+
+
+    public void setCrecheLocalizacao(final String crecheLocalizacao) {
+	this.crecheLocalizacao = crecheLocalizacao;
+    }
+
+
+
+
+
+    public String getPessoaUserResposta() {
+	return pessoaUserResposta;
+    }
+
+
+
+
+
+    public void setPessoaUserResposta(String pessoaUserResposta) {
+	this.pessoaUserResposta = pessoaUserResposta;
     }
 
 }

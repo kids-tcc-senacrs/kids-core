@@ -5,7 +5,9 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -43,10 +45,15 @@ public class EventoRestController {
 
 
 
-    @RequestMapping(method = GET, path = "/{usuarioId}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getEventosByUsuarioFamiliar(@PathVariable(required = true) final Long usuarioId) {
+    @RequestMapping(method = GET, path = "/{usuarioId}/{emAberto}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getEventosByUsuarioFamiliar(@PathVariable(required = true) final Long usuarioId, @PathVariable(required = true) final boolean emAberto) {
 	try {
-	    final List<EventoVO> eventos = this.eventoService.getEventosByUsuarioFamiliar(usuarioId);
+	    final List<EventoVO> eventos = new ArrayList<>();
+	    if (emAberto) {
+		eventos.addAll(this.eventoService.getEventosByUsuarioFamiliarEmAberto(usuarioId));
+	    } else {
+		eventos.addAll(this.eventoService.getEventosByUsuarioFamiliarCancelados(usuarioId));
+	    }
 	    return ResponseEntity.status(HttpStatus.OK).body(KidsJsonUtil.convertToJson(eventos));
 	} catch (final KidsException e) {
 	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
@@ -63,9 +70,29 @@ public class EventoRestController {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));
 	    } else {
-		
+
 		this.eventoService.save(dto);
-		
+
+		return ResponseEntity.status(CREATED).build();
+	    }
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
+	}
+    }
+
+
+
+
+
+    @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> update(@Valid @RequestBody(required = true) final EventoDTO dto, final Errors errors) {
+	try {
+	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));
+	    } else {
+
+		this.eventoService.update(dto);
+
 		return ResponseEntity.status(CREATED).build();
 	    }
 	} catch (final KidsException e) {

@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.kids.enumeration.EventoStatus;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -43,6 +45,9 @@ public class EventoDTO implements Serializable {
     @NotNull(message = "o campo 'Data de realização' é de preenchimento obrigatório")
     @ApiModelProperty(position = 4, required = true)
     private LocalDateTime dtRealizacao;
+
+    @ApiModelProperty(position = 5)
+    private EventoStatus status;
 
 
 
@@ -122,6 +127,22 @@ public class EventoDTO implements Serializable {
 
     public void setDtRealizacao(LocalDateTime dtRealizacao) {
 	this.dtRealizacao = dtRealizacao;
+    }
+
+
+
+
+
+    public EventoStatus getStatus() {
+	return status;
+    }
+
+
+
+
+
+    public void setStatus(EventoStatus status) {
+	this.status = status;
     }
 
 }

@@ -3,8 +3,10 @@ package com.kids.moduloeventos.validate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.kids.enumeration.EventoStatus;
 import com.kids.enumeration.TipoUsuario;
 import com.kids.exception.KidsException;
+import com.kids.model.Evento;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocreche.CrecheFacade;
@@ -51,7 +53,7 @@ public class ValidateEvento {
 
 
 
-    public void validar(final EventoDTO dto) throws KidsException {
+    public void validarInsert(final EventoDTO dto) throws KidsException {
 	this.validarDataDoEvento(dto);
 	this.validarCrecheCadastrada(dto);
     }
@@ -84,6 +86,38 @@ public class ValidateEvento {
 	    throw new UsuarioInexistenteException();
 	} else if (!TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
 	    throw new TipoUsuarioInvalidoException();
+	}
+    }
+
+
+
+
+
+    public void validarUpdate(final EventoDTO dto) throws KidsException {
+	this.validarEventoCadastrado(dto.getEventoId());
+	this.validarStatusEvento(dto);
+    }
+
+
+
+
+
+    private void validarStatusEvento(final EventoDTO dto) throws StatusInvalidoException {
+	final Evento evento = this.eventoRepository.findEvento(dto.getEventoId());
+	if (evento.getDtRealizacao().isBefore(LocalDateTime.now()) && EventoStatus.PREVISTO.equals(dto.getStatus())) {
+	    throw new StatusInvalidoException("message_statusInvalidoParaDataAnteriorException");
+	}
+
+    }
+
+
+
+
+
+    private void validarEventoCadastrado(final Long eventoId) throws EventoInexistenteException {
+	final Evento evento = this.eventoRepository.findEvento(eventoId);
+	if (evento == null) {
+	    throw new EventoInexistenteException();
 	}
     }
 

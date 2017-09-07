@@ -6,6 +6,7 @@ import com.kids.enumeration.EventoStatus;
 import com.kids.model.Evento;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.moduloeventos.dto.EventoDTO;
+import com.kids.repository.EventoRepository;
 
 /**
  * 
@@ -18,6 +19,8 @@ public class BuildEvento {
     private Evento evento = new Evento();
 
     private CrecheFacade crecheFacade;
+
+    private EventoRepository eventoRepository;
 
 
 
@@ -40,8 +43,18 @@ public class BuildEvento {
 
 
 
+    public BuildEvento(final EventoRepository eventoRepository) {
+	this.eventoRepository = eventoRepository;
+	Objects.requireNonNull(this.eventoRepository, "deve informar uma instancia de EventoRepository");
+    }
+
+
+
+
+
     public void update(final EventoDTO dto) {
-	this.create(dto);
+	this.evento = this.eventoRepository.findEvento(dto.getEventoId());
+	this.evento.setStatus(dto.getStatus());
     }
 
 
