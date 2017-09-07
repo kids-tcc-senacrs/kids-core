@@ -74,7 +74,7 @@ public class UsuarioRepository {
 
 
     public Usuario findUsuarioById(final Long id) {
-	return this.em.getReference(Usuario.class, id);
+	return this.em.find(Usuario.class, id);
     }
 
 
