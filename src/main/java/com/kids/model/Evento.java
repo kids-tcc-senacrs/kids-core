@@ -36,8 +36,8 @@ public class Evento implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @TableGenerator(name = "alergia", allocationSize = 1)
+    @GeneratedValue(generator = "sequenceEvento", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequenceEvento", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -56,6 +56,102 @@ public class Evento implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10)
     private EventoStatus status;
+
+
+
+
+
+    public Long getId() {
+	return id;
+    }
+
+
+
+
+
+    public void setId(Long id) {
+	this.id = id;
+    }
+
+
+
+
+
+    public Creche getCreche() {
+	return creche;
+    }
+
+
+
+
+
+    public void setCreche(Creche creche) {
+	this.creche = creche;
+    }
+
+
+
+
+
+    public String getNome() {
+	return nome;
+    }
+
+
+
+
+
+    public void setNome(String nome) {
+	this.nome = nome;
+    }
+
+
+
+
+
+    public String getDescricao() {
+	return descricao;
+    }
+
+
+
+
+
+    public void setDescricao(String descricao) {
+	this.descricao = descricao;
+    }
+
+
+
+
+
+    public LocalDateTime getDtRealizacao() {
+	return dtRealizacao;
+    }
+
+
+
+
+
+    public void setDtRealizacao(LocalDateTime dtRealizacao) {
+	this.dtRealizacao = dtRealizacao;
+    }
+
+
+
+
+
+    public EventoStatus getStatus() {
+	return status;
+    }
+
+
+
+
+
+    public void setStatus(EventoStatus status) {
+	this.status = status;
+    }
 
 
 

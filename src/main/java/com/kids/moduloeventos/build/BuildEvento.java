@@ -1,0 +1,66 @@
+package com.kids.moduloeventos.build;
+
+import java.util.Objects;
+
+import com.kids.enumeration.EventoStatus;
+import com.kids.model.Evento;
+import com.kids.modulocreche.CrecheFacade;
+import com.kids.moduloeventos.dto.EventoDTO;
+
+/**
+ * 
+ * @author luciano - lucianoortizsilva@gmail.com
+ * @since 09/2017
+ *
+ */
+public class BuildEvento {
+
+    private Evento evento = new Evento();
+
+    private CrecheFacade crecheFacade;
+
+
+
+
+
+    public BuildEvento() {
+	super();
+    }
+
+
+
+
+
+    public BuildEvento(final CrecheFacade crecheFacade) {
+	this.crecheFacade = crecheFacade;
+	Objects.requireNonNull(this.crecheFacade, "deve informar uma instancia de crecheFacade");
+    }
+
+
+
+
+
+    public void update(final EventoDTO dto) {
+	this.create(dto);
+    }
+
+
+
+
+
+    public void create(final EventoDTO dto) {
+	this.evento.setCreche(this.crecheFacade.getCreche(dto.getCrecheId().longValue()));
+	this.evento.setDescricao(dto.getDescricao());
+	this.evento.setNome(dto.getEventoNome());
+	this.evento.setStatus(EventoStatus.PREVISTO);
+	this.evento.setDtRealizacao(dto.getDtRealizacao());
+    }
+
+
+
+
+
+    public Evento getEvento() {
+	return evento;
+    }
+}
