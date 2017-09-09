@@ -2,6 +2,7 @@ package com.kids.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * 
@@ -21,6 +22,15 @@ public class KidsDateUtil {
 
     public static LocalDateTime converterToLocalDateTime(final String date) {
 	return LocalDateTime.parse(date);
+    }
+
+
+
+
+
+    public static LocalDateTime converterZoneDatetimeToLocalDateTime(final String date) {
+	ZonedDateTime zdt = ZonedDateTime.parse(date);
+	return zdt.toLocalDateTime();
     }
 
 }

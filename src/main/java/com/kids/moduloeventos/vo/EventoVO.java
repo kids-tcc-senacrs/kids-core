@@ -48,6 +48,9 @@ public class EventoVO implements Serializable {
     @ApiModelProperty(position = 9)
     private String pessoaUserResposta;
 
+    @ApiModelProperty(position = 10)
+    private String eventoStatus;
+
 
 
 
@@ -206,6 +209,22 @@ public class EventoVO implements Serializable {
 
     public void setPessoaUserResposta(String pessoaUserResposta) {
 	this.pessoaUserResposta = pessoaUserResposta;
+    }
+
+
+
+
+
+    public String getEventoStatus() {
+	return eventoStatus;
+    }
+
+
+
+
+
+    public void setEventoStatus(String eventoStatus) {
+	this.eventoStatus = eventoStatus;
     }
 
 }

@@ -13,6 +13,7 @@ import com.kids.modulocreche.CrecheFacade;
 import com.kids.modulocrianca.validate.CrecheInexistenteException;
 import com.kids.moduloeventos.dto.EventoDTO;
 import com.kids.repository.EventoRepository;
+import com.kids.util.KidsDateUtil;
 
 public class ValidateEvento {
 
@@ -71,7 +72,8 @@ public class ValidateEvento {
 
 
     private void validarDataDoEvento(final EventoDTO dto) throws DataEventoInvalidaException {
-	if (dto.getDtRealizacao().compareTo(LocalDateTime.now()) < 0) {
+	final LocalDateTime date = KidsDateUtil.converterZoneDatetimeToLocalDateTime(dto.getDtRealizacao());
+	if (date.isBefore(LocalDateTime.now())) {
 	    throw new DataEventoInvalidaException();
 	}
     }
@@ -80,11 +82,24 @@ public class ValidateEvento {
 
 
 
-    public void validar(final Long usuarioId) throws UsuarioInexistenteException, TipoUsuarioInvalidoException {
+    public void validarUsuarioFamiliar(final Long usuarioId) throws UsuarioInexistenteException, TipoUsuarioInvalidoException {
 	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
 	if (usuario == null) {
 	    throw new UsuarioInexistenteException();
 	} else if (!TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+	    throw new TipoUsuarioInvalidoException();
+	}
+    }
+
+
+
+
+
+    public void validarUsuarioCreche(final Long usuarioId) throws UsuarioInexistenteException, TipoUsuarioInvalidoException {
+	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
+	if (usuario == null) {
+	    throw new UsuarioInexistenteException();
+	} else if (!TipoUsuario.CRECHE.equals(usuario.getTipo())) {
 	    throw new TipoUsuarioInvalidoException();
 	}
     }
@@ -104,7 +119,7 @@ public class ValidateEvento {
 
     private void validarStatusEvento(final EventoDTO dto) throws StatusInvalidoException {
 	final Evento evento = this.eventoRepository.findEvento(dto.getEventoId());
-	if (evento.getDtRealizacao().isBefore(LocalDateTime.now()) && EventoStatus.PREVISTO.equals(dto.getStatus())) {
+	if (evento.getDtRealizacao().compareTo(LocalDateTime.now()) < 0 && EventoStatus.PREVISTO.equals(dto.getStatus())) {
 	    throw new StatusInvalidoException("message_statusInvalidoParaDataAnteriorException");
 	}
 

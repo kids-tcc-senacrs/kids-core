@@ -1,14 +1,13 @@
 package com.kids.moduloeventos.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kids.enumeration.EventoStatus;
 
 import io.swagger.annotations.ApiModel;
@@ -39,12 +38,14 @@ public class EventoDTO implements Serializable {
 
     @NotEmpty(message = "o campo 'descrição' é de preenchimento obrigatório")
     @ApiModelProperty(position = 3, required = true)
+
     private String descricao;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME, style = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd HH:mm")
     @NotNull(message = "o campo 'Data de realização' é de preenchimento obrigatório")
     @ApiModelProperty(position = 4, required = true)
-    private LocalDateTime dtRealizacao;
+    private String dtRealizacao;
 
     @ApiModelProperty(position = 5)
     private EventoStatus status;
@@ -117,7 +118,7 @@ public class EventoDTO implements Serializable {
 
 
 
-    public LocalDateTime getDtRealizacao() {
+    public String getDtRealizacao() {
 	return dtRealizacao;
     }
 
@@ -125,7 +126,7 @@ public class EventoDTO implements Serializable {
 
 
 
-    public void setDtRealizacao(LocalDateTime dtRealizacao) {
+    public void setDtRealizacao(String dtRealizacao) {
 	this.dtRealizacao = dtRealizacao;
     }
 

@@ -126,9 +126,36 @@ public class EventoRepository {
 
 
 
+    @SuppressWarnings("unchecked")
+    public List<EventoVO> findEventosByUsuarioCreche(final Long usuarioId) {
+	final StringBuilder nativeQuery = new StringBuilder();
+	nativeQuery.append("  SELECT evento.id                  AS \"eventoId\",");
+	nativeQuery.append("         evento.nome                AS \"eventoNome\",");
+	nativeQuery.append("         evento.dt_realizacao       AS \"dtRealizacao\",");
+	nativeQuery.append("         evento.status              AS \"eventoStatus\"");
+	nativeQuery.append("    FROM EVENTO evento");
+	nativeQuery.append("   INNER JOIN CRECHE creche ON creche.id = evento.id_creche");
+	nativeQuery.append("   INNER JOIN PESSOA pessoa        ON pessoa.id = creche.id_pessoa");
+	nativeQuery.append("   INNER JOIN USUARIO usuario      ON pessoa.id = usuario.id_pessoa");
+	nativeQuery.append("   WHERE usuario.id = :userId");
+	nativeQuery.append("   ORDER BY evento.dt_realizacao DESC ");
+
+	final Session session = (Session) this.em.getDelegate();
+	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
+	query.setParameter("userId", usuarioId.intValue());
+	query.setResultTransformer(new FluentHibernateResultTransformer(EventoVO.class));
+
+	return query.list();
+    }
+
+
+
+
+
     @Transactional
     public void save(final Evento evento) {
 	this.em.persist(evento);
+	this.em.flush();
     }
 
 
@@ -146,6 +173,7 @@ public class EventoRepository {
     @Transactional
     public void update(final Evento evento) {
 	this.em.merge(evento);
+	this.em.flush();
     }
 
 }

@@ -7,6 +7,7 @@ import com.kids.model.Evento;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.moduloeventos.dto.EventoDTO;
 import com.kids.repository.EventoRepository;
+import com.kids.util.KidsDateUtil;
 
 /**
  * 
@@ -66,7 +67,7 @@ public class BuildEvento {
 	this.evento.setDescricao(dto.getDescricao());
 	this.evento.setNome(dto.getEventoNome());
 	this.evento.setStatus(EventoStatus.PREVISTO);
-	this.evento.setDtRealizacao(dto.getDtRealizacao());
+	this.evento.setDtRealizacao(KidsDateUtil.converterZoneDatetimeToLocalDateTime(dto.getDtRealizacao()));
     }
 
 

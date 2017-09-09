@@ -32,7 +32,7 @@ public class EventoService {
 
     public List<EventoVO> getEventosByUsuarioFamiliarEmAberto(final Long usuarioId) throws KidsException {
 	final ValidateEvento validate = new ValidateEvento(usuarioFacade);
-	validate.validar(usuarioId);
+	validate.validarUsuarioFamiliar(usuarioId);
 	return this.eventoRepository.findEventosEmAberto(usuarioId);
     }
 
@@ -42,8 +42,18 @@ public class EventoService {
 
     public List<EventoVO> getEventosByUsuarioFamiliarCancelados(final Long usuarioId) throws KidsException {
 	final ValidateEvento validate = new ValidateEvento(usuarioFacade);
-	validate.validar(usuarioId);
+	validate.validarUsuarioFamiliar(usuarioId);
 	return this.eventoRepository.findEventosEmCancelados(usuarioId);
+    }
+
+
+
+
+
+    public List<EventoVO> getEventosByUsuarioCreche(final Long usuarioId) throws KidsException {
+	final ValidateEvento validate = new ValidateEvento(usuarioFacade);
+	validate.validarUsuarioCreche(usuarioId);
+	return this.eventoRepository.findEventosByUsuarioCreche(usuarioId);
     }
 
 

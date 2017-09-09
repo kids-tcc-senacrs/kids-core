@@ -64,15 +64,27 @@ public class EventoRestController {
 
 
 
+    @RequestMapping(method = GET, path = "/{usuarioId}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getEventosByUsuarioCreche(@PathVariable(required = true) final Long usuarioId) {
+	try {
+	    final List<EventoVO> eventos = this.eventoService.getEventosByUsuarioCreche(usuarioId);
+	    return ResponseEntity.status(HttpStatus.OK).body(KidsJsonUtil.convertToJson(eventos));
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
+	}
+    }
+
+
+
+
+
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> save(@Valid @RequestBody(required = true) final EventoDTO dto, final Errors errors) {
 	try {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));
 	    } else {
-
 		this.eventoService.save(dto);
-
 		return ResponseEntity.status(CREATED).build();
 	    }
 	} catch (final KidsException e) {

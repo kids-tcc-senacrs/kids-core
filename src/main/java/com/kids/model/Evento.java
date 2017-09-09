@@ -44,17 +44,17 @@ public class Evento implements Serializable {
     @JoinColumn(name = "id_creche")
     private Creche creche;
 
-    @Column(name = "nome", length = 60)
+    @Column(name = "nome", length = 60, nullable = false)
     private String nome;
 
-    @Column(name = "descricao", length = 255)
+    @Column(name = "descricao", length = 255, nullable = false)
     private String descricao;
 
-    @Column(name = "dt_realizacao")
+    @Column(name = "dt_realizacao", nullable = false)
     private LocalDateTime dtRealizacao;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 10)
+    @Column(name = "status", length = 10, nullable = false)
     private EventoStatus status;
 
 
