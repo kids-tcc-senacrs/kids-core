@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import com.kids.enumeration.AvisoOrigem;
+import com.kids.enumeration.AvisoTipo;
 
 /**
  * 
@@ -53,8 +53,8 @@ public class Aviso implements Serializable {
     private Date dtExpiracao;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "origem", length = 6, nullable = false)
-    private AvisoOrigem origem;
+    @Column(name = "tipo", length = 12, nullable = false)
+    private AvisoTipo tipo;
 
 
 
@@ -124,16 +124,49 @@ public class Aviso implements Serializable {
 
 
 
-    public AvisoOrigem getOrigem() {
-	return origem;
+    public AvisoTipo getTipo() {
+	return tipo;
     }
 
 
 
 
 
-    public void setOrigem(AvisoOrigem origem) {
-	this.origem = origem;
+    public void setTipo(AvisoTipo tipo) {
+	this.tipo = tipo;
+    }
+
+
+
+
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	return result;
+    }
+
+
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Aviso other = (Aviso) obj;
+	if (id == null) {
+	    if (other.id != null)
+		return false;
+	} else if (!id.equals(other.id))
+	    return false;
+	return true;
     }
 
 }

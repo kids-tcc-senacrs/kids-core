@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kids.exception.KidsException;
 import com.kids.model.Aviso;
 import com.kids.moduloaviso.dto.AvisoDTO;
+import com.kids.moduloaviso.vo.AvisoVO;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.repository.AvisoRepository;
 
@@ -24,8 +25,8 @@ public class AvisoService {
 
 
 
-    public List<Aviso> getAvisosNaoExpirados() {
-	return this.avisoRepository.findAllNaoExpirados();
+    public List<AvisoVO> getAvisosNaoExpirados(final Long usuarioId) {
+	return this.avisoRepository.findAllNaoExpirados(usuarioId);
     }
 
 
@@ -37,7 +38,7 @@ public class AvisoService {
 	aviso.setCreche(crecheFacade.buscarCreche(dto.getCrecheId().longValue()));
 	aviso.setDescricao(dto.getDescricao());
 	aviso.setDtExpiracao(dto.getDtExpiracao());
-	aviso.setOrigem(dto.getOrigem());
+	aviso.setTipo(dto.getTipo());
 	this.avisoRepository.persist(aviso);
     }
 

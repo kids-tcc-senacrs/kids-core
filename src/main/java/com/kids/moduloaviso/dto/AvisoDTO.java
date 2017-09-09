@@ -7,7 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
-import com.kids.enumeration.AvisoOrigem;
+import com.kids.enumeration.AvisoTipo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -37,8 +37,8 @@ public class AvisoDTO implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @ApiModelProperty(position = 5, required = true)
-    @NotNull(message = "O campo 'origem' é de preenchimento obrigatório")
-    private AvisoOrigem origem;
+    @NotNull(message = "O campo 'tipo' é de preenchimento obrigatório")
+    private AvisoTipo tipo;
 
 
 
@@ -92,16 +92,16 @@ public class AvisoDTO implements Serializable {
 
 
 
-    public AvisoOrigem getOrigem() {
-	return origem;
+    public AvisoTipo getTipo() {
+	return tipo;
     }
 
 
 
 
 
-    public void setOrigem(AvisoOrigem origem) {
-	this.origem = origem;
+    public void setTipo(AvisoTipo tipo) {
+	this.tipo = tipo;
     }
 
 }
