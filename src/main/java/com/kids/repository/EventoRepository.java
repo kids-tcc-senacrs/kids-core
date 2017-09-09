@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.fluent.hibernate.transformer.FluentHibernateResultTransformer;
 import com.kids.enumeration.EventoStatus;
 import com.kids.model.Evento;
+import com.kids.model.EventoResposta;
 import com.kids.moduloeventos.vo.EventoVO;
 
 @Repository
@@ -173,6 +174,16 @@ public class EventoRepository {
     @Transactional
     public void update(final Evento evento) {
 	this.em.merge(evento);
+	this.em.flush();
+    }
+
+
+
+
+
+    @Transactional
+    public void saveResposta(final EventoResposta resposta) {
+	this.em.persist(resposta);
 	this.em.flush();
     }
 

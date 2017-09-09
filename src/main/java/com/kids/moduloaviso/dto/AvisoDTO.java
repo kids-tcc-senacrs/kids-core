@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Representa os objetos da tela de eventos
+ * 
  * 
  * @author luciano - lucianoortizsilva@gmail.com
  * @since 09/2017

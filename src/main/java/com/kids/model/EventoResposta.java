@@ -19,7 +19,7 @@ import javax.persistence.TableGenerator;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import com.kids.enumeration.EventoStatus;
+import com.kids.enumeration.EventoRespostaStatus;
 
 /**
  * 
@@ -36,8 +36,8 @@ public class EventoResposta implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @TableGenerator(name = "alergia", allocationSize = 1)
+    @GeneratedValue(generator = "sequenceEventoResposta", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "sequenceEventoResposta", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -50,7 +50,7 @@ public class EventoResposta implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private EventoStatus status;
+    private EventoRespostaStatus status;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
@@ -111,7 +111,7 @@ public class EventoResposta implements Serializable {
 
 
 
-    public EventoStatus getStatus() {
+    public EventoRespostaStatus getStatus() {
 	return status;
     }
 
@@ -119,7 +119,7 @@ public class EventoResposta implements Serializable {
 
 
 
-    public void setStatus(EventoStatus status) {
+    public void setStatus(EventoRespostaStatus status) {
 	this.status = status;
     }
 

@@ -37,8 +37,8 @@ public class Aviso implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequenceEvento", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequenceEvento", allocationSize = 1)
+    @GeneratedValue(generator = "aviso", strategy = GenerationType.TABLE)
+    @TableGenerator(name = "aviso", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
