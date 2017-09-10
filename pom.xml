@@ -162,6 +162,7 @@
 					</lifecycleMappingMetadata>
 				</configuration>
 			</plugin>
+			<!-- https://stackoverflow.com/questions/44306362/cant-deploy-to-heroku-at-error-code-h10-desc-app-crashed -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
