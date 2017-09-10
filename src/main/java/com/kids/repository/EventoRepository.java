@@ -12,10 +12,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.fluent.hibernate.transformer.FluentHibernateResultTransformer;
+import com.kids.enumeration.EventoRespostaStatus;
 import com.kids.enumeration.EventoStatus;
 import com.kids.model.Evento;
 import com.kids.model.EventoResposta;
 import com.kids.moduloeventos.vo.EventoVO;
+import com.kids.moduloeventos.vo.RespostaEventoVO;
 
 @Repository
 public class EventoRepository {
@@ -185,6 +187,44 @@ public class EventoRepository {
     public void saveResposta(final EventoResposta resposta) {
 	this.em.persist(resposta);
 	this.em.flush();
+    }
+
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public List<RespostaEventoVO> findRespostasEventosConfirmados(final Long usuarioId) {
+	final StringBuilder nativeQuery = new StringBuilder();
+	nativeQuery.append("  SELECT evento.nome as \"eventoNome\",");
+	nativeQuery.append("         pessoaCrianca.nome as \"criancaNome\",");
+	nativeQuery.append("         evento.dt_realizacao as \"dtRealizacao\",");
+	nativeQuery.append("         pessoaCreche.nome  as \"crecheNome\"");
+	nativeQuery.append("    FROM CRIANCA crianca");
+	nativeQuery.append("   INNER JOIN PESSOA pessoaCrianca     ON crianca.pessoa_id = pessoaCrianca.id");
+	nativeQuery.append("   INNER JOIN CRECHE   creche          ON creche.id = crianca.creche_id");
+	nativeQuery.append("   INNER JOIN PESSOA pessoaCreche      ON creche.id_pessoa   = pessoaCreche.id");
+	nativeQuery.append("   INNER JOIN ENDERECO enderecoCreche  ON enderecoCreche.id_pessoa = creche.id_pessoa");
+	nativeQuery.append("   INNER JOIN CRIANCA_FAMILIA familia  ON familia.id_crianca = crianca.id AND familia.id_usuario = :usuarioId");
+	nativeQuery.append("   INNER JOIN EVENTO evento            ON evento.id_creche = creche.id");
+	nativeQuery.append("    LEFT JOIN EVENTO_RESPOSTA resposta ON resposta.id_evento = evento.id AND resposta.id_crianca = crianca.id");
+	nativeQuery.append("    LEFT JOIN USUARIO usuarioResposta  ON usuarioResposta.id = resposta.id_usuario");
+	nativeQuery.append("    LEFT JOIN PESSOA pessoaUserResposta ON pessoaUserResposta.id = usuarioResposta.id_pessoa");
+	nativeQuery.append("  WHERE evento.dt_realizacao >= :dtRealizacao");
+	nativeQuery.append("  AND evento.status = :eventoStatus");
+	nativeQuery.append("  AND resposta.status = :respostaStatus");
+	nativeQuery.append("  ORDER BY evento.dt_realizacao");
+
+	final Session session = (Session) this.em.getDelegate();
+	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
+	query.setParameter("usuarioId", usuarioId.intValue());
+	query.setParameter("eventoStatus", EventoStatus.PREVISTO.name());
+	query.setParameter("respostaStatus", EventoRespostaStatus.CONFIRMADO.name());
+	query.setParameter("dtRealizacao", new Date());
+	query.setResultTransformer(new FluentHibernateResultTransformer(RespostaEventoVO.class));
+
+	return query.list();
+
     }
 
 }

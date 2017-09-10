@@ -19,6 +19,7 @@ import com.kids.moduloeventos.dto.EventoDTO;
 import com.kids.moduloeventos.dto.RespostaEventoDTO;
 import com.kids.moduloeventos.validate.ValidateEvento;
 import com.kids.moduloeventos.vo.EventoVO;
+import com.kids.moduloeventos.vo.RespostaEventoVO;
 import com.kids.repository.EventoRepository;
 
 @Service
@@ -111,6 +112,14 @@ public class EventoService {
 	resposta.setStatus(dto.getEventoRespostaStatus());
 	resposta.setDtResposta(LocalDateTime.now());
 	this.eventoRepository.saveResposta(resposta);
+    }
+
+
+
+
+
+    public List<RespostaEventoVO> getRespostasDeEventosConfirmados(final Long usuarioId) {
+	return this.eventoRepository.findRespostasEventosConfirmados(usuarioId);
     }
 
 }
