@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS --port $PORT -jar target/kids-core.jar
+web: java $JAVA_OPTS --port $PORT -jar target/kids-core.jar heroku ps:scale web=1
