@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.profiles.active=dev -jar target/dependency/webapp-runner.jarv -jar target/kids-core.jar
+web: java -Dserver.port=$PORT -Dspring.profiles.active=dev -jar target/dependency/webapp-runner.jar -jar target/kids-core.jar
