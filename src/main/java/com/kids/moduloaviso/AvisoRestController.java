@@ -3,6 +3,7 @@ package com.kids.moduloaviso;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -41,8 +42,8 @@ public class AvisoRestController {
 
 
     @RequestMapping(method = GET, path = "/{usuarioId}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAvisosNaoExpirados(@PathVariable(required = true) final Long usuarioId) {
-	return ResponseEntity.status(HttpStatus.OK).body(KidsJsonUtil.convertToJson(this.avisoService.getAvisosNaoExpirados(usuarioId)));
+    public ResponseEntity<?> getAvisos(@PathVariable(required = true) final Long usuarioId) {
+	return ResponseEntity.status(HttpStatus.OK).body(KidsJsonUtil.convertToJson(this.avisoService.getAvisos(usuarioId)));
     }
 
 
@@ -55,14 +56,26 @@ public class AvisoRestController {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));
 	    } else {
-
 		this.avisoService.save(dto);
-
-		return ResponseEntity.status(CREATED).build();
 	    }
 	} catch (final KidsException e) {
 	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
 	}
+	return ResponseEntity.status(CREATED).build();
+    }
+
+
+
+
+
+    @RequestMapping(method = DELETE, path = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> delete(@PathVariable(required = true) final Long id) {
+	try {
+	    this.avisoService.delete(id);
+	} catch (final KidsException e) {
+	    return ResponseEntity.status(CONFLICT).body(new RestErroVo(e.getMessage()));
+	}
+	return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

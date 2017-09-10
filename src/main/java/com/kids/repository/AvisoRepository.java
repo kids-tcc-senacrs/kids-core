@@ -34,7 +34,7 @@ public class AvisoRepository {
 
 
     @SuppressWarnings("unchecked")
-    public List<AvisoVO> findAllNaoExpirados(final Long usuarioId) {
+    public List<AvisoVO> findAvisosParaFamiliares(final Long usuarioId) {
 	final StringBuilder nativeQuery = new StringBuilder();
 	nativeQuery.append("  SELECT distinct(aviso.id) as \"avisoId\",");
 	nativeQuery.append("         pessoaCreche.nome as \"crecheNome\",");
@@ -58,6 +58,49 @@ public class AvisoRepository {
 	query.setParameter("usuarioId", usuarioId);
 	query.setResultTransformer(new FluentHibernateResultTransformer(AvisoVO.class));
 	return query.list();
+    }
+
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public List<AvisoVO> findAvisosParaCreches(final Long usuarioId) {
+	final StringBuilder nativeQuery = new StringBuilder();
+	nativeQuery.append("  SELECT distinct(aviso.id) as \"avisoId\",");
+	nativeQuery.append("         pessoaCreche.nome as \"crecheNome\",");
+	nativeQuery.append("         aviso.descricao as \"descricao\",");
+	nativeQuery.append("         aviso.tipo as \"tipo\",");
+	nativeQuery.append("         aviso.dt_expiracao as \"dtExpiracao\"");
+	nativeQuery.append("    FROM AVISO aviso");
+	nativeQuery.append("   INNER JOIN CRECHE creche          ON aviso.id_creche          = creche.id");
+	nativeQuery.append("   INNER JOIN PESSOA pessoaCreche    ON pessoaCreche.id          = creche.id_pessoa");
+	nativeQuery.append("   INNER JOIN USUARIO usuarioCreche  ON usuarioCreche.id_pessoa  = pessoaCreche.id");
+	nativeQuery.append("   WHERE usuarioCreche.id = :usuarioId");
+	nativeQuery.append("  AND aviso.dt_expiracao >= now()");
+
+	final Session session = (Session) this.em.getDelegate();
+	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
+	query.setParameter("usuarioId", usuarioId);
+	query.setResultTransformer(new FluentHibernateResultTransformer(AvisoVO.class));
+	return query.list();
+    }
+
+
+
+
+
+    public Aviso getAvisoById(final Long id) {
+	return this.em.find(Aviso.class, id);
+    }
+
+
+
+
+
+    @Transactional
+    public void remove(Aviso aviso) {
+	this.em.remove(aviso);
     }
 
 }
