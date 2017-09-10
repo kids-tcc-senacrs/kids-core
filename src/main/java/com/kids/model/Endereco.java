@@ -11,8 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -33,8 +33,8 @@ public class Endereco implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequenceEndereco", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequenceEndereco", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_endereco")
+    @SequenceGenerator(name = "seq_endereco", sequenceName = "seq_endereco", allocationSize = 1)
     private Long id;
 
     @JsonIgnore

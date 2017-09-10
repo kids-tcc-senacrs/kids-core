@@ -13,8 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -37,8 +37,8 @@ public class Diario implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequenceDiario", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequenceDiario", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_diario")
+    @SequenceGenerator(name = "seq_diario", sequenceName = "seq_diario", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

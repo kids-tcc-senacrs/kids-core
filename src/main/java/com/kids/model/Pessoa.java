@@ -9,8 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -30,8 +30,8 @@ public class Pessoa implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequencePessoa", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequencePessoa", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
+    @SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa", allocationSize = 1)
     private Long id;
 
     @Column(name = "nome", nullable = false, length = 60)

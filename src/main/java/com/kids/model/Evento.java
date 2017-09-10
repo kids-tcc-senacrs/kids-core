@@ -13,8 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -36,8 +36,8 @@ public class Evento implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequenceEvento", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequenceEvento", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_evento")
+    @SequenceGenerator(name = "seq_evento", sequenceName = "seq_evento", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

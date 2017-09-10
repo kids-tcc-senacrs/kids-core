@@ -19,8 +19,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -43,8 +43,8 @@ public class Crianca implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequenceCrianca", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequenceCrianca", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_crianca")
+    @SequenceGenerator(name = "seq_crianca", sequenceName = "seq_crianca", allocationSize = 1)
     private Long id;
 
     @Column(name = "matricula", length = 10)

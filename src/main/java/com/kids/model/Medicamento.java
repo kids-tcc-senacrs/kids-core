@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -29,8 +29,8 @@ public class Medicamento implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "sequenceMedicamento", strategy = GenerationType.TABLE)
-    @TableGenerator(name = "sequenceMedicamento", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_medicamento")
+    @SequenceGenerator(name = "seq_medicamento", sequenceName = "seq_medicamento", allocationSize = 1)
     private Long id;
 
     @Column(name = "nome", length = 40)
