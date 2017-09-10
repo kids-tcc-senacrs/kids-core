@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/kids-core.jar
+java $JAVA_OPTS -jar --port $PORT target/kids-core.jar
