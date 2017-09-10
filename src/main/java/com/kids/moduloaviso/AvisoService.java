@@ -77,7 +77,7 @@ public class AvisoService {
 
     public void save(final AvisoDTO dto) throws KidsException {
 	final Aviso aviso = new Aviso();
-	aviso.setCreche(crecheFacade.buscarCreche(dto.getCrecheId().longValue()));
+	aviso.setCreche(crecheFacade.buscarCreche(dto.getCrecheId()));
 	aviso.setDescricao(dto.getDescricao());
 	aviso.setDtExpiracao(dto.getDtExpiracao());
 	aviso.setTipo(dto.getTipo());
