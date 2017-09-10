@@ -1,1 +1,1 @@
-java $JAVA_OPTS -jar --port $PORT target/kids-core.jar
+web: java $JAVA_OPTS --port $PORT -jar target/kids-core.jar
