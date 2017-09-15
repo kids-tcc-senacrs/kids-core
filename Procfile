@@ -1,1 +1,0 @@
-java $JAVA_OPTS -jar target/dependency/webapp-runner.jar target/kids-core.jar --server.port=$PORT $JAR_OPTS
