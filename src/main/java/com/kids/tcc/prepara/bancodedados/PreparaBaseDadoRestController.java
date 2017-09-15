@@ -24,9 +24,9 @@ public class PreparaBaseDadoRestController {
 	@Autowired
 	private PreparaBaseDadoRepository repository;
 
-	@RequestMapping(method = GET, path = "{/senha}")
-	public ResponseEntity<?> prepararBaseDados(final @PathVariable(required = true) String senha) {
-		if ("12345".equals(senha)) {
+	@RequestMapping(method = GET, path = "/{senha}")
+	public ResponseEntity<?> prepararBaseDados(final @PathVariable(required = true) Integer senha) {
+		if (Integer.valueOf(12345).equals(senha)) {
 			this.repository.updateDB();
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
