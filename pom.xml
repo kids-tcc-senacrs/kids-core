@@ -203,6 +203,18 @@
 					</processTypes>
 				</configuration>
 			</plugin>
+			<!-- https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
