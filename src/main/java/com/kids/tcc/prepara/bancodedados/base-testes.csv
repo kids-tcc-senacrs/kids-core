@@ -80,6 +80,6 @@ INSERT INTO EVENTO(id, id_creche, nome, dt_realizacao, status, descricao) VALUES
 INSERT INTO EVENTO(id, id_creche, nome, dt_realizacao, status, descricao) VALUES(9, 1, 'Dia do vampiro', '2018-12-29 23:00:00.000-00', 'CANCELADO', 'Todas as crianças deverão vir fantasiados de vampiros');
 INSERT INTO EVENTO_RESPOSTA (id, id_evento, id_crianca, id_usuario, dt_resposta, status) VALUES (1, 4, 3, 4, '2017-06-01 11:27:00', 'CONFIRMADO');
 INSERT INTO EVENTO_RESPOSTA (id, id_evento, id_crianca, id_usuario, dt_resposta, status) VALUES (2, 4, 4, 4, '2017-07-02 16:41:00', 'REJEITADO');
-INSERT INTO AVISO (id, id_creche, descricao, dt_expiracao, origem) VALUES(1,1,'Não haverá aula no dia 12/12/12. Motivo: Limpeza da caixa de água','2017-12-12 23:59:59','AVISO');
-INSERT INTO AVISO (id, id_creche, descricao, dt_expiracao, origem) VALUES(2,1,'Todos os alunos deverão comprarecer 1h antes do inicio da aula do dia 13/12/12','2017-12-13 23:59:59','AVISO');
-INSERT INTO AVISO (id, id_creche, descricao, dt_expiracao, origem) VALUES(3,1,'Evento Cancelado','2018-12-29 23:00:00.000-00','EVENTO');
+INSERT INTO AVISO (id, id_creche, descricao, dt_expiracao, tipo) VALUES(1,1,'Não haverá aula no dia 12/12/12. Motivo: Limpeza da caixa de água','2017-12-12 23:59:59','INFORMACAO');
+INSERT INTO AVISO (id, id_creche, descricao, dt_expiracao, tipo) VALUES(2,1,'Todos os alunos deverão comprarecer 1h antes do inicio da aula do dia 13/12/12','2017-12-13 23:59:59','INFORMACAO');
+INSERT INTO AVISO (id, id_creche, descricao, dt_expiracao, tipo) VALUES(3,1,'Evento Cancelado','2018-12-29 23:00:00.000-00','CANCELAMENTO');
