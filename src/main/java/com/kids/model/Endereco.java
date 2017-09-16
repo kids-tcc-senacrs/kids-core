@@ -34,7 +34,7 @@ public class Endereco implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_endereco")
-    @SequenceGenerator(name = "seq_endereco", sequenceName = "seq_endereco", allocationSize = 1)
+    @SequenceGenerator(name = "seq_endereco", sequenceName = "seq_endereco", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @JsonIgnore

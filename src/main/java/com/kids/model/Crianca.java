@@ -44,7 +44,7 @@ public class Crianca implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_crianca")
-    @SequenceGenerator(name = "seq_crianca", sequenceName = "seq_crianca", allocationSize = 1)
+    @SequenceGenerator(name = "seq_crianca", sequenceName = "seq_crianca", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @Column(name = "matricula", length = 10)

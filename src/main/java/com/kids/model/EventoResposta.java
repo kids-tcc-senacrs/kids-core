@@ -37,7 +37,7 @@ public class EventoResposta implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_eventoResposta")
-    @SequenceGenerator(name = "seq_eventoResposta", sequenceName = "seq_eventoResposta", allocationSize = 1)
+    @SequenceGenerator(name = "seq_eventoResposta", sequenceName = "seq_eventoResposta", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

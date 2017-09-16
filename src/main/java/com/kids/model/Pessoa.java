@@ -31,7 +31,7 @@ public class Pessoa implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
-    @SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa", allocationSize = 1)
+    @SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @Column(name = "nome", nullable = false, length = 60)

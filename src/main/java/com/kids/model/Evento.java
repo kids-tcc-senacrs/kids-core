@@ -37,7 +37,7 @@ public class Evento implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_evento")
-    @SequenceGenerator(name = "seq_evento", sequenceName = "seq_evento", allocationSize = 1)
+    @SequenceGenerator(name = "seq_evento", sequenceName = "seq_evento", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

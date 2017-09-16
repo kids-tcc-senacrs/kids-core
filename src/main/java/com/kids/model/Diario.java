@@ -38,7 +38,7 @@ public class Diario implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_diario")
-    @SequenceGenerator(name = "seq_diario", sequenceName = "seq_diario", allocationSize = 1)
+    @SequenceGenerator(name = "seq_diario", sequenceName = "seq_diario", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -29,7 +29,7 @@ public class Contato implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_contato")
-    @SequenceGenerator(name = "seq_contato", sequenceName = "seq_contato", allocationSize = 1)
+    @SequenceGenerator(name = "seq_contato", sequenceName = "seq_contato", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @Column(name = "responsavel", nullable = false, length = 60)

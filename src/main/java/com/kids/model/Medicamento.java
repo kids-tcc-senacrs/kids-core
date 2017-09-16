@@ -30,7 +30,7 @@ public class Medicamento implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_medicamento")
-    @SequenceGenerator(name = "seq_medicamento", sequenceName = "seq_medicamento", allocationSize = 1)
+    @SequenceGenerator(name = "seq_medicamento", sequenceName = "seq_medicamento", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @Column(name = "nome", length = 40)

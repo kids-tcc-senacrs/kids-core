@@ -29,7 +29,7 @@ public class Alergia implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_alergia")
-    @SequenceGenerator(name = "seq_alergia", sequenceName = "seq_alergia", allocationSize = 1)
+    @SequenceGenerator(name = "seq_alergia", sequenceName = "seq_alergia", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @Column(name = "descricao", length = 50)

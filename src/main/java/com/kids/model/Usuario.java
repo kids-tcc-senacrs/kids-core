@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
-    @SequenceGenerator(name = "seq_usuario", sequenceName = "seq_usuario", allocationSize = 1)
+    @SequenceGenerator(name = "seq_usuario", sequenceName = "seq_usuario", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

@@ -34,7 +34,7 @@ public class Creche implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_creche")
-    @SequenceGenerator(name = "seq_creche", sequenceName = "seq_creche", allocationSize = 1)
+    @SequenceGenerator(name = "seq_creche", sequenceName = "seq_creche", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @JsonIgnore

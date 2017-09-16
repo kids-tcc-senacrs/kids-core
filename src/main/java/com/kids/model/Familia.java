@@ -33,7 +33,7 @@ public class Familia implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_familia")
-    @SequenceGenerator(name = "seq_familia", sequenceName = "seq_familia", allocationSize = 1)
+    @SequenceGenerator(name = "seq_familia", sequenceName = "seq_familia", allocationSize = 100, initialValue = 100)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
