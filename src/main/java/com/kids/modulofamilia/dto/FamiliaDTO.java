@@ -1,4 +1,4 @@
-package com.kids.modulofamilia.vo;
+package com.kids.modulofamilia.dto;
 
 import java.io.Serializable;
 
@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel(description = "familiar")
-public class FamiliaVO implements Serializable {
+public class FamiliaDTO implements Serializable {
 
     private static final long serialVersionUID = 5337553723112523107L;
 
@@ -53,7 +53,7 @@ public class FamiliaVO implements Serializable {
 
 
 
-    public FamiliaVO() {
+    public FamiliaDTO() {
 	super();
     }
 

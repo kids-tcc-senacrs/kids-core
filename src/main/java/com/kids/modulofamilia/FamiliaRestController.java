@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kids.exception.KidsException;
 import com.kids.model.CriancaFamilia;
-import com.kids.modulofamilia.vo.FamiliaVO;
+import com.kids.modulofamilia.dto.FamiliaDTO;
 import com.kids.util.KidsJsonUtil;
 import com.kids.util.KidsRestUtil;
 import com.kids.util.RestErroVo;
@@ -46,7 +46,7 @@ public class FamiliaRestController {
 
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final FamiliaVO vo, final Errors errors) {
+    public ResponseEntity<?> save(@Valid @RequestBody(required = true) final FamiliaDTO vo, final Errors errors) {
 	try {
 	    if (KidsRestUtil.existeErroNaRequisicao(errors)) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(KidsRestUtil.getErros(errors));

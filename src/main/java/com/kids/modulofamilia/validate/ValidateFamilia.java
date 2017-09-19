@@ -9,7 +9,7 @@ import com.kids.model.CriancaFamilia;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocrianca.CriancaFacade;
-import com.kids.modulofamilia.vo.FamiliaVO;
+import com.kids.modulofamilia.dto.FamiliaDTO;
 import com.kids.repository.FamiliaRepository;
 
 /**
@@ -43,7 +43,7 @@ public class ValidateFamilia {
 
 
 
-    public void validarCadastroNovo(final FamiliaVO vo) throws KidsException {
+    public void validarCadastroNovo(final FamiliaDTO vo) throws KidsException {
 	this.validarCrianca(vo.getCriancaId());
 	this.validarTipoUsuario(vo.getEmail());
 	this.validarEmailAceito(vo.getEmail());

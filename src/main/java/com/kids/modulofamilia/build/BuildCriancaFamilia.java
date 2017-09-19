@@ -13,7 +13,7 @@ import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
 import com.kids.modulocrianca.CriancaFacade;
-import com.kids.modulofamilia.vo.FamiliaVO;
+import com.kids.modulofamilia.dto.FamiliaDTO;
 import com.kids.repository.FamiliaRepository;
 
 /**
@@ -49,7 +49,7 @@ public class BuildCriancaFamilia {
 
 
 
-    public void associar(final FamiliaVO vo) throws KidsException {
+    public void associar(final FamiliaDTO vo) throws KidsException {
 	final Crianca crianca = this.criancaFacade.getCriancaById(vo.getCriancaId());
 	final Familia familia = this.getFamilia(vo);
 	final Usuario usuario = this.getUsuario(familia.getPessoa());
@@ -77,7 +77,7 @@ public class BuildCriancaFamilia {
 
 
 
-    private Familia getFamilia(final FamiliaVO vo) throws KidsException {
+    private Familia getFamilia(final FamiliaDTO vo) throws KidsException {
 	final Usuario usuario = this.usuarioFacade.getUsuarioByEmail(vo.getEmail());
 	if (usuario == null) {
 	    return this.criarUsuarioFamiliar(vo.getNome(), vo.getEmail());

@@ -38,6 +38,7 @@ public class MailService {
 			helper.setTo(to);
 			helper.setFrom(from);
 			mailSender.send(mimeMsg);
+			LOGGER.error("[KIDS] E-MAIL ENVIADO COM SUCESSO PARA : " + to);
 		} catch (final Exception e) {
 			LOGGER.error("[KIDS] Ocoorreu um erro ao enviar email: ", e);
 		}
