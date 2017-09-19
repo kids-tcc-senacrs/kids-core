@@ -1,6 +1,6 @@
 package com.kids.modulocrianca;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,7 +65,7 @@ public class CriancaService {
 
 
 
-    Set<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
+    List<Crianca> getCriancasByUsuarioId(final Long usuarioId) {
 	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
 	if (usuario.getAtivo()) {
 	    if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {

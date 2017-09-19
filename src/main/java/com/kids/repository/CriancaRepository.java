@@ -1,6 +1,9 @@
 package com.kids.repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,7 @@ import com.kids.model.Creche;
 import com.kids.model.Crianca;
 import com.kids.model.CriancaFamilia;
 import com.kids.model.Familia;
+import com.kids.model.comparator.CriancaNomeComparator;
 
 /**
  * 
@@ -89,7 +93,7 @@ public class CriancaRepository {
 
 
     @SuppressWarnings("unchecked")
-    public Set<Crianca> findCriancasByCreche(final Creche creche) {
+    public List<Crianca> findCriancasByCreche(final Creche creche) {
 	final Session session = (Session) this.em.getDelegate();
 	final DetachedCriteria criteria = DetachedCriteria.forClass(Crianca.class, "crianca");
 	criteria.createAlias("crianca.pessoa", "criancaPessoa", JoinType.INNER_JOIN);
@@ -107,7 +111,9 @@ public class CriancaRepository {
 	criteria.add(Restrictions.eq("creche", creche));
 	final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();
 	final Set<Crianca> criancas = result.stream().collect(Collectors.toSet());
-	return this.lazy(criancas);
+	final List<Crianca> listCriancas = new ArrayList<>(criancas);
+	Collections.sort(listCriancas, new CriancaNomeComparator());
+	return this.lazy(listCriancas);
     }
 
 
@@ -126,7 +132,7 @@ public class CriancaRepository {
 
 
 
-    private Set<Crianca> lazy(final Set<Crianca> criancas) {
+    private List<Crianca> lazy(final List<Crianca> criancas) {
 	if (CollectionUtils.isNotEmpty(criancas)) {
 	    for (final Crianca crianca : criancas) {
 		crianca.getPessoa().getId();
@@ -146,7 +152,7 @@ public class CriancaRepository {
 
 
     @SuppressWarnings("unchecked")
-    public Set<Crianca> findCriancasByFamiliar(final Familia familia) {
+    public List<Crianca> findCriancasByFamiliar(final Familia familia) {
 	final Session session = (Session) this.em.getDelegate();
 	final DetachedCriteria criteria = DetachedCriteria.forClass(CriancaFamilia.class, "cf");
 	criteria.createAlias("cf.familia", "familia");
@@ -169,8 +175,9 @@ public class CriancaRepository {
 
 	final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();
 	final Set<Crianca> criancas = result.stream().collect(Collectors.toSet());
-
-	return this.lazy(criancas);
+	final List<Crianca> listCriancas = new ArrayList<>(criancas);
+	Collections.sort(listCriancas, new CriancaNomeComparator());
+	return this.lazy(listCriancas);
     }
 
 }

@@ -8,7 +8,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -49,7 +49,7 @@ public class CriancaRestController {
 
     @RequestMapping(method = GET, path = "/{usuarioId}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCriancasByUsuarioId(@PathVariable(required = true) final Long usuarioId) {
-	final Set<Crianca> criancas = this.criancaService.getCriancasByUsuarioId(usuarioId);
+	final List<Crianca> criancas = this.criancaService.getCriancasByUsuarioId(usuarioId);
 	final HttpStatus httpStatus = CollectionUtils.isEmpty(criancas) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 	return ResponseEntity.status(httpStatus).body(KidsJsonUtil.convertToJson(criancas));
     }
