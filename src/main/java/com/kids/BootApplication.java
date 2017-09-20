@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @since 05/2017
  * 
  */
-
 @EntityScan(basePackageClasses = { BootApplication.class, Jsr310JpaConverters.class })
 @EnableAutoConfiguration
 @SpringBootApplication

@@ -1,5 +1,0 @@
-<html>
-    <body>
-        <h3>Olá ${email}, seja bem vindo ao KIDS!</h3>
-    </body>
-</html>
