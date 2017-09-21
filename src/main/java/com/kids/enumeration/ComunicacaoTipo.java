@@ -6,8 +6,8 @@ package com.kids.enumeration;
  * @since 09/2017
  *
  */
-public enum EventoRespostaStatus {
+public enum ComunicacaoTipo {
 
-    CONFIRMADO, REJEITADO
+    SUGESTAO, RECLAMACAO, ELOGIO
 
 }
