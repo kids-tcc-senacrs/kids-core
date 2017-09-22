@@ -19,7 +19,7 @@ public class UsuarioInexistenteException extends KidsException {
 
 
 
-    UsuarioInexistenteException() {
+    public UsuarioInexistenteException() {
 	super(KidsMessageUtil.getMessage(MESSAGE));
     }
 }

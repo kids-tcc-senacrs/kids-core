@@ -5,7 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kids.exception.KidsException;
+import com.kids.moduloautenticacao.UsuarioFacade;
+import com.kids.modulocomunicacao.build.BuildComunicacao;
+import com.kids.modulocomunicacao.dto.ComunicacaoDTO;
+import com.kids.modulocomunicacao.validate.ValidateComunicacao;
 import com.kids.modulocomunicacao.vo.ComunicacaoVO;
+import com.kids.modulocreche.CrecheFacade;
 import com.kids.repository.ComunicacaoRepository;
 
 /**
@@ -20,12 +26,30 @@ public class ComunicacaoService {
     @Autowired
     private ComunicacaoRepository comunicacaoRepository;
 
+    @Autowired
+    private CrecheFacade crecheFacade;
+
+    @Autowired
+    private UsuarioFacade usuarioFacade;
+
 
 
 
 
     public List<ComunicacaoVO> getComunicacoesByCreche(final Long crecheId) {
 	return this.comunicacaoRepository.findComunicacoesByCreche(crecheId);
+    }
+
+
+
+
+
+    public void save(final ComunicacaoDTO dto) throws KidsException {
+	final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	validate.validarSave(dto);
+	final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	build.create(dto);
+	this.comunicacaoRepository.persist(build.getComunicacao());
     }
 
 }

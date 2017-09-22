@@ -8,8 +8,10 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.fluent.hibernate.transformer.FluentHibernateResultTransformer;
+import com.kids.model.Comunicacao;
 import com.kids.modulocomunicacao.vo.ComunicacaoVO;
 
 @Repository
@@ -45,6 +47,16 @@ public class ComunicacaoRepository {
 	query.setResultTransformer(new FluentHibernateResultTransformer(ComunicacaoVO.class));
 	return query.list();
 
+    }
+
+
+
+
+
+    @Transactional
+    public void persist(final Comunicacao comunicacao) {
+	this.em.persist(comunicacao);
+	this.em.flush();
     }
 
 }

@@ -7,6 +7,7 @@ import com.kids.exception.KidsException;
 import com.kids.model.Pessoa;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.dto.UsuarioNovoDTO;
+import com.kids.moduloautenticacao.validate.UsuarioInexistenteException;
 
 /**
  * 
@@ -26,6 +27,27 @@ public class UsuarioFacade {
 
     public Usuario getUsuarioById(final Long id) {
 	return this.usuarioService.getUsuarioById(id);
+    }
+
+
+
+
+
+    /**
+     * 
+     * @param id
+     *            id do usuario
+     * 
+     * @return {@link Usuario}
+     * 
+     * @throws UsuarioInexistenteException
+     */
+    public Usuario buscarUsuarioById(final Long id) throws UsuarioInexistenteException {
+	final Usuario usuario = this.usuarioService.getUsuarioById(id);
+	if (usuario == null) {
+	    throw new UsuarioInexistenteException();
+	}
+	return usuario;
     }
 
 

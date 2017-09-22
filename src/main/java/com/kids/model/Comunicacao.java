@@ -179,4 +179,36 @@ public class Comunicacao implements Serializable {
 	this.crecheRespondeu = crecheRespondeu;
     }
 
+
+
+
+
+    public LocalDateTime getDtEnvioFamiliar() {
+	return dtEnvioFamiliar;
+    }
+
+
+
+
+
+    public void setDtEnvioFamiliar(LocalDateTime dtEnvioFamiliar) {
+	this.dtEnvioFamiliar = dtEnvioFamiliar;
+    }
+
+
+
+
+
+    public LocalDateTime getDtRespostaCreche() {
+	return dtRespostaCreche;
+    }
+
+
+
+
+
+    public void setDtRespostaCreche(LocalDateTime dtRespostaCreche) {
+	this.dtRespostaCreche = dtRespostaCreche;
+    }
+
 }
