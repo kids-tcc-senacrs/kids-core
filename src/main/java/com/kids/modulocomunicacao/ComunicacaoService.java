@@ -52,4 +52,16 @@ public class ComunicacaoService {
 	this.comunicacaoRepository.persist(build.getComunicacao());
     }
 
+
+
+
+
+    public void update(final ComunicacaoDTO dto) throws KidsException {
+	final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	validate.validarUpdate(dto);
+	final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	build.update(dto);
+	this.comunicacaoRepository.update(build.getComunicacao());
+    }
+
 }

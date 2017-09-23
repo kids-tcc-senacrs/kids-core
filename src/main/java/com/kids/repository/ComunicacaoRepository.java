@@ -59,4 +59,21 @@ public class ComunicacaoRepository {
 	this.em.flush();
     }
 
+
+
+
+
+    public Comunicacao findComunicacaoById(final Long id) {
+	return this.em.find(Comunicacao.class, id);
+    }
+
+
+
+
+
+    @Transactional
+    public void update(final Comunicacao comunicacao) {
+	this.em.merge(comunicacao);
+    }
+
 }

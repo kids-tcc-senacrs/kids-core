@@ -63,4 +63,16 @@ public class BuildComunicacao {
     public Comunicacao getComunicacao() {
 	return comunicacao;
     }
+
+
+
+
+
+    public void update(final ComunicacaoDTO dto) {
+	this.comunicacao = this.comunicacaoRepository.findComunicacaoById(dto.getId());
+	this.comunicacao.setCrecheRespondeu(Boolean.TRUE);
+	this.comunicacao.setDescricaoCreche(dto.getDescricaoCreche());
+	this.comunicacao.setDtRespostaCreche(LocalDateTime.now());
+    }
+
 }

@@ -2,8 +2,11 @@ package com.kids.modulocomunicacao.validate;
 
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.kids.enumeration.TipoUsuario;
 import com.kids.exception.KidsException;
+import com.kids.model.Comunicacao;
 import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.moduloautenticacao.validate.UsuarioInexistenteException;
@@ -47,6 +50,48 @@ public class ValidateComunicacao {
 	this.validarCreche(dto);
 	this.validarUsuario(dto);
 	this.validarTipoUsuario(dto);
+    }
+
+
+
+
+
+    public void validarUpdate(final ComunicacaoDTO dto) throws KidsException {
+	this.validarComunicacao(dto);
+	this.validarCamposObrigatorios(dto);
+	this.validateComunicacaoJaRespondida(dto);
+    }
+
+
+
+
+
+    private void validateComunicacaoJaRespondida(final ComunicacaoDTO dto) throws CrecheJaRespondeuException {
+	final Comunicacao comunicacao = this.comunicacaoRepository.findComunicacaoById(dto.getId());
+	if (comunicacao.getCrecheRespondeu()) {
+	    throw new CrecheJaRespondeuException();
+	}
+    }
+
+
+
+
+
+    private void validarCamposObrigatorios(final ComunicacaoDTO dto) {
+	if (StringUtils.isEmpty(dto.getDescricaoCreche())) {
+	    Objects.requireNonNull(null, "O campo descrição da creche é obrigatório");
+	}
+    }
+
+
+
+
+
+    private void validarComunicacao(final ComunicacaoDTO dto) throws ComunicacaoInexistenteException {
+	final Comunicacao comunicacao = this.comunicacaoRepository.findComunicacaoById(dto.getId());
+	if (comunicacao == null) {
+	    throw new ComunicacaoInexistenteException();
+	}
     }
 
 
