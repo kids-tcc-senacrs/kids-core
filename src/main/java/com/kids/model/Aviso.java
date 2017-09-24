@@ -1,7 +1,7 @@
 package com.kids.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -48,9 +46,8 @@ public class Aviso implements Serializable {
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dt_expiracao", nullable = false)
-    private Date dtExpiracao;
+    private LocalDate dtExpiracao;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", length = 12, nullable = false)
@@ -108,7 +105,7 @@ public class Aviso implements Serializable {
 
 
 
-    public Date getDtExpiracao() {
+    public LocalDate getDtExpiracao() {
 	return dtExpiracao;
     }
 
@@ -116,7 +113,7 @@ public class Aviso implements Serializable {
 
 
 
-    public void setDtExpiracao(Date dtExpiracao) {
+    public void setDtExpiracao(LocalDate dtExpiracao) {
 	this.dtExpiracao = dtExpiracao;
     }
 

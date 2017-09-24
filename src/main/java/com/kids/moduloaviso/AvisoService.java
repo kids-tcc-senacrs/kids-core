@@ -1,5 +1,6 @@
 package com.kids.moduloaviso;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.moduloaviso.dto.AvisoDTO;
 import com.kids.moduloaviso.validate.AvisoInexistenteException;
+import com.kids.moduloaviso.validate.DataExpiracaoInvalidaException;
 import com.kids.moduloaviso.vo.AvisoVO;
 import com.kids.modulocreche.CrecheFacade;
 import com.kids.moduloeventos.EventoFacade;
@@ -76,6 +78,11 @@ public class AvisoService {
 
 
     public void save(final AvisoDTO dto) throws KidsException {
+
+	if (dto.getDtExpiracao().compareTo(LocalDate.now()) <= 0) {
+	    throw new DataExpiracaoInvalidaException();
+	}
+
 	final Aviso aviso = new Aviso();
 	aviso.setCreche(crecheFacade.buscarCreche(dto.getCrecheId()));
 	aviso.setDescricao(dto.getDescricao());

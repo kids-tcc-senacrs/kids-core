@@ -1,11 +1,12 @@
 package com.kids.moduloaviso.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.kids.enumeration.AvisoTipo;
 
@@ -24,19 +25,19 @@ public class AvisoDTO implements Serializable {
 
     private static final long serialVersionUID = -1951783166619495076L;
 
-    @ApiModelProperty(position = 2, required = true)
+    @ApiModelProperty(position = 1, required = true)
     private Long crecheId;
 
     @NotNull(message = "O campo 'descrição' é de preenchimento obrigatório")
-    @ApiModelProperty(position = 3, required = true)
+    @ApiModelProperty(position = 2, required = true)
     private String descricao;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE, style = "yyyy-MM-dd")
+    @ApiModelProperty(position = 3, required = true, notes = "yyyy-MM-dd")
     @NotNull(message = "O campo 'data de expiração' é de preenchimento obrigatório")
-    @ApiModelProperty(position = 4, required = true)
-    private Date dtExpiracao;
+    private LocalDate dtExpiracao;
 
-    @Enumerated(EnumType.STRING)
-    @ApiModelProperty(position = 5, required = true)
+    @ApiModelProperty(position = 4, required = true)
     @NotNull(message = "O campo 'tipo' é de preenchimento obrigatório")
     private AvisoTipo tipo;
 
@@ -76,7 +77,7 @@ public class AvisoDTO implements Serializable {
 
 
 
-    public Date getDtExpiracao() {
+    public LocalDate getDtExpiracao() {
 	return dtExpiracao;
     }
 
@@ -84,7 +85,7 @@ public class AvisoDTO implements Serializable {
 
 
 
-    public void setDtExpiracao(Date dtExpiracao) {
+    public void setDtExpiracao(LocalDate dtExpiracao) {
 	this.dtExpiracao = dtExpiracao;
     }
 
