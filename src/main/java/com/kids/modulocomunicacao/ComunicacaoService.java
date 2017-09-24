@@ -64,4 +64,12 @@ public class ComunicacaoService {
 	this.comunicacaoRepository.update(build.getComunicacao());
     }
 
+
+
+
+
+    public List<ComunicacaoVO> getComunicacoesByUsuarioFamiliar(final Long usuarioId) {
+	return this.comunicacaoRepository.findComunicacoesByUsuarioFamiliar(usuarioId);
+    }
+
 }

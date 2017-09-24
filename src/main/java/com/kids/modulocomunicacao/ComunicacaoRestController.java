@@ -8,6 +8,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -49,6 +50,24 @@ public class ComunicacaoRestController {
     public ResponseEntity<?> getComunicacoesByCreche(@PathVariable(required = true) final Long crecheId) {
 
 	final List<ComunicacaoVO> comunicacoes = this.comunicadoService.getComunicacoesByCreche(crecheId);
+
+	final HttpStatus httpStatus = CollectionUtils.isEmpty(comunicacoes) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+
+	return ResponseEntity.status(httpStatus).body(KidsJsonUtil.convertToJson(comunicacoes));
+    }
+
+
+
+
+
+    @RequestMapping(method = GET, path = "/{usuarioId}/{familiar}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getComunicacoesByUsuario(@PathVariable(required = true) final Long usuarioId, @PathVariable(required = true) final boolean familiar) {
+
+	List<ComunicacaoVO> comunicacoes = new ArrayList<>();
+
+	if (familiar) {
+	    comunicacoes.addAll(this.comunicadoService.getComunicacoesByUsuarioFamiliar(usuarioId));
+	}
 
 	final HttpStatus httpStatus = CollectionUtils.isEmpty(comunicacoes) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 

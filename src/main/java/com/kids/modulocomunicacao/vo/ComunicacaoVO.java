@@ -42,6 +42,9 @@ public class ComunicacaoVO implements Serializable {
     @ApiModelProperty(position = 7)
     private Date dtRespostaCreche;
 
+    @ApiModelProperty(position = 8)
+    private String crecheNome;
+
 
 
 
@@ -168,6 +171,22 @@ public class ComunicacaoVO implements Serializable {
 
     public void setDtRespostaCreche(Date dtRespostaCreche) {
 	this.dtRespostaCreche = dtRespostaCreche;
+    }
+
+
+
+
+
+    public String getCrecheNome() {
+	return crecheNome;
+    }
+
+
+
+
+
+    public void setCrecheNome(String crecheNome) {
+	this.crecheNome = crecheNome;
     }
 
 }

@@ -76,4 +76,35 @@ public class ComunicacaoRepository {
 	this.em.merge(comunicacao);
     }
 
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public List<ComunicacaoVO> findComunicacoesByUsuarioFamiliar(final Long usuarioId) {
+	final StringBuilder nativeQuery = new StringBuilder();
+	nativeQuery.append(" SELECT C.id                 as \"comunicacaoId\",");
+	nativeQuery.append("        P.nome               as \"usuarioNome\",");
+	nativeQuery.append("        C.descricao_familiar as \"descricaoFamiliar\",");
+	nativeQuery.append("        C.descricao_creche   as \"descricaoCreche\",");
+	nativeQuery.append("        C.tipo               as \"tipo\",");
+	nativeQuery.append("        C.creche_respondeu   as \"crecheRespondeu\",");
+	nativeQuery.append("        C.dt_envio_familiar  as \"dtEnvioFamiliar\",");
+	nativeQuery.append("        C.dt_resposta_creche as \"dtRespostaCreche\",");
+	nativeQuery.append("        Pcreche.nome as \"crecheNome\"");
+	nativeQuery.append("  FROM COMUNICACAO C");
+	nativeQuery.append("  INNER JOIN USUARIO U     ON C.id_usuario = U.id");
+	nativeQuery.append("  INNER JOIN PESSOA  P     ON U.id_pessoa  = P.id");
+	nativeQuery.append("  INNER JOIN CRECHE creche ON creche.id = C.id_creche");
+	nativeQuery.append("  INNER JOIN PESSOA  Pcreche ON Pcreche.id  = creche.id_pessoa");
+	nativeQuery.append("  WHERE C.id_usuario = :usuarioId");
+	nativeQuery.append("  ORDER BY C.dt_envio_familiar DESC");
+
+	final Session session = (Session) this.em.getDelegate();
+	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
+	query.setParameter("usuarioId", usuarioId);
+	query.setResultTransformer(new FluentHibernateResultTransformer(ComunicacaoVO.class));
+	return query.list();
+    }
+
 }
