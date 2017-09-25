@@ -23,102 +23,66 @@ import com.kids.repository.ComunicacaoRepository;
  */
 public class ValidateComunicacao {
 
-    private ComunicacaoRepository comunicacaoRepository;
+	private ComunicacaoRepository comunicacaoRepository;
 
-    private CrecheFacade crecheFacade;
+	private CrecheFacade crecheFacade;
 
-    private UsuarioFacade usuarioFacade;
+	private UsuarioFacade usuarioFacade;
 
-
-
-
-
-    public ValidateComunicacao(final ComunicacaoRepository comunicacaoRepository, final CrecheFacade crecheFacade, final UsuarioFacade usuarioFacade) {
-	this.comunicacaoRepository = comunicacaoRepository;
-	this.crecheFacade = crecheFacade;
-	this.usuarioFacade = usuarioFacade;
-	Objects.requireNonNull(this.comunicacaoRepository, "deve informar uma instancia de ComunicacaoRepository");
-	Objects.requireNonNull(this.crecheFacade, "deve informar uma instancia de CrecheFacade");
-	Objects.requireNonNull(this.usuarioFacade, "deve informar uma instancia de UsuarioFacade");
-    }
-
-
-
-
-
-    public void validarSave(final ComunicacaoDTO dto) throws KidsException {
-	this.validarCreche(dto);
-	this.validarUsuario(dto);
-	this.validarTipoUsuario(dto);
-    }
-
-
-
-
-
-    public void validarUpdate(final ComunicacaoDTO dto) throws KidsException {
-	this.validarComunicacao(dto);
-	this.validarCamposObrigatorios(dto);
-	this.validateComunicacaoJaRespondida(dto);
-    }
-
-
-
-
-
-    private void validateComunicacaoJaRespondida(final ComunicacaoDTO dto) throws CrecheJaRespondeuException {
-	final Comunicacao comunicacao = this.comunicacaoRepository.findComunicacaoById(dto.getId());
-	if (comunicacao.getCrecheRespondeu()) {
-	    throw new CrecheJaRespondeuException();
+	public ValidateComunicacao(final ComunicacaoRepository comunicacaoRepository, final CrecheFacade crecheFacade, final UsuarioFacade usuarioFacade) {
+		this.comunicacaoRepository = comunicacaoRepository;
+		this.crecheFacade = crecheFacade;
+		this.usuarioFacade = usuarioFacade;
+		Objects.requireNonNull(this.comunicacaoRepository, "deve informar uma instancia de ComunicacaoRepository");
+		Objects.requireNonNull(this.crecheFacade, "deve informar uma instancia de CrecheFacade");
+		Objects.requireNonNull(this.usuarioFacade, "deve informar uma instancia de UsuarioFacade");
 	}
-    }
 
-
-
-
-
-    private void validarCamposObrigatorios(final ComunicacaoDTO dto) {
-	if (StringUtils.isEmpty(dto.getDescricaoCreche())) {
-	    Objects.requireNonNull(null, "O campo descrição da creche é obrigatório");
+	public void validarSave(final ComunicacaoDTO dto) throws KidsException {
+		this.validarCreche(dto);
+		this.validarUsuario(dto);
+		this.validarTipoUsuario(dto);
 	}
-    }
 
-
-
-
-
-    private void validarComunicacao(final ComunicacaoDTO dto) throws ComunicacaoInexistenteException {
-	final Comunicacao comunicacao = this.comunicacaoRepository.findComunicacaoById(dto.getId());
-	if (comunicacao == null) {
-	    throw new ComunicacaoInexistenteException();
+	public void validarUpdate(final ComunicacaoDTO dto) throws KidsException {
+		this.validarComunicacao(dto);
+		this.validarCamposObrigatorios(dto);
+		this.validateComunicacaoJaRespondida(dto);
 	}
-    }
 
-
-
-
-
-    private void validarTipoUsuario(final ComunicacaoDTO dto) throws TipoUsuarioNaoPodeCriarComunicacaoException {
-	final Usuario usuario = this.usuarioFacade.getUsuarioById(dto.getUsuarioId());
-	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
-	    throw new TipoUsuarioNaoPodeCriarComunicacaoException();
+	private void validateComunicacaoJaRespondida(final ComunicacaoDTO dto) throws CrecheJaRespondeuException {
+		final Comunicacao comunicacao = this.comunicacaoRepository.findComunicacaoById(dto.getId());
+		if (comunicacao.getCrecheRespondeu()) {
+			throw new CrecheJaRespondeuException();
+		}
 	}
-    }
 
+	private void validarCamposObrigatorios(final ComunicacaoDTO dto) {
+		if (StringUtils.isEmpty(dto.getDescricaoCreche())) {
+			Objects.requireNonNull(null, "O campo descrição da creche é obrigatório");
+		}
+	}
 
+	private void validarComunicacao(final ComunicacaoDTO dto) throws ComunicacaoInexistenteException {
+		final Comunicacao comunicacao = this.comunicacaoRepository.findComunicacaoById(dto.getId());
+		if (comunicacao == null) {
+			throw new ComunicacaoInexistenteException();
+		}
+	}
 
+	private void validarTipoUsuario(final ComunicacaoDTO dto) throws TipoUsuarioNaoPodeCriarComunicacaoException {
+		final Usuario usuario = this.usuarioFacade.getUsuarioById(dto.getUsuarioId());
+		if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+			throw new TipoUsuarioNaoPodeCriarComunicacaoException();
+		}
+	}
 
+	private void validarUsuario(final ComunicacaoDTO dto) throws UsuarioInexistenteException {
+		this.usuarioFacade.buscarUsuarioById(dto.getUsuarioId());
+	}
 
-    private void validarUsuario(final ComunicacaoDTO dto) throws UsuarioInexistenteException {
-	this.usuarioFacade.buscarUsuarioById(dto.getUsuarioId());
-    }
-
-
-
-
-
-    private void validarCreche(final ComunicacaoDTO dto) throws CrecheInexistenteException {
-	this.crecheFacade.buscarCreche(dto.getCrecheId());
-    }
+	private void validarCreche(final ComunicacaoDTO dto) throws CrecheInexistenteException {
+		this.crecheFacade.buscarCreche(dto.getCrecheId());
+	}
 
 }

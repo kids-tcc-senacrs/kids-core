@@ -23,53 +23,37 @@ import com.kids.repository.ComunicacaoRepository;
 @Service
 public class ComunicacaoService {
 
-    @Autowired
-    private ComunicacaoRepository comunicacaoRepository;
+	@Autowired
+	private ComunicacaoRepository comunicacaoRepository;
 
-    @Autowired
-    private CrecheFacade crecheFacade;
+	@Autowired
+	private CrecheFacade crecheFacade;
 
-    @Autowired
-    private UsuarioFacade usuarioFacade;
+	@Autowired
+	private UsuarioFacade usuarioFacade;
 
+	public List<ComunicacaoVO> getComunicacoesByCreche(final Long crecheId) {
+		return this.comunicacaoRepository.findComunicacoesByCreche(crecheId);
+	}
 
+	public void save(final ComunicacaoDTO dto) throws KidsException {
+		final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+		validate.validarSave(dto);
+		final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+		build.create(dto);
+		this.comunicacaoRepository.persist(build.getComunicacao());
+	}
 
+	public void update(final ComunicacaoDTO dto) throws KidsException {
+		final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+		validate.validarUpdate(dto);
+		final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+		build.update(dto);
+		this.comunicacaoRepository.update(build.getComunicacao());
+	}
 
-
-    public List<ComunicacaoVO> getComunicacoesByCreche(final Long crecheId) {
-	return this.comunicacaoRepository.findComunicacoesByCreche(crecheId);
-    }
-
-
-
-
-
-    public void save(final ComunicacaoDTO dto) throws KidsException {
-	final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-	validate.validarSave(dto);
-	final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-	build.create(dto);
-	this.comunicacaoRepository.persist(build.getComunicacao());
-    }
-
-
-
-
-
-    public void update(final ComunicacaoDTO dto) throws KidsException {
-	final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-	validate.validarUpdate(dto);
-	final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-	build.update(dto);
-	this.comunicacaoRepository.update(build.getComunicacao());
-    }
-
-
-
-
-
-    public List<ComunicacaoVO> getComunicacoesByUsuarioFamiliar(final Long usuarioId) {
-	return this.comunicacaoRepository.findComunicacoesByUsuarioFamiliar(usuarioId);
-    }
+	public List<ComunicacaoVO> getComunicacoesByUsuarioFamiliar(final Long usuarioId) {
+		return this.comunicacaoRepository.findComunicacoesByUsuarioFamiliar(usuarioId);
+	}
 
 }

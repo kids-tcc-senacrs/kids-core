@@ -18,76 +18,66 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "comunicacaoDTO")
 public class ComunicacaoDTO implements Serializable {
 
-    private static final long serialVersionUID = 5297714208132822588L;
+	private static final long serialVersionUID = 5297714208132822588L;
 
-    @ApiModelProperty(position = 0, required = false)
-    private Long id;
+	@ApiModelProperty(position = 0, required = false)
+	private Long id;
 
-    @NotNull(message = "o campo 'creche' é de preenchimento obrigatório")
-    @ApiModelProperty(position = 1, required = true)
-    private Long crecheId;
+	@NotNull(message = "o campo 'creche' é de preenchimento obrigatório")
+	@ApiModelProperty(position = 1, required = true)
+	private Long crecheId;
 
-    @NotNull(message = "o campo 'id do usuario familiar' é de preenchimento obrigatório")
-    @ApiModelProperty(position = 2, required = true)
-    private Long usuarioId;
+	@NotNull(message = "o campo 'id do usuario familiar' é de preenchimento obrigatório")
+	@ApiModelProperty(position = 2, required = true)
+	private Long usuarioId;
 
-    @ApiModelProperty(position = 3, required = true)
-    @NotNull(message = "o campo 'tipo' é de preenchimento obrigatório")
-    private ComunicacaoTipo tipo;
+	@ApiModelProperty(position = 3, required = true)
+	@NotNull(message = "o campo 'tipo' é de preenchimento obrigatório")
+	private ComunicacaoTipo tipo;
 
-    @NotNull(message = "o campo 'descrição' é de preenchimento obrigatório")
-    @ApiModelProperty(position = 4, required = true)
-    private String descricaoFamiliar;
+	@NotNull(message = "o campo 'descrição' é de preenchimento obrigatório")
+	@ApiModelProperty(position = 4, required = true)
+	private String descricaoFamiliar;
 
-    @ApiModelProperty(position = 5, required = false)
-    private String descricaoCreche;
+	@ApiModelProperty(position = 5, required = false)
+	private String descricaoCreche;
 
+	public ComunicacaoDTO(final Long id, final Long crecheId, final Long usuarioId, final ComunicacaoTipo tipo, final String descricaoFamiliar, final String descricaoCreche) {
+		super();
+		this.id = id;
+		this.crecheId = crecheId;
+		this.usuarioId = usuarioId;
+		this.tipo = tipo;
+		this.descricaoFamiliar = descricaoFamiliar;
+		this.descricaoCreche = descricaoCreche;
+	}
 
+	public ComunicacaoDTO() {
+		super();
+	}
 
+	public Long getId() {
+		return id;
+	}
 
+	public Long getCrecheId() {
+		return crecheId;
+	}
 
-    public Long getId() {
-	return id;
-    }
+	public Long getUsuarioId() {
+		return usuarioId;
+	}
 
+	public ComunicacaoTipo getTipo() {
+		return tipo;
+	}
 
+	public String getDescricaoFamiliar() {
+		return descricaoFamiliar;
+	}
 
-
-
-    public Long getCrecheId() {
-	return crecheId;
-    }
-
-
-
-
-
-    public Long getUsuarioId() {
-	return usuarioId;
-    }
-
-
-
-
-
-    public ComunicacaoTipo getTipo() {
-	return tipo;
-    }
-
-
-
-
-
-    public String getDescricaoFamiliar() {
-	return descricaoFamiliar;
-    }
-
-
-
-
-
-    public String getDescricaoCreche() {
-	return descricaoCreche;
-    }
+	public String getDescricaoCreche() {
+		return descricaoCreche;
+	}
 
 }
