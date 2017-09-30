@@ -1,11 +1,14 @@
 package com.kids.modulocomunicacao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kids.exception.KidsException;
+import com.kids.model.Creche;
+import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocomunicacao.build.BuildComunicacao;
 import com.kids.modulocomunicacao.dto.ComunicacaoDTO;
@@ -23,37 +26,63 @@ import com.kids.repository.ComunicacaoRepository;
 @Service
 public class ComunicacaoService {
 
-	@Autowired
-	private ComunicacaoRepository comunicacaoRepository;
+    @Autowired
+    private ComunicacaoRepository comunicacaoRepository;
 
-	@Autowired
-	private CrecheFacade crecheFacade;
+    @Autowired
+    private CrecheFacade crecheFacade;
 
-	@Autowired
-	private UsuarioFacade usuarioFacade;
+    @Autowired
+    private UsuarioFacade usuarioFacade;
 
-	public List<ComunicacaoVO> getComunicacoesByCreche(final Long crecheId) {
-		return this.comunicacaoRepository.findComunicacoesByCreche(crecheId);
-	}
 
-	public void save(final ComunicacaoDTO dto) throws KidsException {
-		final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-		validate.validarSave(dto);
-		final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-		build.create(dto);
-		this.comunicacaoRepository.persist(build.getComunicacao());
-	}
 
-	public void update(final ComunicacaoDTO dto) throws KidsException {
-		final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-		validate.validarUpdate(dto);
-		final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
-		build.update(dto);
-		this.comunicacaoRepository.update(build.getComunicacao());
-	}
 
-	public List<ComunicacaoVO> getComunicacoesByUsuarioFamiliar(final Long usuarioId) {
-		return this.comunicacaoRepository.findComunicacoesByUsuarioFamiliar(usuarioId);
-	}
+
+    public List<ComunicacaoVO> getComunicacoesByCreche(final Long crecheId) {
+	return this.comunicacaoRepository.findComunicacoesByCreche(crecheId);
+    }
+
+
+
+
+
+    public void save(final ComunicacaoDTO dto) throws KidsException {
+	final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	validate.validarSave(dto);
+	final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	build.create(dto);
+	this.comunicacaoRepository.persist(build.getComunicacao());
+    }
+
+
+
+
+
+    public void update(final ComunicacaoDTO dto) throws KidsException {
+	final ValidateComunicacao validate = new ValidateComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	validate.validarUpdate(dto);
+	final BuildComunicacao build = new BuildComunicacao(comunicacaoRepository, crecheFacade, usuarioFacade);
+	build.update(dto);
+	this.comunicacaoRepository.update(build.getComunicacao());
+    }
+
+
+
+
+
+    public List<ComunicacaoVO> getComunicacoesByUsuarioFamiliar(final Long usuarioId) {
+	return this.comunicacaoRepository.findComunicacoesByUsuarioFamiliar(usuarioId);
+    }
+
+
+
+
+
+    public Collection<? extends ComunicacaoVO> getComunicacoesByUsuarioCreche(final Long usuarioId) {
+	final Usuario usuario = this.usuarioFacade.getUsuarioById(usuarioId);
+	final Creche creche = this.crecheFacade.getCrecheByUsuario(usuario);
+	return this.comunicacaoRepository.findComunicacoesByUsuarioCreche(creche.getId());
+    }
 
 }

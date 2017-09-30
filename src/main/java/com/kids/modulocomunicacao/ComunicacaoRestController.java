@@ -67,6 +67,8 @@ public class ComunicacaoRestController {
 
 	if (familiar) {
 	    comunicacoes.addAll(this.comunicadoService.getComunicacoesByUsuarioFamiliar(usuarioId));
+	} else {
+	    comunicacoes.addAll(this.comunicadoService.getComunicacoesByUsuarioCreche(usuarioId));
 	}
 
 	final HttpStatus httpStatus = CollectionUtils.isEmpty(comunicacoes) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
