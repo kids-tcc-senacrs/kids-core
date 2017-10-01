@@ -45,6 +45,9 @@ public class ComunicacaoVO implements Serializable {
     @ApiModelProperty(position = 8)
     private String crecheNome;
 
+    @ApiModelProperty(position = 9)
+    private Number usuarioId;
+
 
 
 
@@ -187,6 +190,22 @@ public class ComunicacaoVO implements Serializable {
 
     public void setCrecheNome(String crecheNome) {
 	this.crecheNome = crecheNome;
+    }
+
+
+
+
+
+    public Number getUsuarioId() {
+	return usuarioId;
+    }
+
+
+
+
+
+    public void setUsuarioId(Number usuarioId) {
+	this.usuarioId = usuarioId;
     }
 
 }

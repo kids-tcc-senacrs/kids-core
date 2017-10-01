@@ -116,6 +116,7 @@ public class ComunicacaoRepository {
     public Collection<? extends ComunicacaoVO> findComunicacoesByUsuarioCreche(final Long crecheId) {
 	final StringBuilder nativeQuery = new StringBuilder();
 	nativeQuery.append(" SELECT C.id                 as \"comunicacaoId\",");
+	nativeQuery.append("        C.id_usuario         as \"usuarioId\",");
 	nativeQuery.append("        P.nome               as \"usuarioNome\",");
 	nativeQuery.append("        C.descricao_familiar as \"descricaoFamiliar\",");
 	nativeQuery.append("        C.descricao_creche   as \"descricaoCreche\",");
