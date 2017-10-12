@@ -45,6 +45,24 @@ public class CardapioAlimento implements Serializable {
 
 
 
+    public CardapioAlimento(final Cardapio cardapio, final String nome) {
+	super();
+	this.cardapio = cardapio;
+	this.nome = nome;
+    }
+
+
+
+
+
+    public CardapioAlimento() {
+	super();
+    }
+
+
+
+
+
     public Long getId() {
 	return id;
     }

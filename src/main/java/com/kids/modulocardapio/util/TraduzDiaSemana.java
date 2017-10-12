@@ -29,8 +29,10 @@ public class TraduzDiaSemana implements Serializable {
 	} else if (diaSemana.trim().equalsIgnoreCase("FRIDAY")) {
 	    return "SEXTA-FEIRA";
 
-	} else {
+	} else if (diaSemana.trim().equalsIgnoreCase("SATURDAY")) {
 	    return "SÁBADO";
+	} else {
+	    return diaSemana.trim();
 	}
     }
 

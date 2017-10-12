@@ -2,7 +2,9 @@ package com.kids.modulocardapio.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,16 +27,16 @@ public class CardapioDTO implements Serializable {
 
     @NotNull(message = "O campo 'crecheId' é de preenchimento obrigatório")
     @ApiModelProperty(position = 0, required = true)
-    private Number crecheId;
+    private Long crecheId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE, style = "yyyy-MM-dd")
     @ApiModelProperty(position = 1, required = true, notes = "yyyy-MM-dd")
     @NotNull(message = "O campo 'data do cardápio' é de preenchimento obrigatório")
     private LocalDate dtCardapio;
 
-    @NotNull(message = "O campo 'alimento' é de preenchimento obrigatório")
+    @Valid
     @ApiModelProperty(position = 2)
-    private String alimento;
+    private List<AlimentoDTO> alimentos;
 
 
 
@@ -48,7 +50,7 @@ public class CardapioDTO implements Serializable {
 
 
 
-    public Number getCrecheId() {
+    public Long getCrecheId() {
 	return crecheId;
     }
 
@@ -56,7 +58,7 @@ public class CardapioDTO implements Serializable {
 
 
 
-    public void setCrecheId(Number crecheId) {
+    public void setCrecheId(Long crecheId) {
 	this.crecheId = crecheId;
     }
 
@@ -80,16 +82,16 @@ public class CardapioDTO implements Serializable {
 
 
 
-    public String getAlimento() {
-	return alimento;
+    public List<AlimentoDTO> getAlimentos() {
+	return alimentos;
     }
 
 
 
 
 
-    public void setAlimento(String alimento) {
-	this.alimento = alimento;
+    public void setAlimentos(List<AlimentoDTO> alimentos) {
+	this.alimentos = alimentos;
     }
 
 }

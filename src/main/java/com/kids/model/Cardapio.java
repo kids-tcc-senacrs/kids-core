@@ -2,6 +2,7 @@ package com.kids.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -46,10 +47,30 @@ public class Cardapio implements Serializable {
     private String diaSemana;
 
     @Column(name = "dt_cardapio", nullable = false)
-    private LocalDate dtcardapio;
+    private LocalDate dtCardapio;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cardapio", cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<CardapioAlimento> alimentos;
+
+
+
+
+
+    public Cardapio(final Creche creche, final String diaSemana, final LocalDate dtCardapio) {
+	super();
+	this.creche = creche;
+	this.diaSemana = diaSemana;
+	this.dtCardapio = dtCardapio;
+	this.setAlimentos(new ArrayList<>());
+    }
+
+
+
+
+
+    public Cardapio() {
+	super();
+    }
 
 
 
@@ -103,16 +124,16 @@ public class Cardapio implements Serializable {
 
 
 
-    public LocalDate getDtcardapio() {
-	return dtcardapio;
+    public LocalDate getDtCardapio() {
+	return dtCardapio;
     }
 
 
 
 
 
-    public void setDtcardapio(LocalDate dtcardapio) {
-	this.dtcardapio = dtcardapio;
+    public void setDtCardapio(LocalDate dtCardapio) {
+	this.dtCardapio = dtCardapio;
     }
 
 

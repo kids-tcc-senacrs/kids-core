@@ -1,5 +1,6 @@
 package com.kids.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,12 +8,14 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.fluent.hibernate.transformer.FluentHibernateResultTransformer;
-import com.kids.model.Avaliacao;
 import com.kids.model.Cardapio;
+import com.kids.model.Creche;
 import com.kids.modulocardapio.vo.AlimentoVO;
 import com.kids.modulocardapio.vo.CardapioVO;
 
@@ -33,8 +36,8 @@ public class CardapioRepository {
 
 
     @Transactional
-    public void persist(Avaliacao avaliacao) {
-	this.em.persist(avaliacao);
+    public void persist(final Cardapio cardapio) {
+	this.em.persist(cardapio);
     }
 
 
@@ -101,6 +104,19 @@ public class CardapioRepository {
 	query.setParameter("cardapioId", cardapioId);
 	query.setResultTransformer(new FluentHibernateResultTransformer(AlimentoVO.class));
 	return query.list();
+    }
+
+
+
+
+
+    public Cardapio findCardapiosByCreche(final Creche creche, final LocalDate dtCardapio) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(Cardapio.class);
+	criteria.add(Restrictions.eq("creche", creche));
+	criteria.add(Restrictions.eq("dtCardapio", dtCardapio));
+	return (Cardapio) criteria.getExecutableCriteria(session).uniqueResult();
+
     }
 
 }
