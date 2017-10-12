@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kids.model.Cardapio;
 import com.kids.modulocardapio.util.TraduzDiaSemana;
 import com.kids.modulocardapio.vo.CardapioVO;
 import com.kids.modulocreche.CrecheFacade;
@@ -40,4 +41,19 @@ public class CardapioService {
 	return cardapios;
     }
 
+
+
+
+
+    public void delete(final Cardapio cardapio) {
+	this.cardapioRepository.remove(cardapio);
+    }
+
+
+
+
+
+    public Cardapio getByid(final Long id) {
+	return this.cardapioRepository.findById(id);
+    }
 }

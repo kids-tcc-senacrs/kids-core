@@ -67,4 +67,21 @@ public class CardapioRepository {
 	this.em.persist(cardapio);
     }
 
+
+
+
+
+    public Cardapio findById(final Long id) {
+	return this.em.find(Cardapio.class, id);
+    }
+
+
+
+
+
+    @Transactional
+    public void remove(final Cardapio cardapio) {
+	this.em.remove(cardapio);
+    }
+
 }

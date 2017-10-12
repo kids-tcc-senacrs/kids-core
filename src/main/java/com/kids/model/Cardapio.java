@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +48,7 @@ public class Cardapio implements Serializable {
     @Column(name = "dt_cardapio", nullable = false)
     private LocalDate dtcardapio;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cardapio")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cardapio", cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<CardapioAlimento> alimentos;
 
 
@@ -126,7 +127,7 @@ public class Cardapio implements Serializable {
 
 
 
-    public void setAlimentos(List<CardapioAlimento> alimentos) {
+    public void setAlimentos(final List<CardapioAlimento> alimentos) {
 	this.alimentos = alimentos;
     }
 
