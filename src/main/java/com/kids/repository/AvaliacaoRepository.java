@@ -54,4 +54,13 @@ public class AvaliacaoRepository {
 	return query.list();
     }
 
+
+
+
+
+    @Transactional
+    public void save(final Avaliacao avaliacao) {
+	this.em.persist(avaliacao);
+    }
+
 }
