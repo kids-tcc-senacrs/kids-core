@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.fluent.hibernate.transformer.FluentHibernateResultTransformer;
 import com.kids.model.Avaliacao;
 import com.kids.model.Cardapio;
+import com.kids.modulocardapio.vo.AlimentoVO;
 import com.kids.modulocardapio.vo.CardapioVO;
 
 /**
@@ -82,6 +83,24 @@ public class CardapioRepository {
     @Transactional
     public void remove(final Cardapio cardapio) {
 	this.em.remove(cardapio);
+    }
+
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public List<AlimentoVO> findAlimentosByCardapioId(final Long cardapioId) {
+	final StringBuilder nativeQuery = new StringBuilder();
+	nativeQuery.append("  SELECT CA.id          as \"alimentoId\",");
+	nativeQuery.append("         CA.nome        as \"nome\"");
+	nativeQuery.append("    FROM CARDAPIO_ALIMENTO CA");
+	nativeQuery.append("   WHERE CA.id_cardapio = :cardapioId ");
+	final Session session = (Session) this.em.getDelegate();
+	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
+	query.setParameter("cardapioId", cardapioId);
+	query.setResultTransformer(new FluentHibernateResultTransformer(AlimentoVO.class));
+	return query.list();
     }
 
 }

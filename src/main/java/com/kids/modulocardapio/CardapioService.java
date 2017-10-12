@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.kids.model.Cardapio;
 import com.kids.modulocardapio.util.TraduzDiaSemana;
+import com.kids.modulocardapio.vo.AlimentoVO;
 import com.kids.modulocardapio.vo.CardapioVO;
-import com.kids.modulocreche.CrecheFacade;
 import com.kids.repository.CardapioRepository;
 
 /**
@@ -20,9 +20,6 @@ import com.kids.repository.CardapioRepository;
  */
 @Service
 public class CardapioService {
-
-    @Autowired
-    private CrecheFacade crecheFacade;
 
     @Autowired
     private CardapioRepository cardapioRepository;
@@ -55,5 +52,13 @@ public class CardapioService {
 
     public Cardapio getByid(final Long id) {
 	return this.cardapioRepository.findById(id);
+    }
+
+
+
+
+
+    public List<AlimentoVO> getAlimentosByCardapioId(final Long cardapioId) {
+	return this.cardapioRepository.findAlimentosByCardapioId(cardapioId);
     }
 }
