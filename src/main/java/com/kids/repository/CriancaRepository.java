@@ -140,6 +140,8 @@ public class CriancaRepository {
 		crianca.getPessoa().getEndereco();
 		crianca.getContato();
 		crianca.getCreche();
+		crianca.getCreche().getPessoa();
+		crianca.getCreche().getPessoa().getNome();
 		crianca.getAlergias();
 		crianca.getMedicamentos();
 	    }
@@ -160,17 +162,19 @@ public class CriancaRepository {
 	criteria.createAlias("crianca.pessoa", "criancaPessoa", JoinType.INNER_JOIN);
 	criteria.createAlias("criancaPessoa.endereco", "enderecoCrianca", JoinType.INNER_JOIN);
 	criteria.createAlias("crianca.contato", "contato", JoinType.INNER_JOIN);
+	criteria.createAlias("crianca.creche", "creche", JoinType.INNER_JOIN);
+	criteria.createAlias("creche.pessoa", "crechePessoa", JoinType.INNER_JOIN);
 	criteria.createAlias("crianca.alergias", "a", JoinType.LEFT_OUTER_JOIN);
 	criteria.createAlias("crianca.medicamentos", "m", JoinType.LEFT_OUTER_JOIN);
 
 	criteria.add(Restrictions.eq("cf.familia", familia));
-
 	criteria.setFetchMode("crianca.pessoa", FetchMode.SELECT);
 	criteria.setFetchMode("criancaPessoa.endereco", FetchMode.SELECT);
 	criteria.setFetchMode("crianca.contato", FetchMode.SELECT);
+	criteria.setFetchMode("crianca.creche", FetchMode.SELECT);
+	criteria.setFetchMode("creche.pessoa", FetchMode.SELECT);
 	criteria.setFetchMode("crianca.alergias", FetchMode.SELECT);
 	criteria.setFetchMode("crianca.medicamentos", FetchMode.SELECT);
-
 	criteria.setProjection(Projections.property("cf.crianca"));
 
 	final Collection<Crianca> result = criteria.getExecutableCriteria(session).list();

@@ -15,7 +15,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -37,7 +36,7 @@ public class Creche implements Serializable {
     @SequenceGenerator(name = "seq_creche", sequenceName = "seq_creche", allocationSize = 100, initialValue = 100)
     private Long id;
 
-    @JsonIgnore
+    //@JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pessoa", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_pessoa"))
     private Pessoa pessoa;
