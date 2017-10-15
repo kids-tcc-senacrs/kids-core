@@ -55,7 +55,8 @@ public class CardapioRepository {
 	nativeQuery.append("   INNER JOIN CRECHE CR ON C.id_creche = CR.id");
 	nativeQuery.append("   INNER JOIN PESSOA  P ON CR.id_pessoa = P.id");
 	nativeQuery.append("   WHERE CR.id = :crecheId ");
-	nativeQuery.append("     AND C.DT_CARDAPIO <= current_date LIMIT 7 ");
+	nativeQuery.append("     AND C.DT_CARDAPIO between (current_date - 7) and (current_date + 7) ");
+	nativeQuery.append("   ORDER BY C.DT_CARDAPIO");
 
 	final Session session = (Session) this.em.getDelegate();
 	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
