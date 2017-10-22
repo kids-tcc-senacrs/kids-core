@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,8 @@ public class GaleriaService {
 
     @Autowired
     private CrecheFacade crecheFacade;
+
+    final static Logger LOGGER = Logger.getLogger(GaleriaService.class);
 
 
 
@@ -58,7 +61,10 @@ public class GaleriaService {
 
 	    this.atualizarGaleria(nomeArquivo, galeria);
 
+	    LOGGER.info("UPLOAD REALIZADO COM SUCESSO");
+
 	} catch (final Exception e) {
+	    LOGGER.info("ERRO AO REALIZAR UPLOAD DE IMAGENS VIA GALERIA", e);
 	    throw new KidsException("Ocorreu um erro inesperado!!!");
 	}
 
