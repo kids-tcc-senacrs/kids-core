@@ -1,5 +1,6 @@
 package com.kids.modulofamilia;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.kids.exception.KidsException;
 import com.kids.mail.MailService;
+import com.kids.model.Creche;
 import com.kids.model.Crianca;
 import com.kids.model.CriancaFamilia;
+import com.kids.model.Usuario;
 import com.kids.moduloautenticacao.UsuarioFacade;
 import com.kids.modulocrianca.CriancaFacade;
 import com.kids.modulofamilia.build.BuildCriancaFamilia;
@@ -40,6 +43,14 @@ public class FamiliaService {
 
     @Autowired
     private MailService mailService;
+
+
+
+
+
+    public List<Creche> findCrechesByUsuarioFamiliar(final Usuario usuarioFamiliar) {
+	return this.criancaFamiliaRepository.findCrechesByUsuarioFamiliar(usuarioFamiliar);
+    }
 
 
 

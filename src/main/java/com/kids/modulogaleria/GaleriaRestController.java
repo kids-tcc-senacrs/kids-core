@@ -37,11 +37,11 @@ public class GaleriaRestController {
 
 
 
-    @RequestMapping(method = GET, path = "/{crecheId}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> get(@PathVariable(required = true) final Long crecheId) {
+    @RequestMapping(method = GET, path = "/{usuarioId}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> get(@PathVariable(required = true) final Long usuarioId) {
 	try {
 
-	    final List<GaleriaVO> galerias = this.galeriaService.getGaleriasByCrecheId(crecheId);
+	    final List<GaleriaVO> galerias = this.galeriaService.getGaleriasByUsuarioId(usuarioId);
 	    final HttpStatus httpStatus = galerias == null || galerias.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK;
 	    return ResponseEntity.status(httpStatus).body(KidsJsonUtil.convertToJson(galerias));
 

@@ -1,5 +1,6 @@
 package com.kids.repository;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,12 +10,15 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kids.model.Creche;
 import com.kids.model.CriancaFamilia;
+import com.kids.model.Usuario;
 
 /**
  * 
@@ -64,6 +68,20 @@ public class CriancaFamiliaRepository {
 	final DetachedCriteria criteria = DetachedCriteria.forClass(CriancaFamilia.class);
 	criteria.add(Restrictions.eq("id", criancaFamiliaId));
 	return (CriancaFamilia) criteria.getExecutableCriteria(session).uniqueResult();
+    }
+
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public List<Creche> findCrechesByUsuarioFamiliar(final Usuario usuarioFamiliar) {
+	final Session session = (Session) this.em.getDelegate();
+	final DetachedCriteria criteria = DetachedCriteria.forClass(CriancaFamilia.class, "cf");
+	criteria.createAlias("cf.crianca", "crianca");
+	criteria.add(Restrictions.eq("cf.usuario.id", usuarioFamiliar.getId()));
+	criteria.setProjection(Projections.property("crianca.creche"));
+	return criteria.getExecutableCriteria(session).list();
     }
 
 

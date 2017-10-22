@@ -38,11 +38,14 @@ public class GaleriaRepository {
     @SuppressWarnings("unchecked")
     public List<GaleriaVO> findGaleriasByCrecheId(final Long crecheId) {
 	final StringBuilder nativeQuery = new StringBuilder();
-	nativeQuery.append("  SELECT G.id         as \"id\",");
-	nativeQuery.append("         G.descricao  as \"descricao\",");
-	nativeQuery.append("         G.dt_post    as \"dtPost\",");
-	nativeQuery.append("         G.imagem     as \"imagem\"");
+	nativeQuery.append("  SELECT G.id          as \"id\",");
+	nativeQuery.append("                G.descricao   as \"descricao\",");
+	nativeQuery.append("                G.dt_post       as \"dtPost\",");
+	nativeQuery.append("                G.imagem     as \"imagem\",");
+	nativeQuery.append("                P.nome          as \"nomeCreche\"");
 	nativeQuery.append("    FROM GALERIA G");
+	nativeQuery.append("    INNER JOIN CRECHE C ON G.creche_id = C.id");
+	nativeQuery.append("    INNER JOIN PESSOA  P ON C.id_pessoa = P.id");
 	nativeQuery.append("   WHERE G.creche_id = :crecheId ");
 	nativeQuery.append("    ORDER BY  G.dt_post DESC");
 

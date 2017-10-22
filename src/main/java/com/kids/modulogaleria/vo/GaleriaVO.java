@@ -27,8 +27,11 @@ public class GaleriaVO implements Serializable {
     @ApiModelProperty(position = 2)
     private String imagem;
 
-    @ApiModelProperty(position = 8)
+    @ApiModelProperty(position = 3)
     private Date dtPost;
+
+    @ApiModelProperty(position = 4)
+    private String nomeCreche;
 
 
 
@@ -125,6 +128,22 @@ public class GaleriaVO implements Serializable {
 	} else if (!id.equals(other.id))
 	    return false;
 	return true;
+    }
+
+
+
+
+
+    public String getNomeCreche() {
+	return nomeCreche;
+    }
+
+
+
+
+
+    public void setNomeCreche(String nomeCreche) {
+	this.nomeCreche = nomeCreche;
     }
 
 }

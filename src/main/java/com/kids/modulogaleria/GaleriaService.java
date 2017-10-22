@@ -5,21 +5,30 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kids.enumeration.TipoUsuario;
 import com.kids.exception.KidsException;
 import com.kids.model.Creche;
 import com.kids.model.Galeria;
+import com.kids.model.Usuario;
+import com.kids.moduloautenticacao.UsuarioFacade;
+import com.kids.moduloautenticacao.validate.UsuarioInexistenteException;
 import com.kids.modulocreche.CrecheFacade;
+import com.kids.modulofamilia.FamiliaService;
 import com.kids.modulogaleria.util.CriaArquivoDaFoto;
 import com.kids.modulogaleria.vo.GaleriaVO;
 import com.kids.repository.GaleriaRepository;
@@ -32,6 +41,12 @@ public class GaleriaService {
 
     @Autowired
     private CrecheFacade crecheFacade;
+
+    @Autowired
+    private UsuarioFacade usuarioFacade;
+
+    @Autowired
+    private FamiliaService familiaService;
 
     final static Logger LOGGER = Logger.getLogger(GaleriaService.class);
 
@@ -98,16 +113,30 @@ public class GaleriaService {
 
 
 
-    public List<GaleriaVO> getGaleriasByCrecheId(final Long crecheId) {
+    public List<GaleriaVO> getGaleriasByUsuarioId(final Long usuarioId) throws UsuarioInexistenteException {
 
-	final List<GaleriaVO> galerias = this.galeriaRepository.findGaleriasByCrecheId(crecheId);
+	List<GaleriaVO> galerias = new ArrayList<>();
+
+	final Usuario usuario = this.usuarioFacade.buscarUsuarioById(usuarioId);
+
+	if (TipoUsuario.CRECHE.equals(usuario.getTipo())) {
+
+	    final Creche creche = this.crecheFacade.getCrecheByUsuario(usuario);
+	    galerias = this.galeriaRepository.findGaleriasByCrecheId(creche.getId());
+
+	} else if (TipoUsuario.FAMILIAR.equals(usuario.getTipo())) {
+
+	    final Set<Long> crechesIds = this.getCrechesIds(this.familiaService.findCrechesByUsuarioFamiliar(usuario));
+	    for (final Long crecheId : crechesIds) {
+		galerias = this.galeriaRepository.findGaleriasByCrecheId(crecheId);
+	    }
+
+	}
 
 	final CriaArquivoDaFoto criaArquivoDaFoto = new CriaArquivoDaFoto();
-
 	for (final GaleriaVO galeriaVO : galerias) {
 	    criaArquivoDaFoto.agrupar(galeriaVO);
 	}
-
 	for (final GaleriaVO galeriaVO : galerias) {
 	    final File imagem = criaArquivoDaFoto.getArquivo(galeriaVO);
 	    final String imagemBase64 = this.convertToBase64(imagem);
@@ -115,6 +144,20 @@ public class GaleriaService {
 	}
 
 	return galerias;
+    }
+
+
+
+
+
+    final Set<Long> getCrechesIds(final List<Creche> creches) {
+	final Set<Long> naoAguentoMaisCodarEsseTcc = new HashSet<Long>();
+	if (CollectionUtils.isNotEmpty(creches)) {
+	    for (final Creche creche : creches) {
+		naoAguentoMaisCodarEsseTcc.add(creche.getId());
+	    }
+	}
+	return naoAguentoMaisCodarEsseTcc;
     }
 
 
