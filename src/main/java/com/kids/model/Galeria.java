@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -43,9 +42,8 @@ public class Galeria implements Serializable {
     @Column(name = "dt_post", nullable = false)
     private LocalDateTime dtPost;
 
-    @Lob
-    @Column(name = "imagem", nullable = false)
-    private Byte imagem[];
+    @Column(name = "imagem")
+    private String imagem;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creche_id", foreignKey = @ForeignKey(name = "FK_creche"), nullable = false)
@@ -103,7 +101,7 @@ public class Galeria implements Serializable {
 
 
 
-    public Byte[] getImagem() {
+    public String getImagem() {
 	return imagem;
     }
 
@@ -111,7 +109,7 @@ public class Galeria implements Serializable {
 
 
 
-    public void setImagem(Byte[] imagem) {
+    public void setImagem(String imagem) {
 	this.imagem = imagem;
     }
 
