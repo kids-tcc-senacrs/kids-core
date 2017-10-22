@@ -69,13 +69,4 @@ public class GaleriaRestController {
 	return ResponseEntity.status(CREATED).build();
     }
 
-    //final Byte[] fileContent = toObjects(file.getBytes());
-    //    final StringBuilder sb = new StringBuilder("data:image/jpg;base64,");
-    //    final byte[] base64 = Base64.encodeBase64(file.getBytes(), false);
-    //    sb.append(StringUtils.newStringUtf8(base64));
-    //    private Byte[] toObjects(byte[] bytesPrim) {
-    //	Byte[] bytes = new Byte[bytesPrim.length];
-    //	Arrays.setAll(bytes, n -> bytesPrim[n]);
-    //	return bytes;
-    //    }
 }

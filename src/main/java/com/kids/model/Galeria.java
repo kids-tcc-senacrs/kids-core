@@ -33,7 +33,7 @@ public class Galeria implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_galeria")
-    @SequenceGenerator(name = "seq_galeria", sequenceName = "seq_galeria", allocationSize = 100, initialValue = 100)
+    @SequenceGenerator(name = "seq_galeria", sequenceName = "seq_galeria", allocationSize = 100, initialValue = 350)
     private Long id;
 
     @Column(name = "descricao", length = 60, nullable = false)

@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import com.kids.exception.KidsException;
 import com.kids.model.Creche;
 import com.kids.model.Galeria;
 import com.kids.modulocreche.CrecheFacade;
+import com.kids.modulogaleria.util.CriaArquivoDaFoto;
 import com.kids.modulogaleria.vo.GaleriaVO;
 import com.kids.repository.GaleriaRepository;
 
@@ -95,7 +99,37 @@ public class GaleriaService {
 
 
     public List<GaleriaVO> getGaleriasByCrecheId(final Long crecheId) {
-	return this.galeriaRepository.findGaleriasByCrecheId(crecheId);
+
+	final List<GaleriaVO> galerias = this.galeriaRepository.findGaleriasByCrecheId(crecheId);
+
+	final CriaArquivoDaFoto criaArquivoDaFoto = new CriaArquivoDaFoto();
+
+	for (final GaleriaVO galeriaVO : galerias) {
+	    criaArquivoDaFoto.agrupar(galeriaVO);
+	}
+
+	for (final GaleriaVO galeriaVO : galerias) {
+	    final File imagem = criaArquivoDaFoto.getArquivo(galeriaVO);
+	    final String imagemBase64 = this.convertToBase64(imagem);
+	    galeriaVO.setImagem(imagemBase64);
+	}
+
+	return galerias;
+    }
+
+
+
+
+
+    private String convertToBase64(final File imagem) {
+	try {
+	    final byte[] fileContent = FileUtils.readFileToByteArray(imagem);
+	    final byte[] base64 = Base64.encodeBase64(fileContent, false);
+	    return StringUtils.newStringUtf8(base64);
+	} catch (Exception e) {
+	    LOGGER.error("erro");
+	}
+	return null;
     }
 
 }

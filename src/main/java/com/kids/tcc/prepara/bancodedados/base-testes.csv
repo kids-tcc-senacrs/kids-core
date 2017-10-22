@@ -185,3 +185,9 @@ INSERT INTO CARDAPIO_ALIMENTO(id, id_cardapio, nome)VALUES((select (max(id) + 1)
 INSERT INTO CARDAPIO_ALIMENTO(id, id_cardapio, nome)VALUES((select (max(id) + 1) from  CARDAPIO_ALIMENTO),8,'POLENTA COM MOLHO');
 INSERT INTO CARDAPIO_ALIMENTO(id, id_cardapio, nome)VALUES((select (max(id) + 1) from  CARDAPIO_ALIMENTO),8,'OVO');
 INSERT INTO CARDAPIO_ALIMENTO(id, id_cardapio, nome)VALUES((select (max(id) + 1) from  CARDAPIO_ALIMENTO),8,'MAÇA');
+INSERT INTO GALERIA(id, descricao, dt_post, imagem, creche_id)VALUES(300,'Brincando com giz','2017-10-22 14:52:12.619','1300.jpeg',1);
+INSERT INTO GALERIA(id, descricao, dt_post, imagem, creche_id)VALUES(301,'Diversão na praça da creche','2017-10-18 14:53:42.188','1301.jpeg',1);
+INSERT INTO GALERIA(id, descricao, dt_post, imagem, creche_id)VALUES(302,'Dia do amigo','2017-10-15 14:54:08.048','1302.jpeg',1);
+INSERT INTO GALERIA(id, descricao, dt_post, imagem, creche_id)VALUES(303,'Diversão com tinta','2017-10-09 14:54:40.402','1303.jpeg',1);
+INSERT INTO GALERIA(id, descricao, dt_post, imagem, creche_id)VALUES(304,'Hora do recreio','2017-10-02 14:55:10.374','1304.jpeg',1);
+INSERT INTO GALERIA(id, descricao, dt_post, imagem, creche_id)VALUES(305,'Estudando sozinho','2017-09-24 14:55:59.798','1305.jpeg',1);

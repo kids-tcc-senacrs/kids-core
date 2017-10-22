@@ -44,6 +44,7 @@ public class GaleriaRepository {
 	nativeQuery.append("         G.imagem     as \"imagem\"");
 	nativeQuery.append("    FROM GALERIA G");
 	nativeQuery.append("   WHERE G.creche_id = :crecheId ");
+	nativeQuery.append("    ORDER BY  G.dt_post DESC");
 
 	final Session session = (Session) this.em.getDelegate();
 	final SQLQuery query = session.createSQLQuery(nativeQuery.toString());
@@ -59,6 +60,7 @@ public class GaleriaRepository {
     @Transactional
     public void update(final Galeria galeria) {
 	this.em.merge(galeria);
+	this.em.flush();
     }
 
 }
