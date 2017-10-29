@@ -21,16 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/db")
 public class PreparaBaseDadoRestController {
 
-	@Autowired
-	private PreparaBaseDadoRepository repository;
+    @Autowired
+    private PreparaBaseDadoRepository repository;
 
-	@RequestMapping(method = GET, path = "/{senha}")
-	public ResponseEntity<?> prepararBaseDados(final @PathVariable(required = true) Integer senha) {
-		if (Integer.valueOf(12345).equals(senha)) {
-			this.repository.updateDB();
-		} else {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
-		return ResponseEntity.status(HttpStatus.OK).build();
+
+
+
+
+    @RequestMapping(method = GET, path = "/{senha}")
+    public ResponseEntity<?> prepararBaseDados(final @PathVariable(required = true) Integer senha) {
+	if (Integer.valueOf(12345).equals(senha)) {
+	    this.repository.updateDB();
+	} else {
+	    return ResponseEntity.status(HttpStatus.CONFLICT).body("[KIDS INFORMA] - Ocorreu um erro inexperado ao preparar a base de dados. Tente novamente");
 	}
+	return ResponseEntity.status(HttpStatus.OK).body("[KIDS INFORMA] -  Base de testes preparada com sucesso!.");
+    }
 }
